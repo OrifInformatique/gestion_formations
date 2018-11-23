@@ -12,7 +12,7 @@
         <!-- apprentices table -->
         <!-- put this in a loop -->
         <tr>
-            <td>nom</td>
+            <td><a href="#">nom</a></td>
             <td>formation</td>
             <td>année</td>
             <td>moyenne</td>
