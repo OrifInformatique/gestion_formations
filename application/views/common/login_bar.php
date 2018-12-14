@@ -21,7 +21,7 @@
 
         <?php } else { ?>
           <!-- Not logged in, display a "login" button -->
-          <a href="<?php echo base_url("auth/login"); ?>" ><?php echo $this->lang->line('btn_login'); ?></a>
+          <a href="<?php echo base_url("auth"); ?>" ><?php echo $this->lang->line('btn_login'); ?></a>
         <?php } ?>
       </div>
     </div>

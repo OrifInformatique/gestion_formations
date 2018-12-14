@@ -25,6 +25,10 @@ $lang['group_eliminatory']              = 'Elimination';
 $lang['group_position']                 = 'Position';
 $lang['group_parent_group']             = 'Groupe Parent';
 
+//Log Error
+$lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
+$lang['no_id']                          = 'Veuillez insérer des identifiants';
+
 // List headers
 $lang['group_list']                     = 'Liste des groupes';
 $lang['group_new']                      = 'Nouveau groupe';
