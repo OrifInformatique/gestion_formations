@@ -7,7 +7,7 @@
  * @link        https://github.com/OrifInformatique/gestion_formations
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
  */
-class user_types_model extends MY_Model
+class user_type_model extends MY_Model
 {
     protected $_table = 't_user_types';
     protected $primary_key = 'ID';

@@ -15,8 +15,8 @@ class Auth extends MY_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('users_model');
-        $this->load->model('user_types_model');
+        $this->load->model('user_model');
+        $this->load->model('user_type_model');
         $this->load->helper(array('form', 'url'));
     }
 
@@ -48,8 +48,8 @@ class Auth extends MY_Controller {
 
         if ($this->form_validation->run() == true) {
 
-            if($this->users_model->check_password($username, $password)) {
-                $user = $this->users_model->with('users_type')->get_by('User', $username);
+            if($this->user_model->check_password($username, $password)) {
+                $user = $this->user_model->with('users_type')->get_by('User', $username);
 
                 $this->session->user_id = $user->ID;
                 $this->session->username = $user->User;

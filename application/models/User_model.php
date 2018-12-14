@@ -7,7 +7,7 @@
  * @link        https://github.com/OrifInformatique/gestion_formations
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
  */
-class users_model extends MY_Model
+class user_model extends MY_Model
 {
     /* SET MY_Model VARIABLES */
     protected $_table = 't_users';
