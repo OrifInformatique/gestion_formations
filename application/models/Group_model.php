@@ -19,6 +19,15 @@ class Group_model extends MY_Model {
         parent::__construct();
     }
 
+    public function get_next_id() {
+        $query = $this->db->query("SHOW TABLE STATUS LIKE 't_groups'");
+
+        $row = $query->row(0);
+        $value = $row->Auto_increment;
+
+        return $value;
+    }
+
     public function get_filtered($filters) {
         // WHERE clause for filtering
         $where_group_filter = "";
