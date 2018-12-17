@@ -20,7 +20,29 @@ class Group extends MY_Controller {
     }
 
     public function index($error = 0){
-        
+        $groups = $this->group_model->get_filtered();
+        $this->display_view('group/list', $groups);
+    }
+
+    public function view($id = -1) {
+        if($id == -1)
+            return;
+        if($id == 0) {
+            $this->display_view('group/form');
+            return;
+        }
+        $a = array("idf" => $id);
+        $groups = $this->group_model->get_filtered($a);
+
+        //Make sure that there is only 1 item
+        if (sizeof($groups) > 1) {
+            //This should just redirect to the default list but currently you can see all the things that were selected to find out why
+            $this->display_view('group/list', $groups);
+        } elseif (sizeof($groups) == 1) {
+            $this->display_view('group/form', $groups);
+        } else {
+            redirect('group');
+        }
     }
 
     public function add($error = NULL){
@@ -30,9 +52,5 @@ class Group extends MY_Controller {
         $outputs["groups"] = $this->group_model->get_tree();
 
         $this->display_view('group/add', $outputs);
-    }
-
-    public function form_validate(){
-        $this->form_validation->set_rules('title', 'Title', 'required');
     }
 }

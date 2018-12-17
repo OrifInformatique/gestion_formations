@@ -53,7 +53,7 @@ class group_model extends MY_Model {
     /**
      * Ne sera certainement jamais utilisé
     **/
-    public function get_filtered($filters) {
+    public function get_filtered($filters = NULL) {
         // WHERE clause for filtering
         $where_group_filter = "";
 
@@ -86,7 +86,7 @@ class group_model extends MY_Model {
                 }
                 $where_id_filter = substr($where_id_filter, 0, -4);
             } else {
-                $where_id_filter .= 'ID LIKE '.$search_id;
+                $where_id_filter .= 'ID LIKE '.$id_search_filter;
             }
             $where_id_filter .= ')';
 
@@ -110,7 +110,7 @@ class group_model extends MY_Model {
                 }
                 $where_weight_filter = substr($where_weight_filter, 0, -4);
             } else {
-                $where_weight_filter .= 'Weight LIKE '.$search_id;
+                $where_weight_filter .= 'Weight LIKE '.$weight_search_filter;
             }
             $where_weight_filter .= ')';
 
@@ -134,7 +134,7 @@ class group_model extends MY_Model {
                 }
                 $where_eliminatory_filter = substr($where_eliminatory_filter, 0, -4);
             } else {
-                $where_eliminatory_filter .= 'Weight LIKE '.$search_id;
+                $where_eliminatory_filter .= 'Weight LIKE '.$eliminatory_search_filter;
             }
             $where_eliminatory_filter .= ')';
 
@@ -158,7 +158,7 @@ class group_model extends MY_Model {
                 }
                 $where_position_filter = substr($where_position_filter, 0, -4);
             } else {
-                $where_position_filter .= 'Position LIKE '.$search_id;
+                $where_position_filter .= 'Position LIKE '.$position_search_filter;
             }
             $where_position_filter .= ')';
 
@@ -182,7 +182,7 @@ class group_model extends MY_Model {
                 }
                 $where_parent_filter = substr($where_parent_filter, 0, -4);
             } else {
-                $where_parent_filter .= 'FK_Parent_Group LIKE '.$search_id;
+                $where_parent_filter .= 'FK_Parent_Group LIKE '.$parent_search_filter;
             }
             $where_parent_filter .= ')';
 
