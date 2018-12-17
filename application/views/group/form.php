@@ -9,7 +9,7 @@
 ?>
 
 <div class="container">
-    <h1 class="title-section"><?php echo $this->lang->line('title_question_update'); ?></h1>
+    <h1 class="title-section"><?php if(isset($group)) {echo $this->lang->line('group_modify')} else {echo $this->lang->line('group_new');} ?></h1>
     <?php
     $attributes = array("id" => "addGroupForm",
                         "name" => "addGroupForm");
@@ -18,10 +18,10 @@
         <!-- Display buttons and display topic and question type as information -->
         <div class="row">
             <div class="form-group">
-                <a name="cancel" class="btn btn-danger col-xs-12 col-sm-4" href="<?=base_url('/Group')?>"><?=$this->lang->line('cancel')?></a>
+                <a name="cancel" class="btn btn-danger" href="<?=base_url('/group')?>"><?=$this->lang->line('cancel')?></a>
                 <?php
-                    echo form_submit('save', $this->lang->line('save'), 'class="btn btn-success col-xs-12 col-sm-4 col-sm-offset-4"'); 
-                    echo form_submit('test', '', 'style="visibility: hidden; height:0;"');//for cancel "Enter" key in form 
+                    echo form_submit('save', $this->lang->line('save'), 'class="btn btn-success"'); 
+                    echo form_reset('reset', $this->lang->line('btn_reset'), 'class="btn btn-danger"');
                 ?>
             </div>
             <div class="form-group col-md-8 text-right">
@@ -40,8 +40,8 @@
             <div class="form-group col-md-12">
                 <?php echo form_label($this->lang->line('group_name'), 'name'); ?>
                 <?php 
-                    if(isset($name)){
-                        echo form_input('name', $name, 'maxlength="65535" class="form-control" id="name"');
+                    if(isset($group)){
+                        echo form_input('name', $group->name, 'maxlength="65535" class="form-control" id="name"');
                     } else {
                         echo form_input('name', '', 'maxlength="65535" class="form-control" id="name"');
                     }
@@ -57,8 +57,8 @@
                     </div>
                     <div class="col-md-7">
                         <?php 
-                            if(isset($weight)){
-                                echo form_input('weight', $weight, 'class="form-control" id="weight"');
+                            if(isset($group)){
+                                echo form_input('weight', $group->weight, 'class="form-control" id="weight"');
                             } else {
                                 echo form_input('weight', 100, 'class="form-control" id="weight"');
                             }
@@ -79,8 +79,8 @@
                     </div>
                     <div class="col-md-8">
                         <?php 
-                            if(isset($eliminatory)){
-                                echo form_checkbox('eliminatory', 'eliminatory', $eliminatory, 'class="form-control" id="eliminatory"');
+                            if(isset($group)){
+                                echo form_checkbox('eliminatory', 'eliminatory', $group->eliminatory, 'class="form-control" id="eliminatory"');
                             } else {
                                 echo form_checkbox('eliminatory', 'eliminatory', false, 'class="form-control" id="eliminatory"');
                             }
@@ -99,8 +99,8 @@
                     </div>
                     <div class="col-md-8">
                         <?php 
-                            if(isset($position)){
-                                echo form_input('position', $position, 'class="form-control" id="position"');
+                            if(isset($group)){
+                                echo form_input('position', $group->position, 'class="form-control" id="position"');
                             } else {
                                 echo form_input('position', 1, 'class="form-control" id="position"');
                             }

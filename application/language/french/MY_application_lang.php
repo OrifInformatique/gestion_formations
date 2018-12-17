@@ -18,8 +18,8 @@ $lang['date_format_short']              = 'd.m.Y';
 $lang['datetime_format_short']          = 'd.m.Y H:i';
 
 // Fields labels
-$lang['field_username']                 = 'Nom d\'utilisateur';
-$lang['field_password']                 = 'Mot de passe';
+$lang['field_username']                 = 'Nom d\'utilisateur:';
+$lang['field_password']                 = 'Mot de passe:';
 $lang['group_name']                     = 'Nom';
 $lang['group_weight']                   = 'Poids';
 $lang['group_eliminatory']              = 'Eliminatoire';

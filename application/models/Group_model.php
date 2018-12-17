@@ -28,7 +28,7 @@ class Group_model extends MY_Model {
         return $value;
     }
 
-    public function get_filtered($filters) {
+    public function get_filtered($filters = NULL) {
         // WHERE clause for filtering
         $where_group_filter = "";
 

@@ -15,12 +15,13 @@ class Group extends MY_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('groups_model');
+        $this->load->model('group_model');
         $this->load->helper(array('form', 'url'));
     }
 
     public function index($error = 0){
-        $this->display_view('group/form');
+        $groups = $this->group_model->get_filtered();
+        $this->display_view('group/list', $groups);
     }
 
 }
