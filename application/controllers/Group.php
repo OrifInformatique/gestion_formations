@@ -24,4 +24,18 @@ class Group extends MY_Controller {
         $this->display_view('group/list', $groups);
     }
 
+    public function view($id = -1) {
+        if($id = -1)
+            return;
+        $groups = $this->group_model->get_filtered(new array("idf" => $id));
+
+        //Make sure that there is only 1 item
+        if (sizeof($groups) != 1) {
+            //This should just redirect to the default list
+            $this->display_view('group/list', $groups);
+        } else {
+            $this->display_view('group/form', $groups)
+        }
+    }
+
 }
