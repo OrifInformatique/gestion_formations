@@ -49,10 +49,6 @@ class group_model extends MY_Model {
         return $groups_tree;
     }
 
-
-    /**
-     * Ne sera certainement jamais utilisé
-    **/
     public function get_filtered($filters = NULL) {
         // WHERE clause for filtering
         $where_group_filter = "";

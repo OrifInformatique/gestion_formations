@@ -28,7 +28,8 @@ class Group extends MY_Controller {
         if($id == -1)
             return;
         if($id == 0) {
-            $this->display_view('group/form');
+            $groups["groups"] = $this->group_model->get_tree();
+            $this->display_view('group/add', $groups);
             return;
         }
         $a = array("idf" => $id);
@@ -39,7 +40,8 @@ class Group extends MY_Controller {
             //This should just redirect to the default list but currently you can see all the things that were selected to find out why
             $this->display_view('group/list', $groups);
         } elseif (sizeof($groups) == 1) {
-            $this->display_view('group/form', $groups);
+            $groups["groups"] = $this->group_model->get_tree();
+            $this->display_view('group/add', $groups);
         } else {
             redirect('group');
         }
