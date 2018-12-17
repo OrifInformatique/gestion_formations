@@ -20,8 +20,8 @@ class Group extends MY_Controller {
     }
 
     public function index($error = 0){
-        $groups = $this->group_model->get_filtered();
-        $this->display_view('group/list', $groups);
+        $outputs['groups'] = $this->group_model->get_all();
+        $this->display_view('group/list', $outputs);
     }
 
     public function view($id = -1) {
