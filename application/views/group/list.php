@@ -13,8 +13,8 @@
         foreach ($groups as $group) { ?>
     <tr>
         <!-- Click here to modify -->
-        <td><a href="#"><?php echo $group->id; ?></a></td>
-        <td><?php echo $group->name_group; ?></td>
+        <td><?php echo $group->id; ?></td>
+        <td><a href="<?php echo base_url().'view/'.$group->id; ?>"><?php echo $group->name_group; ?></a></td>
         <td><?php echo $group->weight; ?></td>
         <td><?php echo $group->eliminatory; ?></td>
         <td><?php echo $group->position; ?></td>

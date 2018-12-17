@@ -25,16 +25,23 @@ class Group extends MY_Controller {
     }
 
     public function view($id = -1) {
-        if($id = -1)
+        if($id == -1)
             return;
-        $groups = $this->group_model->get_filtered(new array("idf" => $id));
+        if($id == 0) {
+            $this->display_view('group/form');
+            return;
+        }
+        $a = array("idf" => $id);
+        $groups = $this->group_model->get_filtered($a);
 
         //Make sure that there is only 1 item
-        if (sizeof($groups) != 1) {
-            //This should just redirect to the default list
+        if (sizeof($groups) > 1) {
+            //This should just redirect to the default list but currently you can see all the things that were selected to find out why
             $this->display_view('group/list', $groups);
+        } elseif (sizeof($groups) == 1) {
+            $this->display_view('group/form', $groups);
         } else {
-            $this->display_view('group/form', $groups)
+            redirect('group');
         }
     }
 

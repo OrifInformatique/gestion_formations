@@ -9,7 +9,7 @@
 ?>
 
 <div class="container">
-    <h1 class="title-section"><?php if(isset($group)) {echo $this->lang->line('group_modify')} else {echo $this->lang->line('group_new');} ?></h1>
+    <h1 class="title-section"><?php if(isset($group)) {echo $this->lang->line('group_modify');} else {echo $this->lang->line('group_new');} ?></h1>
     <?php
     $attributes = array("id" => "addGroupForm",
                         "name" => "addGroupForm");
@@ -24,9 +24,6 @@
                     echo form_reset('reset', $this->lang->line('btn_reset'), 'class="btn btn-danger"');
                 ?>
             </div>
-            <div class="form-group col-md-8 text-right">
-                <h4><?php echo $this->lang->line('group_new'); ?></h4>
-            </div>
         </div>
 
         <!-- ERROR MESSAGES -->
@@ -38,14 +35,20 @@
         <!-- QUESTION FIELDS -->
         <div class="row">
             <div class="form-group col-md-12">
-                <?php echo form_label($this->lang->line('group_name'), 'name'); ?>
-                <?php 
-                    if(isset($group)){
-                        echo form_input('name', $group->name, 'maxlength="65535" class="form-control" id="name"');
-                    } else {
-                        echo form_input('name', '', 'maxlength="65535" class="form-control" id="name"');
-                    }
-                ?>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <?php echo form_label($this->lang->line('group_name'), 'name'); ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?php 
+                            if(isset($group)){
+                                echo form_input('name', $group->name, 'maxlength="65535" class="form-control" id="name"');
+                            } else {
+                                echo form_input('name', '', 'maxlength="65535" class="form-control" id="name"');
+                            }
+                        ?>
+                    </div>
+                </div>
             </div>
         </div>
 
