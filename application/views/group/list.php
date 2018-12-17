@@ -1,5 +1,6 @@
 <div class="container">
     <h1><?php echo $this->lang->line('group_list') ?></h1>
+    <a class="btn btn-success" href="<?=base_url('group/add')?>"><?=$this->lang->line('group_new')?></a>
     <table>
         <tr>
             <th><?php echo $this->lang->line('group_id') ?></th>
