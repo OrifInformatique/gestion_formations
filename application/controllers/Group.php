@@ -25,8 +25,8 @@ class Group extends MY_Controller {
     }
 
     public function view($id = -1) {
-        if($id == -1)
-            return;
+        if($id < 0)
+            redirect('group');
         if($id == 0) {
             $groups["groups"] = $this->group_model->get_tree();
             $this->display_view('group/add', $groups);
