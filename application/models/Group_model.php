@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Group_model extends MY_Model {
+class group_model extends MY_Model {
     /* SET MY_Model VARIABLES */
     protected $_table = 't_groups';
     protected $primary_key = 'ID';
@@ -28,6 +28,31 @@ class Group_model extends MY_Model {
         return $value;
     }
 
+    public function get_tree($parent_group = 0){
+        
+        $groups = $this->group_model->get_many_by("FK_Parent_Group = ".$parent_group);
+
+        if (count($groups) > 0){
+            foreach ($groups as $group) {
+                $child_groups = $this->group_model->get_many_by("FK_Parent_Group = ".$group->ID);
+
+                if(count($child_groups) > 0){
+                    $groups_tree[$group->Name_Group] = $this->group_model->get_tree($group->ID);
+                } else {
+                    $groups_tree[$group->ID] = $group->Name_Group;
+                }
+            }
+        } else {
+            $groups_tree = NULL;
+        }
+
+        return $groups_tree;
+    }
+
+
+    /**
+     * Ne sera certainement jamais utilisé
+    **/
     public function get_filtered($filters) {
         // WHERE clause for filtering
         $where_group_filter = "";

@@ -13,7 +13,7 @@
     <?php
     $attributes = array("id" => "addGroupForm",
                         "name" => "addGroupForm");
-    echo form_open('Group/add_Group', $attributes);
+    echo form_open('Group/form_validate', $attributes);
     ?>        
         <!-- Display buttons and display topic and question type as information -->
         <div class="row">
@@ -104,6 +104,21 @@
                             } else {
                                 echo form_input('position', 1, 'class="form-control" id="position"');
                             }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <?php echo form_label($this->lang->line('group_parent_group'), 'parent_group'); ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?php 
+                            echo form_dropdown('parent_group', $groups, null, 'class="form-control" id="parent_group"');
                         ?>
                     </div>
                 </div>
