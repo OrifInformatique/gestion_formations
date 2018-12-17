@@ -37,14 +37,14 @@
             <div class="form-group col-md-12">
                 <div class="form-group row">
                     <div class="col-md-4">
-                        <?php echo form_label($this->lang->line('group_name'), 'Name_Group'); ?>
+                        <?php echo form_label($this->lang->line('group_name'), 'name_Group'); ?>
                     </div>
                     <div class="col-md-8">
                         <?php 
                             if(isset($group)){
-                                echo form_input('Name_Group', $group->Name_Group, 'maxlength="65535" class="form-control" id="name"');
+                                echo form_input('name_Group', $group->name_Group, 'maxlength="65535" class="form-control" id="name_Group"');
                             } else {
-                                echo form_input('Name_Group', '', 'maxlength="65535" class="form-control" id="name"');
+                                echo form_input('name_Group', '', 'maxlength="65535" class="form-control" id="name_Group"');
                             }
                         ?>
                     </div>
