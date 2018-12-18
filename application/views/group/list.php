@@ -12,12 +12,12 @@
         foreach ($groups as $group) { ?>
             <div class="row">
                 <!-- Click here to modify -->
-                <div class="col-md-3"><a href="<?php echo base_url().'view/'.$group->ID; ?>"><?php echo $group->Name_Group; ?></a></div>
+                <div class="col-md-3"><a href="<?php echo base_url().'group/view/'.$group->ID; ?>"><?php echo $group->Name_Group; ?></a></div>
                 <div class="col-md-2"><?php echo $group->Weight . ' %'; ?></div>
                 <div class="col-md-2"><?php echo $group->Eliminatory?$this->lang->line('yes'):$this->lang->line('no'); ?></div>
                 <div class="col-md-3"><?php echo getParentGroup($group->FK_Parent_Group, $groups); ?></div>
                 <!-- Click here to delete -->
-                <div class="col-md-2"><a href="<?php echo base_url().'delete/'.$group->ID; ?>">[x]</a></div>
+                <div class="col-md-2"><a href="<?php echo base_url().'group/delete/'.$group->ID; ?>">[x]</a></div>
             </div>
     <?php } 
 
@@ -39,16 +39,14 @@
     }
     function get_tree($groups){
         foreach ($groups as $key => $group) {
+            echo '<fieldset class="bob"><legend class="bob">';
             if(is_array($group)){
-                echo '<fieldset class="bob">';
-                echo '<legend class="bob">'.$key.'</legend>';
+                echo $key;
                 get_tree($group);
-                echo '</fieldset>';
             } else {
-                echo '<fieldset class="bob">';
-                echo '<legend class="bob">'.$group.'</legend>';
-                echo '</fieldset>';
+                echo $group;
             }
+            echo '</legend></fieldset>';
         }
     }
 ?>

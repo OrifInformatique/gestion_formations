@@ -29,20 +29,19 @@ class Group extends MY_Controller {
         if($id < 0)
             redirect('group');
         if($id == 0) {
-            $groups["groups"] = $this->group_model->get_tree();
-            $this->display_view('group/add', $groups);
+            $outputs["groups"] = $this->group_model->get_tree();
+            $this->display_view('group/add', $outputs);
             return;
         }
-        $a = array("idf" => $id);
-        $groups = $this->group_model->get_filtered($a);
+        $outputs['group'] = $this->group_model->get_filtered(array("idf" => $id));
 
         //Make sure that there is only 1 item
-        if (sizeof($groups) > 1) {
+        if (sizeof($outputs) > 1) {
             //This should just redirect to the default list but currently you can see all the things that were selected to find out why
-            $this->display_view('group/list', $groups);
-        } elseif (sizeof($groups) == 1) {
-            $groups["groups"] = $this->group_model->get_tree();
-            $this->display_view('group/add', $groups);
+            $this->display_view('group/list', $outputs);
+        } elseif (sizeof($outputs) == 1) {
+            $outputs["groups"] = $this->group_model->get_tree();
+            $this->display_view('group/add', $outputs);
         } else {
             redirect('group');
         }
