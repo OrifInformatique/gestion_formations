@@ -1,6 +1,6 @@
 <div class="container">
     <h1><?php echo $this->lang->line('group_list') ?></h1>
-    <a class="btn btn-success" href="<?=base_url('group/add')?>"><?=$this->lang->line('group_new')?></a>
+    <a class="btn btn-success" href="<?=base_url('group/form')?>"><?=$this->lang->line('group_new')?></a>
     <div class="row">
         <div class="col-md-1"><strong><?php echo $this->lang->line('group_position') ?></strong></div>
         <div class="col-md-3"><strong><?php echo $this->lang->line('group_name') ?></strong></div>
@@ -14,7 +14,7 @@
             <div class="row">
                 <!-- Click here to modify -->
                 <div class="col-md-1"><?php echo $group->Position; ?></div>
-                <div class="col-md-3"><a href="<?php echo base_url().'group/add/'.$group->ID; ?>"><?php echo $group->Name_Group; ?></a></div>
+                <div class="col-md-3"><a href="<?php echo base_url().'group/form/'.$group->ID; ?>"><?php echo $group->Name_Group; ?></a></div>
                 <div class="col-md-2"><?php echo $group->Weight . ' %'; ?></div>
                 <div class="col-md-2"><?php echo $group->Eliminatory?$this->lang->line('yes'):$this->lang->line('no'); ?></div>
                 <div class="col-md-3"><?php echo getParentGroup($group->FK_Parent_Group, $groups); ?></div>
