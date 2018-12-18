@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2018-11-19" view-index="0" gantt-divider-location="452" resource-divider-location="300" version="2.8.5" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="Gestion de Formation" company="" webLink="http://" view-date="2018-11-19" view-index="0" gantt-divider-location="452" resource-divider-location="300" version="2.8.8" locale="en_GB">
     <description/>
     <view zooming-state="default:5" id="gantt-chart">
         <field id="tpd3" name="Nom" width="350" order="0"/>
@@ -15,7 +15,7 @@
         <day-types>
             <day-type id="0"/>
             <day-type id="1"/>
-            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="1" thu="1" fri="0" sat="1"/>
             <only-show-weekends value="false"/>
             <overriden-day-types/>
             <days/>
@@ -34,13 +34,13 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="40" name="Vacances" color="#00ff00" meeting="false" start="2018-12-24" duration="10" complete="0" expand="true"/>
-        <task id="13" name="Créer le Gantt" meeting="false" start="2018-11-26" duration="15" complete="0" expand="true"/>
-        <task id="0" name="BDD" meeting="false" start="2018-11-26" duration="10" complete="0" expand="true">
-            <task id="3" name="Concevoir la BDD" meeting="false" start="2018-11-26" duration="7" complete="0" expand="true"/>
-            <task id="5" name="Créer la BDD dans phpMyAdmin" meeting="false" start="2018-12-04" duration="4" complete="0" expand="true"/>
+        <task id="40" name="Vacances" color="#00ff00" meeting="false" start="2018-12-24" duration="6" complete="0" thirdDate="2018-12-24" thirdDate-constraint="0" expand="true"/>
+        <task id="13" name="Créer le Gantt" color="#8cb6ce" meeting="false" start="2018-11-26" duration="9" complete="0" thirdDate="2018-11-26" thirdDate-constraint="0" expand="true"/>
+        <task id="0" name="BDD" meeting="false" start="2018-11-26" duration="6" complete="0" expand="true">
+            <task id="3" name="Concevoir la BDD" color="#8cb6ce" meeting="false" start="2018-11-26" duration="5" complete="0" thirdDate="2018-11-26" thirdDate-constraint="0" expand="true"/>
+            <task id="5" name="Créer la BDD dans phpMyAdmin" color="#8cb6ce" meeting="false" start="2018-12-04" duration="2" complete="0" thirdDate="2018-12-04" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="6" name="PHP" meeting="false" start="2018-11-30" duration="41" complete="0" expand="true">
+        <task id="6" name="PHP" meeting="false" start="2018-11-30" duration="25" complete="0" expand="true">
             <task id="14" name="Login" meeting="false" start="2018-12-10" duration="1" complete="0" expand="true">
                 <task id="49" name="Reprendre le code de gestion de questionnaires" meeting="false" start="2018-12-10" duration="1" complete="0" expand="true"/>
             </task>
@@ -50,11 +50,11 @@
                 <task id="52" name="Lier le formulaire au model" meeting="false" start="2018-12-10" duration="2" complete="0" expand="true"/>
                 <task id="54" name="Validation des champs" meeting="false" start="2018-12-10" duration="2" complete="0" expand="true"/>
             </task>
-            <task id="17" name="Module" meeting="false" start="2018-12-17" duration="10" complete="0" expand="true"/>
-            <task id="16" name="Formation" meeting="false" start="2018-12-17" duration="10" complete="0" expand="true"/>
-            <task id="15" name="Apprentice" meeting="false" start="2018-12-17" duration="10" complete="0" expand="true"/>
+            <task id="17" name="Module" color="#8cb6ce" meeting="false" start="2018-12-17" duration="6" complete="0" thirdDate="2018-12-17" thirdDate-constraint="0" expand="true"/>
+            <task id="16" name="Formation" color="#8cb6ce" meeting="false" start="2018-12-17" duration="6" complete="0" thirdDate="2018-12-17" thirdDate-constraint="0" expand="true"/>
+            <task id="15" name="Apprentice" color="#8cb6ce" meeting="false" start="2018-12-17" duration="6" complete="0" thirdDate="2018-12-17" thirdDate-constraint="0" expand="true"/>
             <task id="22" name="Créer un exemple en HTML" meeting="false" start="2018-11-30" duration="3" complete="0" expand="true"/>
-            <task id="39" name="CSS général du site" meeting="false" start="2019-01-14" duration="10" complete="0" expand="true"/>
+            <task id="39" name="CSS général du site" meeting="false" start="2019-01-14" duration="6" complete="0" expand="true"/>
         </task>
     </tasks>
     <resources>
