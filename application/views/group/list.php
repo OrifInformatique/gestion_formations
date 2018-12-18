@@ -39,14 +39,14 @@
     }
     function get_tree($groups){
         foreach ($groups as $key => $group) {
-            echo '<fieldset class="bob"><legend class="bob">';
+            echo '<fieldset class="bob">';
             if(is_array($group)){
-                echo $key;
+                echo '<legend class="bob">'.$key.'</legend>';
                 get_tree($group);
             } else {
-                echo $group;
+                echo '<legend class="bob">'.$group.'</legend>';
             }
-            echo '</legend></fieldset>';
+            echo '</fieldset>';
         }
     }
 ?>
