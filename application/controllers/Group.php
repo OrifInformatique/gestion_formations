@@ -20,7 +20,7 @@ class Group extends MY_Controller {
     }
 
     public function index($error = 0){
-        $outputs['groups'] = $this->group_model->get_all();
+        $outputs['groups'] = $this->group_model->get_ordered();
         $outputs['groups_tree'] = $this->group_model->get_tree();
         $this->display_view('group/list', $outputs);
     }

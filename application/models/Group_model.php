@@ -28,8 +28,14 @@ class group_model extends MY_Model {
         return $value;
     }
 
+    public function get_ordered(){
+        $this->db->order_by('Position', 'asc');
+        return $this->group_model->get_all();
+    }
+
     public function get_tree($parent_group = 0){
         
+        $this->db->order_by('Position', 'asc');
         $groups = $this->group_model->get_many_by("FK_Parent_Group = ".$parent_group);
 
         if (count($groups) > 0){
