@@ -13,7 +13,7 @@
     <?php
     $attributes = array("id" => "addGroupForm",
                         "name" => "addGroupForm");
-    echo form_open('Group/form_validate', $attributes);
+    echo form_open('Group/form_validation', $attributes);
     ?>        
         <!-- Display buttons and display topic and question type as information -->
         <div class="row">
@@ -37,15 +37,11 @@
             <div class="form-group col-md-12">
                 <div class="form-group row">
                     <div class="col-md-4">
-                        <?php echo form_label($this->lang->line('group_name'), 'name_Group'); ?>
+                        <?php echo form_label($this->lang->line('group_name'), 'name_group'); ?>
                     </div>
                     <div class="col-md-8">
                         <?php 
-                            if(isset($group)){
-                                echo form_input('name_Group', $group->name_Group, 'maxlength="65535" class="form-control" id="name_Group"');
-                            } else {
-                                echo form_input('name_Group', '', 'maxlength="65535" class="form-control" id="name_Group"');
-                            }
+                            echo form_input('name_group', set_value('name_group'), 'maxlength="65535" class="form-control" id="name_group"');
                         ?>
                     </div>
                 </div>
@@ -60,11 +56,7 @@
                     </div>
                     <div class="col-md-7">
                         <?php 
-                            if(isset($group)){
-                                echo form_input('weight', $group->weight, 'class="form-control" id="weight"');
-                            } else {
-                                echo form_input('weight', 100, 'class="form-control" id="weight"');
-                            }
+                            echo form_input('weight', set_value('weight'), 'class="form-control" id="weight"');
                         ?>
                     </div>
                     <div class="col-md-1">
@@ -82,11 +74,7 @@
                     </div>
                     <div class="col-md-8">
                         <?php 
-                            if(isset($group)){
-                                echo form_checkbox('eliminatory', 'eliminatory', $group->eliminatory, 'class="form-control" id="eliminatory"');
-                            } else {
-                                echo form_checkbox('eliminatory', 'eliminatory', false, 'class="form-control" id="eliminatory"');
-                            }
+                            echo form_checkbox('eliminatory', 'eliminatory', set_value('eliminatory'), 'class="form-control" id="eliminatory"');
                         ?>
                     </div>
 
@@ -101,12 +89,8 @@
                         <?php echo form_label($this->lang->line('group_position'), 'position'); ?>
                     </div>
                     <div class="col-md-8">
-                        <?php 
-                            if(isset($group)){
-                                echo form_input('position', $group->position, 'class="form-control" id="position"');
-                            } else {
-                                echo form_input('position', 1, 'class="form-control" id="position"');
-                            }
+                        <?php
+                            echo form_input('position', set_value('position'), 'class="form-control" id="position"');
                         ?>
                     </div>
                 </div>
@@ -121,11 +105,7 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                            if(isset($group)){
-                                echo form_dropdown('parent_group', $groups, $groups->FK_Parent_Group, 'class="form-control" id="parent_group"');
-                            } else {
-                                echo form_dropdown('parent_group', $groups, 0, 'class="form-control" id="parent_group"');
-                            }
+                            echo form_dropdown('parent_group', $groups, set_value('parent_group'), 'class="form-control" id="parent_group"');
                         ?>
                     </div>
                 </div>
