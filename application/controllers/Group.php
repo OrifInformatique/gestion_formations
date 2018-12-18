@@ -36,10 +36,10 @@ class Group extends MY_Controller {
         $outputs['group'] = $this->group_model->get_filtered(array("idf" => $id));
 
         //Make sure that there is only 1 item
-        if (sizeof($outputs) > 1) {
+        if (sizeof($outputs['group']) > 1) {
             //This should just redirect to the default list but currently you can see all the things that were selected to find out why
             $this->display_view('group/list', $outputs);
-        } elseif (sizeof($outputs) == 1) {
+        } elseif (sizeof($outputs['group']) == 1) {
             $outputs['group'] = $outputs['group'][0];
             $outputs["groups"][0] = "Aucun";
             $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('Name_Group'));
