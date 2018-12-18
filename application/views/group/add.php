@@ -81,7 +81,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_checkbox('eliminatory', set_value('eliminatory', $group->Eliminatory), 'class="form-control" id="eliminatory"');
+                            echo form_checkbox('eliminatory', set_value('eliminatory'), $group->Eliminatory, 'class="form-control" id="eliminatory"');
                         else
                             echo form_checkbox('eliminatory', set_value('eliminatory'), ' class="form-control" id="eliminatory"');
                         ?>
