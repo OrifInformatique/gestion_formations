@@ -25,32 +25,7 @@ class Group extends MY_Controller {
         $this->display_view('group/list', $outputs);
     }
 
-    /*public function view($id = -1) {
-        if($id < 0)
-            redirect('group');
-        if($id == 0) {
-            $outputs["groups"] = $this->group_model->get_tree();
-            $this->display_view('group/add', $outputs);
-            return;
-        }
-        $outputs['group'] = $this->group_model->get_filtered(array("idf" => $id));
-
-        //Make sure that there is only 1 item
-        if (sizeof($outputs['group']) > 1) {
-            //This should just redirect to the default list but currently you can see all the things that were selected to find out why
-            $this->display_view('group/list', $outputs);
-        } elseif (sizeof($outputs['group']) == 1) {
-            $outputs['group'] = $outputs['group'][0];
-            $outputs["groups"][0] = "Aucun";
-            $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('Name_Group'));
-            unset($outputs["groups"][$id]);
-            $this->display_view('group/add', $outputs);
-        } else {
-            redirect('group');
-        }
-    }*/
-
-    public function add($id = 0, $error = NULL){
+    public function form($id = 0, $error = NULL){
         $outputs["error"] = ($error == NULL ? NULL : true);
 
         if($id > 0){
