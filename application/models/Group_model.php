@@ -5,11 +5,11 @@ class group_model extends MY_Model {
     protected $_table = 't_groups';
     protected $primary_key = 'ID';
     protected $protected_attributes = ['ID'];
-    protected $belongs_to = ['t_groups' => ['primary_key' => 'FK_Parent_Group',
+    protected $belongs_to = ['Parent_Group' => ['primary_key' => 'FK_Parent_Group',
                                             'model' => 'groups_model']];
-    protected $has_many = ['t_modules_subjects' => ['primary_key' => 'FK_Group',
+    protected $has_many = ['Modules_Subjects' => ['primary_key' => 'FK_Group',
                                                     'model' => 'modules_subjects_model'],
-                           't_groups' => ['primary_key' => 'FK_Parent_Group',
+                           'Child_Groups' => ['primary_key' => 'FK_Parent_Group',
                                           'model' => 'groups_model']];
 
     /**
