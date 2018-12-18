@@ -9,7 +9,7 @@
 ?>
 
 <div class="container">
-    <h1 class="title-section"><?php if(isset($group)) {echo $this->lang->line('group_modify');} else {echo $this->lang->line('group_new');} ?></h1>
+    <h1 class="title-section"><?php if(isset($group)) {echo $this->lang->line('group_modify'); $update = TRUE;} else {echo $this->lang->line('group_new'); $update = FALSE;} ?></h1>
     <?php
     $attributes = array("id" => "addGroupForm",
                         "name" => "addGroupForm");
@@ -40,7 +40,10 @@
                         <?php echo form_label($this->lang->line('group_name'), 'name_group'); ?>
                     </div>
                     <div class="col-md-8">
-                        <?php 
+                        <?php
+                        if($update)
+                            echo form_input('name_group', set_value('name_group', $group->Name_Group), 'maxlength="65535" class="form-control" id="name_group"');
+                        else
                             echo form_input('name_group', set_value('name_group'), 'maxlength="65535" class="form-control" id="name_group"');
                         ?>
                     </div>
@@ -55,8 +58,11 @@
                         <?php echo form_label($this->lang->line('group_weight'), 'weight'); ?>
                     </div>
                     <div class="col-md-7">
-                        <?php 
-                            echo form_input('weight', set_value('weight'), 'class="form-control" id="weight"');
+                        <?php
+                        if($update)
+                            echo form_input('weight', set_value('weight', $group->Weight), 'class="form-control" id="weight"');
+                        else
+                            echo form_input('weight', set_value('weight'), ' class="form-control" id="weight"');
                         ?>
                     </div>
                     <div class="col-md-1">
@@ -73,8 +79,11 @@
                         <?php echo form_label($this->lang->line('group_eliminatory'), 'eliminatory'); ?>
                     </div>
                     <div class="col-md-8">
-                        <?php 
-                            echo form_checkbox('eliminatory', 'eliminatory', set_value('eliminatory'), 'class="form-control" id="eliminatory"');
+                        <?php
+                        if($update)
+                            echo form_checkbox('eliminatory', set_value('eliminatory'), $group->Eliminatory, 'class="form-control" id="eliminatory"');
+                        else
+                            echo form_checkbox('eliminatory', set_value('eliminatory'), ' class="form-control" id="eliminatory"');
                         ?>
                     </div>
 
@@ -90,7 +99,10 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                            echo form_input('position', set_value('position'), 'class="form-control" id="position"');
+                        if($update)
+                            echo form_input('position', set_value('position', $group->Position), 'class="form-control" id="position"');
+                        else
+                            echo form_input('position', set_value('position'), ' class="form-control" id="position"');
                         ?>
                     </div>
                 </div>
@@ -105,7 +117,10 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                            echo form_dropdown('parent_group', $groups, set_value('parent_group'), 'class="form-control" id="parent_group"');
+                        if($update)
+                            echo form_dropdown('parent_group', $groups, set_value('parent_group', $group->FK_Parent_Group), 'class="form-control" id="parent_group"');
+                        else
+                            echo form_dropdown('parent_group', set_value('parent_group'), ' class="form-control" id="parent_group"');
                         ?>
                     </div>
                 </div>

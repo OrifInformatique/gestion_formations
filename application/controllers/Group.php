@@ -40,7 +40,10 @@ class Group extends MY_Controller {
             //This should just redirect to the default list but currently you can see all the things that were selected to find out why
             $this->display_view('group/list', $outputs);
         } elseif (sizeof($outputs) == 1) {
-            $outputs["groups"] = $this->group_model->get_tree();
+            $outputs['group'] = $outputs['group'][0];
+            $outputs["groups"][0] = "Aucun";
+            $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('Name_Group'));
+            unset($outputs["groups"][$id]);
             $this->display_view('group/add', $outputs);
         } else {
             redirect('group');
