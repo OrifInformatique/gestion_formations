@@ -14,25 +14,27 @@ class group_model extends MY_Model {
 
     /**
      * Constructor
-    **/
+     */
     public function __construct() {
         parent::__construct();
     }
 
-    public function get_next_id() {
-        $query = $this->db->query("SHOW TABLE STATUS LIKE 't_groups'");
-
-        $row = $query->row(0);
-        $value = $row->Auto_increment;
-
-        return $value;
-    }
-
-    public function get_ordered(){
-        $this->db->order_by('Position', 'asc');
+    /**
+     * Returns groups ordered by position
+     * @param string main The column that will be used for the sorting
+     * @param string direction 'asc' or 'desc', wether it goes from top to bottom or not
+     * @return array All groups
+     */
+    public function get_ordered($main = 'Position', $direction = 'asc'){
+        $this->db->order_by($main, $direction);
         return $this->group_model->get_all();
     }
 
+    /**
+     * Returns the tree of the group and its parents
+     * @param integer parent_group The parent group, usually at FK_Parent_Group
+     * @return array All groups sorted
+     */
     public function get_tree($parent_group = 0){
         
         $this->db->order_by('Position', 'asc');
@@ -55,6 +57,12 @@ class group_model extends MY_Model {
         return $groups_tree;
     }
 
+    /**
+     * Returns a list of groups depending on the filters
+     * @param array filters The filters for the search. 'tf' is for text, 'idf' is for ids, 'wgf' is for weight, 'elf' is for eliminatory, 'pof' is for position, 'pgf' is for parent group
+     * @return array All the groups depending on the filters
+     * @deprecated get_many_by()
+     */
     public function get_filtered($filters = NULL) {
         // WHERE clause for filtering
         $where_group_filter = "";

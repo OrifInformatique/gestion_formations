@@ -11,6 +11,9 @@ class Group extends MY_Controller {
     /* MY_Controller variables definition */
     protected $access_level = "*";
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();
@@ -19,12 +22,21 @@ class Group extends MY_Controller {
         $this->load->helper(array('form', 'url'));
     }
 
+    /**
+     * Shows the index with all the groups
+     * @param integer error The error (does nothing)
+     */
     public function index($error = 0){
         $outputs['groups'] = $this->group_model->get_ordered();
         $outputs['groups_tree'] = $this->group_model->get_tree();
         $this->display_view('group/list', $outputs);
     }
 
+    /**
+     * Shows the form
+     * @param integer id If a group with the id exists, it will update it, otherwise it will create a new group
+     * @param integer error If there is an error
+     */
     public function form($id = 0, $error = NULL){
         $outputs["error"] = ($error == NULL ? NULL : true);
 
@@ -38,6 +50,10 @@ class Group extends MY_Controller {
         $this->display_view('group/add', $outputs);
     }
 
+    /**
+     * Opens the form and deals with updating or creating the group
+     * @param integer error If there is an error (does nothing)
+     */
     public function form_validation($error = NULL){
         $this->form_validation->set_rules('name_group', $this->lang->line('group_name'), 'required');
         $this->form_validation->set_rules('weight', $this->lang->line('group_weight'), 'required');
@@ -66,6 +82,11 @@ class Group extends MY_Controller {
         }
     }
 
+    /**
+     * Deletes a group
+     * @param integer id The id to delete, the page will prevent deletion if a bad id is entered
+     * @param integer confirm If 0, it will lead to the deletion page, if 1 it will lead to the success page, else it will lead back to the index
+     */
     public function delete($id, $confirm = 0) {
         $groups = $this->group_model->get($id);
         $outputs['group'] = $groups;
