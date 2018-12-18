@@ -89,7 +89,7 @@ class Group extends MY_Controller {
             redirect('group');
         if($confirm == 1) {
             $this->group_model->delete($id);
-            //display_view('group/success')
+            display_view('group/success');
         } elseif ($confirm == 0)
             display_view('group/delete');
         else
