@@ -50,8 +50,11 @@ $lang['return']                         = 'Retour';
 
 // Messages
 $lang['group_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer le groupe';
+$lang['group_deleted']                  = 'Le groupe a été supprimé';
 
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';
 
 // Other texts
+$lang['redirect_warn_start']            = 'Vous allez être redirigé dans';
+$lang['redirect_warn_end']              = 'secondes';
