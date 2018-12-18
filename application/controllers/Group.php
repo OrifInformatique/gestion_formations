@@ -96,11 +96,12 @@ class Group extends MY_Controller {
             $this->display_view('group/list', $groups); //Again, this is for debugging
         elseif(sizeof($groups) == 0)
             redirect('group');
+        $outputs['group'] = $groups[0];
         if($confirm == 1) {
             $this->group_model->delete($id);
             $this->display_view('group/success');
         } elseif ($confirm == 0)
-            $this->display_view('group/delete');
+            $this->display_view('group/delete', $outputs);
         else
             redirect('group');
     }
