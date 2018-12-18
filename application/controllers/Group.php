@@ -80,6 +80,7 @@ class Group extends MY_Controller {
             $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('Name_Group'));
             $this->display_view('group/add', $outputs);
         }
+    }
 
     public function delete($id, $confirm = FALSE) {
         if(sizeof($groups = $this->group_model->get_filtered(array("idf" => $id))) != 1)
