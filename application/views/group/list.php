@@ -30,7 +30,7 @@
                 <div class="col-md-2"><?php echo $group->Eliminatory?$this->lang->line('yes'):$this->lang->line('no'); ?></div>
                 <div class="col-md-3"><?php echo getParentGroup($group->ID, $groups); ?></div>
                 <!-- Click here to delete -->
-                <div class="col-md-2"><a href="#">[x]</a></div>
+                <div class="col-md-2"><a href="<?php echo base_url().'delete/'.$group->ID; ?>">[x]</a></div>
             </div>
     <?php } } ?>
 </div>
