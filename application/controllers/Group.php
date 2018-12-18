@@ -25,7 +25,7 @@ class Group extends MY_Controller {
         $this->display_view('group/list', $outputs);
     }
 
-    public function view($id = -1) {
+    /*public function view($id = -1) {
         if($id < 0)
             redirect('group');
         if($id == 0) {
@@ -48,12 +48,15 @@ class Group extends MY_Controller {
         } else {
             redirect('group');
         }
-    }
+    }*/
 
-    public function add($error = NULL){
+    public function add($id = 0, $error = NULL){
         $outputs["error"] = ($error == NULL ? NULL : true);
-        $outputs["action"] = "add";
 
+        if($id > 0){
+            $outputs["group"] = $this->group_model->get($id);
+        }
+        
         $outputs["groups"][0] = $this->lang->line('none');
         $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('Name_Group'));
 
@@ -66,7 +69,6 @@ class Group extends MY_Controller {
         $this->form_validation->set_rules('position', $this->lang->line('group_position'), 'required');
         $this->form_validation->set_rules('parent_group', $this->lang->line('group_parent_group'), 'required');
 
-
         $req = array(
             'Name_Group' => $this->input->post('name_group'),
             'Weight' => $this->input->post('weight'),
@@ -76,7 +78,11 @@ class Group extends MY_Controller {
         );
 
         if($this->form_validation->run()){
-            $this->group_model->insert($req);
+            if($this->input->post('id') > 0){
+                $this->group_model->update($this->input->post('id'), $req);
+            } else {
+                $this->group_model->insert($req);
+            }
             $this->index();
         } else {
             $outputs["groups"][0] = "Aucun";
