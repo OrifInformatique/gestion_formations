@@ -39,7 +39,7 @@ class group_model extends MY_Model {
                 if(count($child_groups) > 0){
                     $groups_tree[$group->Name_Group] = $this->group_model->get_tree($group->ID);
                 } else {
-                    $groups_tree[$group->ID] = $group->Name_Group;
+                    $groups_tree[$group->Name_Group] = $group->Name_Group;
                 }
             }
         } else {
