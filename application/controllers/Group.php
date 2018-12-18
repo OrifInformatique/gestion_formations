@@ -92,11 +92,8 @@ class Group extends MY_Controller {
     }
 
     public function delete($id, $confirm = 0) {
-        if(sizeof($groups = $this->group_model->get_filtered(array("idf" => $id))) > 1)
-            $this->display_view('group/list', $groups); //Again, this is for debugging
-        elseif(sizeof($groups) == 0)
-            redirect('group');
-        $outputs['group'] = $groups[0];
+        $groups = $this->group_model->get($id);
+        $outputs['group'] = $groups;
         if($confirm == 1) {
             $this->group_model->delete($id);
             $this->display_view('group/success');

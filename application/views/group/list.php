@@ -23,7 +23,7 @@
             </div>
     <?php } 
 
-    get_tree($groups_tree);
+    //get_tree($groups_tree);
 
     } ?>
 </div>
