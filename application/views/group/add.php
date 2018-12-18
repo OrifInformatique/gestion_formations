@@ -83,7 +83,7 @@
                         if($update)
                             echo form_checkbox('eliminatory', set_value('eliminatory'), $group->Eliminatory, 'class="form-control" id="eliminatory"');
                         else
-                            echo form_checkbox('eliminatory', set_value('eliminatory'), ' class="form-control" id="eliminatory"');
+                            echo form_checkbox('eliminatory', set_value('eliminatory'), FALSE, ' class="form-control" id="eliminatory"');
                         ?>
                     </div>
 
@@ -120,7 +120,7 @@
                         if($update)
                             echo form_dropdown('parent_group', $groups, set_value('parent_group', $group->FK_Parent_Group), 'class="form-control" id="parent_group"');
                         else
-                            echo form_dropdown('parent_group', set_value('parent_group'), ' class="form-control" id="parent_group"');
+                            echo form_dropdown('parent_group', $groups, set_value('parent_group'), ' class="form-control" id="parent_group"');
                         ?>
                     </div>
                 </div>
