@@ -44,6 +44,7 @@ $lang['btn_submit']                     = 'Envoyer';
 $lang['btn_reset']                      = 'Réinitialiser';
 $lang['yes']                            = 'Oui';
 $lang['no']                             = 'Non';
+$lang['none']                             = 'Aucun';
 $lang['save']                           = 'Enregistrer';
 $lang['cancel']                         = 'Annuler';
 $lang['return']                         = 'Retour';
