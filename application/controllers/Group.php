@@ -51,7 +51,8 @@ class Group extends MY_Controller {
         $outputs["error"] = ($error == NULL ? NULL : true);
         $outputs["action"] = "add";
 
-        $outputs["groups"] = $this->group_model->get_tree();
+        $outputs["groups"][0] = "Aucun";
+        $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('Name_Group'));
 
         $this->display_view('group/add', $outputs);
     }

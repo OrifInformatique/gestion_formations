@@ -120,8 +120,12 @@
                         <?php echo form_label($this->lang->line('group_parent_group'), 'parent_group'); ?>
                     </div>
                     <div class="col-md-8">
-                        <?php 
-                            echo form_dropdown('parent_group', $groups, null, 'class="form-control" id="parent_group"');
+                        <?php
+                            if(isset($group)){
+                                echo form_dropdown('parent_group', $groups, $groups->FK_Parent_Group, 'class="form-control" id="parent_group"');
+                            } else {
+                                echo form_dropdown('parent_group', $groups, 0, 'class="form-control" id="parent_group"');
+                            }
                         ?>
                     </div>
                 </div>
