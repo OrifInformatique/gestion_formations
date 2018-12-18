@@ -6,7 +6,6 @@
  * @link        https://github.com/OrifInformatique/gestion_questionnaires
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
  */
-var_dump($group);
 ?>
 
 <div class="container">
