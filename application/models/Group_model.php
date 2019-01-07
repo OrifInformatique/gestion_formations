@@ -6,11 +6,11 @@ class group_model extends MY_Model {
     protected $primary_key = 'ID';
     protected $protected_attributes = ['ID'];
     protected $belongs_to = ['Parent_Group' => ['primary_key' => 'FK_Parent_Group',
-                                            'model' => 'groups_model']];
+                                            'model' => 'group_model']];
     protected $has_many = ['Modules_Subjects' => ['primary_key' => 'FK_Group',
                                                     'model' => 'modules_subjects_model'],
                            'Child_Groups' => ['primary_key' => 'FK_Parent_Group',
-                                          'model' => 'groups_model']];
+                                          'model' => 'group_model']];
 
     /**
      * Constructor
@@ -31,35 +31,6 @@ class group_model extends MY_Model {
     public function get_ordered($main = 'Position', $direction = 'asc'){
         $this->db->order_by($main, $direction);
         return $this->group_model->get_all();
-    }
-
-    /**
-     * Returns the tree of the group and its parents
-     * @param integer $parent_group
-     *      The parent group, usually at FK_Parent_Group
-     * @return array
-     *      All groups sorted
-     */
-    public function get_tree($parent_group = 0){
-        
-        $this->db->order_by('Position', 'asc');
-        $groups = $this->group_model->get_many_by("FK_Parent_Group = ".$parent_group);
-
-        if (count($groups) > 0){
-            foreach ($groups as $group) {
-                $child_groups = $this->group_model->get_many_by("FK_Parent_Group = ".$group->ID);
-
-                if(count($child_groups) > 0){
-                    $groups_tree[$group->Name_Group] = $this->group_model->get_tree($group->ID);
-                } else {
-                    $groups_tree[$group->Name_Group] = $group->Name_Group;
-                }
-            }
-        } else {
-            $groups_tree = NULL;
-        }
-
-        return $groups_tree;
     }
 
     /**

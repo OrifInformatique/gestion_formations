@@ -9,7 +9,7 @@
         <div class="col-md-3"><strong><?php echo $this->lang->line('group_parent_group') ?></strong></div>
         <div class="col-md-1"></div>
     </div>
-    <?php if(isset($groups) && isset($groups_tree)) {
+    <?php if(isset($groups)) {
         foreach ($groups as $group) { ?>
             <div class="row">
                 <!-- Click here to modify -->

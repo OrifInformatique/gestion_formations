@@ -25,6 +25,12 @@ $lang['group_weight']                   = 'Poids';
 $lang['group_eliminatory']              = 'Eliminatoire';
 $lang['group_position']                 = 'Position';
 $lang['group_parent_group']             = 'Groupe Parent';
+$lang['apprentice_firstname']           = 'Prénom';
+$lang['apprentice_lastname']            = 'Nom';
+$lang['apprentice_datebirth']           = 'Date de naissance';
+$lang['apprentice_formation']           = 'Formation';
+$lang['apprentice_MSP']                 = 'MSP';
+$lang['apprentice_user']                = 'Utilisateur';
 
 //Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
@@ -35,6 +41,10 @@ $lang['group_list']                     = 'Liste des groupes';
 $lang['group_new']                      = 'Nouveau groupe';
 $lang['group_modify']                   = 'Modifier le groupe';
 $lang['group_delete']                   = 'Supprimer le groupe';
+$lang['apprentice_list']                = 'Liste des apprentis';
+$lang['apprentice_new']                 = 'Nouvel apprenti';
+$lang['apprentice_modify']              = 'Modifier l\'apprenti';
+$lang['apprentice_delete']              = 'Supprimer l\'apprenti';
 
 // Buttons
 $lang['btn_login']                      = 'Se connecter';
@@ -44,7 +54,8 @@ $lang['btn_submit']                     = 'Envoyer';
 $lang['btn_reset']                      = 'Réinitialiser';
 $lang['yes']                            = 'Oui';
 $lang['no']                             = 'Non';
-$lang['none']                             = 'Aucun';
+$lang['none']                           = 'Aucun';
+$lang['none_f']                         = 'Aucune';
 $lang['save']                           = 'Enregistrer';
 $lang['cancel']                         = 'Annuler';
 $lang['return']                         = 'Retour';
