@@ -65,6 +65,17 @@ class Apprentice extends MY_Controller {
         }
     }
 
+    public function delete($id, $confirm = 0) {
+        $outputs['apprentice'] = $this->apprentice_model->get($id);
+        if($confirm == 1) {
+            $this->apprentice_model->delete($id);
+            $this->display_view('apprentice/success');
+        } elseif ($confirm == 0)
+            $this->display_view('apprentice/delete', $outputs);
+        else
+            redirect('group');
+    }
+
     private function link_arrays($array_keys, $array_values) {
         if(sizeof($array_keys) == 0 || sizeof($array_values) == 0 || sizeof($array_keys) != sizeof($array_values))
             return NULL;

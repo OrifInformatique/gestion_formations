@@ -1,0 +1,14 @@
+<div class="container">
+    <?php if(isset($apprentice) && !is_null($apprentice)) { ?>
+    <h1><?php echo $this->lang->line('apprentice_delete'); ?></h1>
+
+    <?php echo $this->lang->line('apprentice_delete_confirm')." ".$apprentice->Firstname." ".$apprentice->Last_Name."?"; ?><br>
+
+    <a href="<?php echo base_url().'apprentice/delete/'.$apprentice->ID.'/1'; ?>" class="btn btn-danger"><?php echo $this->lang->line('yes'); ?></a>
+    <a href="<?php echo base_url().'apprentice'; ?>" class="btn"><?php echo $this->lang->line('no'); ?></a>
+
+    <?php } else {
+    echo $this->lang->line('group_missing');?>
+    <br><a href="<?php echo base_url().'apprentice'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a>
+    <?php } ?>
+</div>

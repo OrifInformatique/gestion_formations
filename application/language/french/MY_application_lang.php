@@ -63,6 +63,8 @@ $lang['return']                         = 'Retour';
 // Messages
 $lang['group_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer le groupe';
 $lang['group_deleted']                  = 'Le groupe a été supprimé';
+$lang['apprentice_delete_confirm']      = 'Etes-vous sûr de vouloir supprimer l\'apprenti';
+$lang['apprentice_deleted']                  = 'L\'apprenti a été supprimé';
 
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';

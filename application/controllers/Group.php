@@ -98,8 +98,7 @@ class Group extends MY_Controller {
      *      If 0, it will lead to the deletion page, if 1 it will lead to the success page, else it will lead back to the index
      */
     public function delete($id, $confirm = 0) {
-        $groups = $this->group_model->get($id);
-        $outputs['group'] = $groups;
+        $outputs['group'] = $this->group_model->get($id);
         if($confirm == 1) {
             $this->group_model->delete($id);
             $this->display_view('group/success');

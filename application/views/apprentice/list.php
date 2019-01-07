@@ -8,6 +8,7 @@
         <div class="col-md-2"><?php echo $this->lang->line('apprentice_formation'); ?></div>
         <div class="col-md-2"><?php echo $this->lang->line('apprentice_MSP'); ?></div>
         <div class="col-md-1"><?php echo $this->lang->line('apprentice_user'); ?></div>
+        <div class="col-md-1"></div>
     </div>
     <?php if(isset($apprentices)) {
         foreach ($apprentices as $apprentice) { ?>
@@ -18,6 +19,7 @@
                 <div class="col-md-2"><?php echo $apprentice->FK_Formation; ?></div>
                 <div class="col-md-2"><?php echo $apprentice->FK_MSP; ?></div>
                 <div class="col-md-1"><?php echo $apprentice->FK_User; ?></div>
+                <div class="col-md-1"><a href="<?php echo base_url().'apprentice/delete/'.$apprentice->ID; ?>">[x]</a></div>
             </div>
     <?php } } ?>
 </div>
