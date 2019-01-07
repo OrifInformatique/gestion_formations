@@ -14,7 +14,7 @@
             <div class="row">
                 <!-- Click here to modify -->
                 <div class="col-md-1"><?php echo $group->Position; ?></div>
-                <div class="col-md-3"><a href="<?php echo base_url().'group/form/'.$group->ID; ?>"><?php echo $group->Name_Group; ?></a></div>
+                <div class="col-md-3"><a href="<?php echo base_url().'group/form/'.$group->ID; ?>"><?php echo html_escape($group->Name_Group); ?></a></div>
                 <div class="col-md-2"><?php echo $group->Weight . ' %'; ?></div>
                 <div class="col-md-2"><?php echo $group->Eliminatory?$this->lang->line('yes'):$this->lang->line('no'); ?></div>
                 <div class="col-md-3"><?php echo getParentGroup($group->FK_Parent_Group, $groups); ?></div>
