@@ -25,8 +25,15 @@ class Apprentice extends MY_Controller {
     }
 
     public function form($id = 0, $error = NULL) {
+        $this->load->model('formation_model');
 
         $outputs["error"] = ($error == NULL ? NULL : true);
+
+        $formation_names = $this->formation_model->dropdown('Name_Formation');
+        $formation_names[0] = $this->lang->line('none_f');
+        $formation_ids = $this->formation_model->dropdown('ID');
+        $formation_ids[0] = 0;
+        $outputs["formations"] = $this->link_arrays($formation_ids, $formation_names);
 
         if($id > 0)
             $outputs["apprentice"] = $this->apprentice_model->get($id);
