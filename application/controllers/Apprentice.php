@@ -26,6 +26,8 @@ class Apprentice extends MY_Controller {
 
     public function form($id = 0, $error = NULL) {
         $this->load->model('formation_model');
+        $this->load->model('msp_model');
+        $this->load->model('user_model');
 
         $outputs["error"] = ($error == NULL ? NULL : true);
 
@@ -34,6 +36,18 @@ class Apprentice extends MY_Controller {
         $formation_ids = $this->formation_model->dropdown('ID');
         $formation_ids[0] = 0;
         $outputs["formations"] = $this->link_arrays($formation_ids, $formation_names);
+
+        $msps_names = $this->msp_model->dropdown('Last_Name');
+        $msps_names[0] = $this->lang->line('none');
+        $msps_ids = $this->msp_model->dropdown('ID');
+        $msps_ids[0] = 0;
+        $outputs["msps"] = $this->link_arrays($msps_ids, $msps_names);
+
+        $users_names = $this->user_model->dropdown('User');
+        $users_names[0] = $this->lang->line('none');
+        $users_ids = $this->user_model->dropdown('ID');
+        $users_ids[0] = 0;
+        $outputs["users"] = $this->link_arrays($users_ids, $users_names);
 
         if($id > 0)
             $outputs["apprentice"] = $this->apprentice_model->get($id);

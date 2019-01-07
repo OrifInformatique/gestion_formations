@@ -126,11 +126,9 @@ $attributes = array("id" => "apprenticeForm",
                     <?php
                     //Find a way to load the msps
                     if($update)
-                        echo form_input('MSP', set_value('MSP', $apprentice->FK_MSP), 'maxlength="65535" class="form-control" id="MSP"');
-                        //echo form_dropdown('MSP', $msps, set_value('MSP', $apprentice->FK_MSP), 'class="form-control" id="MSP"');
+                        echo form_dropdown('MSP', $msps, set_value('MSP', $apprentice->FK_MSP), 'class="form-control" id="MSP"');
                     else
-                        echo form_input('MSP', set_value('MSP'), 'maxlength="65535" class="form-control" id="MSP"');
-                        //echo form_dropdown('MSP', $msps, set_value('MSP'), 'class="form-control" id="MSP"');
+                        echo form_dropdown('MSP', $msps, set_value('MSP'), 'class="form-control" id="MSP"');
                     ?>
                 </div>
             </div>
@@ -147,11 +145,9 @@ $attributes = array("id" => "apprenticeForm",
                     <?php
                     //Find a way to load the users
                     if($update)
-                        echo form_input('user', set_value('user', $apprentice->FK_User), 'maxlength="65535" class="form-control" id="user"');
-                        //echo form_dropdown('user', $users, set_value('user', $apprentice->FK_User), 'class="form-control" id="user"');
+                        echo form_dropdown('user', $users, set_value('user', $apprentice->FK_User), 'class="form-control" id="user"');
                     else
-                        echo form_input('user', set_value('user'), 'maxlength="65535" class="form-control" id="user"');
-                        //echo form_dropdown('user', $users, set_value('user'), 'class="form-control" id="user"');
+                        echo form_dropdown('user', $users, set_value('user'), 'class="form-control" id="user"');
                     ?>
                 </div>
             </div>
