@@ -16,10 +16,21 @@
                 <div class="col-md-2"><?php echo $apprentice->Firstname; ?></div>
                 <div class="col-md-2"><?php echo $apprentice->Last_Name; ?></div>
                 <div class="col-md-2"><?php echo $apprentice->Date_Birth; ?></div>
-                <div class="col-md-2"><?php echo $apprentice->FK_Formation; ?></div>
-                <div class="col-md-2"><?php echo $apprentice->FK_MSP; ?></div>
-                <div class="col-md-1"><?php echo $apprentice->FK_User; ?></div>
+                <div class="col-md-2"><?php echo getParentFormation($apprentice->FK_Formation, $formations); ?></div>
+                <div class="col-md-2"><?php echo getParentMSP($apprentice->FK_MSP, $msps); ?></div>
+                <div class="col-md-1"><?php echo getParentUser($apprentice->FK_User, $users); ?></div>
                 <div class="col-md-1"><a href="<?php echo base_url().'apprentice/delete/'.$apprentice->ID; ?>">[x]</a></div>
             </div>
     <?php } } ?>
 </div>
+<?php
+function getParentFormation($id, $formations) {
+    return $formations[$id];
+}
+function getParentMSP($id, $msps) {
+    return $msps[$id];
+}
+function getParentUser($id, $users) {
+    return $users[$id];
+}
+?>

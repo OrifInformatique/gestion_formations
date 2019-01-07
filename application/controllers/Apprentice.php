@@ -20,34 +20,15 @@ class Apprentice extends MY_Controller {
     }
 
     public function index($error = 0) {
+        $outputs = $this->get_parents();
         $outputs["apprentices"] = $this->apprentice_model->get_ordered();
         $this->display_view("apprentice/list", $outputs);
     }
 
     public function form($id = 0, $error = NULL) {
-        $this->load->model('formation_model');
-        $this->load->model('msp_model');
-        $this->load->model('user_model');
+        $outputs = $this->get_parents();
 
         $outputs["error"] = ($error == NULL ? NULL : true);
-
-        $formation_names = $this->formation_model->dropdown('Name_Formation');
-        $formation_names[0] = $this->lang->line('none_f');
-        $formation_ids = $this->formation_model->dropdown('ID');
-        $formation_ids[0] = 0;
-        $outputs["formations"] = $this->link_arrays($formation_ids, $formation_names);
-
-        $msps_names = $this->msp_model->dropdown('Last_Name');
-        $msps_names[0] = $this->lang->line('none');
-        $msps_ids = $this->msp_model->dropdown('ID');
-        $msps_ids[0] = 0;
-        $outputs["msps"] = $this->link_arrays($msps_ids, $msps_names);
-
-        $users_names = $this->user_model->dropdown('User');
-        $users_names[0] = $this->lang->line('none');
-        $users_ids = $this->user_model->dropdown('ID');
-        $users_ids[0] = 0;
-        $outputs["users"] = $this->link_arrays($users_ids, $users_names);
 
         if($id > 0)
             $outputs["apprentice"] = $this->apprentice_model->get($id);
@@ -95,6 +76,32 @@ class Apprentice extends MY_Controller {
             $this->display_view('apprentice/delete', $outputs);
         else
             redirect('group');
+    }
+
+    private function get_parents() {
+        $this->load->model('formation_model');
+        $this->load->model('msp_model');
+        $this->load->model('user_model');
+
+        $formation_names = $this->formation_model->dropdown('Name_Formation');
+        $formation_names[0] = $this->lang->line('none_f');
+        $formation_ids = $this->formation_model->dropdown('ID');
+        $formation_ids[0] = 0;
+        $results["formations"] = $this->link_arrays($formation_ids, $formation_names);
+
+        $msps_names = $this->msp_model->dropdown('Last_Name');
+        $msps_names[0] = $this->lang->line('none');
+        $msps_ids = $this->msp_model->dropdown('ID');
+        $msps_ids[0] = 0;
+        $results["msps"] = $this->link_arrays($msps_ids, $msps_names);
+
+        $users_names = $this->user_model->dropdown('User');
+        $users_names[0] = $this->lang->line('none');
+        $users_ids = $this->user_model->dropdown('ID');
+        $users_ids[0] = 0;
+        $results["users"] = $this->link_arrays($users_ids, $users_names);
+
+        return $results;
     }
 
     private function link_arrays($array_keys, $array_values) {
