@@ -26,5 +26,22 @@
       </div>
     </div>
   </div>
+  <div class="row xs">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="<?php echo base_url('Group');?>"><?php echo $this->lang->line('nav_group');?></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="<?php echo base_url('Module');?>"><?php echo $this->lang->line('nav_module');?></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="<?php echo base_url('Apprentice');?>"><?php echo $this->lang->line('nav_apprentice');?></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 </div>
 <hr />

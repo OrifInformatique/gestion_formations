@@ -10,6 +10,11 @@
 // Application name
 $lang['app_title']                      = 'Gestion de formations';
 
+// Navigation menu
+$lang['nav_group']                      = 'Groupes';
+$lang['nav_module']                     = 'Modules';
+$lang['nav_apprentice']                 = 'Apprentis';
+
 // Page titles
 $lang['page_prefix']                    = 'Gestion formations';
 
@@ -36,7 +41,7 @@ $lang['apprentice_formation']           = 'Formation';
 $lang['apprentice_MSP']                 = 'MSP';
 $lang['apprentice_user']                = 'Utilisateur';
 
-//Log Error
+// Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
 $lang['no_id']                          = 'Veuillez insérer des identifiants';
 
