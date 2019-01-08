@@ -58,8 +58,6 @@ class Apprentice extends MY_Controller {
             $current_date[$i] = intval($current_date[$i]);
             $input_date[$i] = intval($input_date[$i]);
         }
-        var_dump($current_date);
-        var_dump($input_date);
         $problem = FALSE;
         switch($current_date[0] <=> $input_date[0]) {
             case -1:
