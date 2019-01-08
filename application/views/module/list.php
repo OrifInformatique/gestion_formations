@@ -23,8 +23,11 @@
             foreach ($modules as $module) {
                 if($module->FK_Group == $group[0]){
                     echo '<div class="row">';
-                        if($module->Number==0)
+                        if($module->Number==0){
                             $module->Number=$subject;
+                        } else if($module->Number<0){
+                             $module->Number="";
+                        }
                         echo '<div class="col-md-1">'.$module->Number.'</div>';
                         echo '<div class="col-md-10"><a href="'.base_url().'module/form/'.$module->ID.'">'.$module->Title.'</a></div>';
                         echo '<div class="col-md-1"><a href="'.base_url().'module/delete/'.$module->ID.'">[x]</a></div>';

@@ -40,8 +40,8 @@ class Module extends MY_Controller {
     }
 
     public function form_validation($error = NULL){
-        $this->form_validation->set_rules('title_module', $this->lang->line('title_module'), 'trim|required|alpha_numeric_spaces');
-        $this->form_validation->set_rules('number_module', $this->lang->line('module_number'), 'required');
+        $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required');
+        $this->form_validation->set_rules('number_module', $this->lang->line('number_module'), 'required');
         $this->form_validation->set_rules('group_module', $this->lang->line('group_module'), 'required');
 
         $req = array(
