@@ -50,6 +50,8 @@ class Module extends MY_Controller {
             'Is_Subject' => null !== $this->input->post('is_Subject_module')
         );
 
+        $req = html_escape($req);
+
         if($this->form_validation->run()){
             if($this->input->post('id') > 0){
                 $this->module_subject_model->update($this->input->post('id'), $req);

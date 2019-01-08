@@ -1,11 +1,11 @@
 <div class="container">
     <h1><?php echo $this->lang->line('module_list') ?></h1>
     <a class="btn btn-success" href="<?=base_url('module/form')?>"><?=$this->lang->line('module_new')?></a>
-    <div class="row">
+    <!--<div class="row">
         <div class="col-md-6"><strong><?php echo $this->lang->line('module_title') ?></strong></div>
         <div class="col-md-5"><strong><?php echo $this->lang->line('module_group') ?></strong></div>
         <div class="col-md-1"></div>
-    </div>
+    </div>-->
     <?php /*if(isset($modules)) {
         foreach ($modules as $module) { ?>
             <div class="row">

@@ -76,6 +76,8 @@ class Group extends MY_Controller {
             'FK_Parent_Group' => $this->input->post('parent_group')
         );
 
+        $req = html_escape($req);
+
         if($this->form_validation->run()){
             if($this->input->post('id') > 0){
                 $this->group_model->update($this->input->post('id'), $req);
