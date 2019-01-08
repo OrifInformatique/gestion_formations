@@ -30,6 +30,7 @@ $lang['group_weight']                   = 'Poids';
 $lang['group_eliminatory']              = 'Eliminatoire';
 $lang['group_position']                 = 'Position';
 $lang['group_parent_group']             = 'Groupe Parent';
+$lang['module_number']                  = 'Numéro (0 pour une matière)';
 $lang['module_title']                   = 'Titre';
 $lang['module_group']                   = 'Groupe';
 $lang['module_description']             = 'Description';
@@ -77,10 +78,11 @@ $lang['return']                         = 'Retour';
 $lang['group_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer le groupe';
 $lang['group_deleted']                  = 'Le groupe a été supprimé';
 $lang['apprentice_delete_confirm']      = 'Etes-vous sûr de vouloir supprimer l\'apprenti';
-$lang['apprentice_deleted']                  = 'L\'apprenti a été supprimé';
+$lang['apprentice_deleted']             = 'L\'apprenti a été supprimé';
 
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';
+$lang['subject']                        = 'Matière';
 
 // Other texts
 $lang['redirect_warn_start']            = 'Vous allez être redirigé dans';

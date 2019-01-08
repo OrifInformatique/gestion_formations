@@ -40,14 +40,15 @@ class Module extends MY_Controller {
     }
 
     public function form_validation($error = NULL){
-        $this->form_validation->set_rules('title_module', $this->lang->line('title_module'), 'required');
-        $this->form_validation->set_rules('group_module', $this->lang->line('group_module'), 'required');
+        $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'required');
+        $this->form_validation->set_rules('number_module', $this->lang->line('module_number'), 'required');
+        $this->form_validation->set_rules('group_module', $this->lang->line('module_group'), 'required');
 
         $req = array(
             'Title' => $this->input->post('title_module'),
+            'Number' => $this->input->post('number_module'),
             'FK_Group' => $this->input->post('group_module'),
-            'Description' => $this->input->post('description_module'),
-            'Is_Subject' => null !== $this->input->post('is_Subject_module')
+            'Description' => $this->input->post('description_module')
         );
 
         $req = html_escape($req);

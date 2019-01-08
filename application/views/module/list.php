@@ -1,25 +1,9 @@
 <div class="container">
     <h1><?php echo $this->lang->line('module_list') ?></h1>
     <a class="btn btn-success" href="<?=base_url('module/form')?>"><?=$this->lang->line('module_new')?></a>
-    <!--<div class="row">
-        <div class="col-md-6"><strong><?php echo $this->lang->line('module_title') ?></strong></div>
-        <div class="col-md-5"><strong><?php echo $this->lang->line('module_group') ?></strong></div>
-        <div class="col-md-1"></div>
-    </div>-->
-    <?php /*if(isset($modules)) {
-        foreach ($modules as $module) { ?>
-            <div class="row">
-                <!-- Click here to modify -->
-                <div class="col-md-2"><?php echo $module->Title; ?></div>
-                <div class="col-md-3"><?php echo getParentGroup($module->Group, $groups); ?></div>
-                <!-- Click here to delete -->
-                <div class="col-md-1"><a href="<?php echo base_url().'group/delete/'.$group->ID; ?>">[x]</a></div>
-            </div>
-    <?php } */
 
-    get_tree($groups_tree, $modules);
+    <?php get_tree($groups_tree, $modules, $this->lang->line('subject')); ?>
 
-    //} ?>
 </div>
 <?php
     function getParentGroup($id = 0, $groups){
@@ -33,17 +17,23 @@
             }
         }
     }
-    function get_tree($groups, $modules = array()){
+    function get_tree($groups = array(), $modules = array(), $subject = ""){
         foreach ($groups as $key => $group) {
             echo '<fieldset class="bob">';
             foreach ($modules as $module) {
                 if($module->FK_Group == $group[0]){
-                    echo '<p><a href="'.base_url().'module/form/'.$module->ID.'">'.$module->Title.'</a></p>';
+                    echo '<div class="row">';
+                        if($module->Number==0)
+                            $module->Number=$subject;
+                        echo '<div class="col-md-1">'.$module->Number.'</div>';
+                        echo '<div class="col-md-10"><a href="'.base_url().'module/form/'.$module->ID.'">'.$module->Title.'</a></div>';
+                        echo '<div class="col-md-1"><a href="'.base_url().'module/delete/'.$module->ID.'">[x]</a></div>';
+                    echo '</div>';
                 }
             }
             if(is_array($group[1])){
                 echo '<legend class="bob">'.$key.'</legend>';
-                get_tree($group[1], $modules);
+                get_tree($group[1], $modules, $subject);
             } else {
                 echo '<legend class="bob">'.$group[1].'</legend>';
             }
