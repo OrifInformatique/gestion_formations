@@ -63,7 +63,7 @@ class Group extends MY_Controller {
      *      If there is an error (does nothing)
      */
     public function form_validation($error = NULL){
-        $this->form_validation->set_rules('name_group', $this->lang->line('group_name'), 'required');
+        $this->form_validation->set_rules('name_group', $this->lang->line('group_name'), 'trim|required|regex_match[/^[a-zA-Z0-9_]*$/]');
         $this->form_validation->set_rules('weight', $this->lang->line('group_weight'), 'required');
         $this->form_validation->set_rules('position', $this->lang->line('group_position'), 'required');
         $this->form_validation->set_rules('parent_group', $this->lang->line('group_parent_group'), 'required');
