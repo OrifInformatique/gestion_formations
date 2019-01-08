@@ -77,11 +77,14 @@ $lang['return']                         = 'Retour';
 // Messages
 $lang['group_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer le groupe';
 $lang['group_deleted']                  = 'Le groupe a été supprimé';
+$lang['module_delete_confirm']          = 'Etes-vous sûr de vouloir supprimer le module';
+$lang['module_deleted']                 = 'Le module a été supprimé';
 $lang['apprentice_delete_confirm']      = 'Etes-vous sûr de vouloir supprimer l\'apprenti';
 $lang['apprentice_deleted']             = 'L\'apprenti a été supprimé';
 
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';
+$lang['module_missing']                 = 'Aucun module trouvé avec les paramètres entrés';
 $lang['subject']                        = 'Matière';
 
 // Other texts

@@ -65,4 +65,15 @@ class Module extends MY_Controller {
             $this->display_view('module/add', $outputs);
         }
     }
+
+    public function delete($id, $confirm = 0) {
+        $outputs['module'] = $this->module_subject_model->get($id);
+        if($confirm == 1) {
+            $this->module_subject_model->delete($id);
+            $this->display_view('module/success');
+        } elseif ($confirm == 0)
+            $this->display_view('module/delete', $outputs);
+        else
+            redirect('module');
+    }
 }
