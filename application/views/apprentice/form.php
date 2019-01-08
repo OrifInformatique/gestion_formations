@@ -88,9 +88,9 @@ $attributes = array("id" => "apprenticeForm",
                 <div class="col-md-8">
                     <?php
                     if($update)
-                        echo form_input('datebirth', set_value('datebirth', $apprentice->Date_Birth), 'maxlength="65535" class="form-control" id="datebirth"');
+                        echo form_input(array('type' => 'date', 'name' => 'datebirth'), set_value('datebirth', $apprentice->Date_Birth), 'maxlength="65535" class="form-control" id="datebirth"');
                     else
-                        echo form_input('datebirth', set_value('datebirth'), 'maxlength="65535" class="form-control" id="datebirth"');
+                        echo form_input(array('type' => 'date', 'name' => 'datebirth'), set_value('datebirth'), 'maxlength="65535" class="form-control" id="datebirth"');
                     ?>
                 </div>
             </div>
