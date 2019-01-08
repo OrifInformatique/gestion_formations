@@ -58,7 +58,7 @@ class Module extends MY_Controller {
             } else {
                 $this->module_subject_model->insert($req);
             }
-            $this->index();
+            redirect('module');
         } else {
             $outputs["groups"] = $this->group_model->dropdown('Name_Group');
             $this->display_view('module/add', $outputs);

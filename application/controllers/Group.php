@@ -84,7 +84,7 @@ class Group extends MY_Controller {
             } else {
                 $this->group_model->insert($req);
             }
-            $this->index();
+            redirect('group');
         } else {
             $outputs["groups"][0] = $this->lang->line('none');
             $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('Name_Group'));
