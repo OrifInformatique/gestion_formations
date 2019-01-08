@@ -37,8 +37,8 @@ class Apprentice extends MY_Controller {
     }
 
     public function form_validation($error = NULL){
-        $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/^[a-zA-Z]+$/]');
-        $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/^[a-zA-Z]+$/]');
+        $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/^[a-z \-A-Z]+$/]');
+        $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/^[a-z \-A-Z]+$/]');
         $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), 'required');
         $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), 'required');
         $this->form_validation->set_rules('MSP', $this->lang->line('apprentice_MSP'), 'required');
