@@ -12,6 +12,7 @@
     echo $this->lang->line('group_missing');?>
     <br><a href="<?php echo base_url().'group'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a>
     <?php } } else { ?>
-    <div class="alert alert-warning"><?php echo $this->lang->line('group_delete_not') ?></div>
+    <div class="row"><a href="<?php echo base_url().'group'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a></div>
+    <div class="alert alert-warning row"><?php echo $this->lang->line('group_delete_not') ?></div>
     <?php } ?>
 </div>
