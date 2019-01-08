@@ -100,6 +100,22 @@ class Group extends MY_Controller {
      *      If 0, it will lead to the deletion page, if 1 it will lead to the success page, else it will lead back to the index
      */
     public function delete($id, $confirm = 0) {
+        $this->load->model('module_subject_model');
+        $modules = $this->module_subject_model->get_ordered();
+        $outputs['deletion_allowed'] = TRUE;
+        for($i = 0; $i < max(array_keys($modules)); $i++) {
+            if(!isset($modules[$i]))
+                continue;
+            if($id == $modules[$i]->FK_Group)
+                $outputs['deletion_allowed'] = FALSE;
+        }
+        $groups = $this->group_model->get_ordered();
+        for($i = 0; $i < max(array_keys($groups)); $i++) {
+            if(!isset($groups[$i]))
+                continue;
+            if($id == $groups[$i]->FK_Parent_Group)
+                $outputs['deletion_allowed'] = FALSE;
+        }
         $outputs['group'] = $this->group_model->get($id);
         if($confirm == 1) {
             $this->group_model->delete($id);

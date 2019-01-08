@@ -51,6 +51,7 @@ $lang['group_list']                     = 'Liste des groupes';
 $lang['group_new']                      = 'Nouveau groupe';
 $lang['group_modify']                   = 'Modifier le groupe';
 $lang['group_delete']                   = 'Supprimer le groupe';
+$lang['group_delete_not']               = 'Le groupe ne peut pas être supprimé car un autre groupe/module y est associé';
 $lang['module_list']                    = 'Liste des modules';
 $lang['module_new']                     = 'Nouveau module';
 $lang['module_modify']                  = 'Modifier le module';
