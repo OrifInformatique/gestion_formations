@@ -13,8 +13,8 @@
     <?php if(isset($apprentices)) {
         foreach ($apprentices as $apprentice) { ?>
             <div class="row">
-                <div class="col-md-2"><?php echo $apprentice->Firstname; ?></div>
-                <div class="col-md-2"><?php echo $apprentice->Last_Name; ?></div>
+                <div class="col-md-2"><a href="<?php echo base_url().'apprentice/form/'.$apprentice->ID; ?>"><?php echo $apprentice->Firstname; ?></a></div>
+                <div class="col-md-2"><a href="<?php echo base_url().'apprentice/form/'.$apprentice->ID; ?>"><?php echo $apprentice->Last_Name; ?></a></div>
                 <div class="col-md-2"><?php echo $apprentice->Date_Birth; ?></div>
                 <div class="col-md-2"><?php echo getParentFormation($apprentice->FK_Formation, $formations); ?></div>
                 <div class="col-md-2"><?php echo getParentMSP($apprentice->FK_MSP, $msps); ?></div>

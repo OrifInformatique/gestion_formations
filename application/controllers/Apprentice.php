@@ -89,8 +89,12 @@ class Apprentice extends MY_Controller {
         $formation_ids[0] = 0;
         $results["formations"] = $this->link_arrays($formation_ids, $formation_names);
 
-        $msps_names = $this->msp_model->dropdown('Last_Name');
+        $msps_names = $this->msp_model->dropdown('Firstname');
         $msps_names[0] = $this->lang->line('none');
+        $msps_last_names = $this->msp_model->dropdown('Last_Name');
+        $msps_last_names[0] = "";
+        for($i = 0; $i < sizeof($msps_names); $i ++)
+            $msps_names[$i] .= " ".$msps_last_names[$i];
         $msps_ids = $this->msp_model->dropdown('ID');
         $msps_ids[0] = 0;
         $results["msps"] = $this->link_arrays($msps_ids, $msps_names);
