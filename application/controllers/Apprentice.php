@@ -53,6 +53,8 @@ class Apprentice extends MY_Controller {
             'FK_User' => $this->input->post('user')
         );
 
+        $req = html_escape($req);
+
         if($this->form_validation->run()){
             if($this->input->post('id') > 0){
                 $this->apprentice_model->update($this->input->post('id'), $req);
