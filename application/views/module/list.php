@@ -38,7 +38,7 @@
             echo '<fieldset class="bob">';
             foreach ($modules as $module) {
                 if($module->FK_Group == $group[0]){
-                    echo '<p>'.$module->Title.'</p>';
+                    echo '<p><a href="'.base_url().'module/form/'.$module->ID.'">'.$module->Title.'</a></p>';
                 }
             }
             if(is_array($group[1])){
