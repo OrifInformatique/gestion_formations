@@ -37,6 +37,7 @@
 
         if($update){
             echo form_hidden('id', $group->ID);
+            unset($groups[$group->ID]);
         }
 
         ?>
