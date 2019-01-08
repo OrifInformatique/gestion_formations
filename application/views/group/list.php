@@ -21,11 +21,10 @@
                 <!-- Click here to delete -->
                 <div class="col-md-1"><a href="<?php echo base_url().'group/delete/'.$group->ID; ?>">[x]</a></div>
             </div>
-    <?php } 
-
-    //get_tree($groups_tree);
-
-    } ?>
+        <?php
+            }
+        }
+    ?>
 </div>
 <?php
     function getParentGroup($id = 0, $groups){
@@ -37,18 +36,6 @@
                     return $group->Name_Group;
                 }
             }
-        }
-    }
-    function get_tree($groups){
-        foreach ($groups as $key => $group) {
-            echo '<fieldset class="bob">';
-            if(is_array($group)){
-                echo '<legend class="bob">'.$key.'</legend>';
-                get_tree($group);
-            } else {
-                echo '<legend class="bob">'.$group.'</legend>';
-            }
-            echo '</fieldset>';
         }
     }
 ?>

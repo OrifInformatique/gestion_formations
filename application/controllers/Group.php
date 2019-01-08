@@ -84,7 +84,7 @@ class Group extends MY_Controller {
             }
             $this->index();
         } else {
-            $outputs["groups"][0] = "Aucun";
+            $outputs["groups"][0] = $this->lang->line('none');
             $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('Name_Group'));
             $this->display_view('group/add', $outputs);
         }

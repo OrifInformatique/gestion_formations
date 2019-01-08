@@ -34,6 +34,35 @@ class group_model extends MY_Model {
     }
 
     /**
+     * Returns the tree of the group and its parents
+     * @param integer $parent_group
+     *      The parent group, usually at FK_Parent_Group
+     * @return array
+     *      All groups sorted
+     */
+    public function get_tree($parent_group = 0){
+        
+        $this->db->order_by('Position', 'asc');
+        $groups = $this->group_model->get_many_by("FK_Parent_Group = ".$parent_group);
+
+        if (count($groups) > 0){
+            foreach ($groups as $group) {
+                $child_groups = $this->group_model->get_many_by("FK_Parent_Group = ".$group->ID);
+
+                if(count($child_groups) > 0){
+                    $groups_tree[$group->Name_Group] = array($group->ID, $this->group_model->get_tree($group->ID));
+                } else {
+                    $groups_tree[$group->Name_Group] = array($group->ID, $group->Name_Group);
+                }
+            }
+        } else {
+            $groups_tree = NULL;
+        }
+
+        return $groups_tree;
+    }
+
+    /**
      * Returns a list of groups depending on the filters
      * @param array $filters
      *      The filters for the search. 'tf' is for text, 'idf' is for ids, 'wgf' is for weight, 'elf' is for eliminatory, 'pof' is for position, 'pgf' is for parent group
