@@ -37,8 +37,8 @@ class Apprentice extends MY_Controller {
     }
 
     public function form_validation($error = NULL){
-        $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'required');
-        $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'required');
+        $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/^[a-z \-A-Z]+$/]');
+        $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/^[a-z \-A-Z]+$/]');
         $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), 'required');
         $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), 'required');
         $this->form_validation->set_rules('MSP', $this->lang->line('apprentice_MSP'), 'required');
@@ -52,20 +52,43 @@ class Apprentice extends MY_Controller {
             'FK_MSP' => $this->input->post('MSP'),
             'FK_User' => $this->input->post('user')
         );
+        $current_date = explode("-", date("Y-m-d"));
+        $input_date = explode("-", $req["Date_Birth"]);
+        for($i = 0; $i < sizeof($current_date); $i++) {
+            $current_date[$i] = intval($current_date[$i]);
+            $input_date[$i] = intval($input_date[$i]);
+        }
+        var_dump($current_date);
+        var_dump($input_date);
+        $problem = FALSE;
+        switch($current_date[0] <=> $input_date[0]) {
+            case -1:
+                $problem = TRUE;
+                break;
+            case 0:
+                switch($current_date[1] <=> $input_date[1]) {
+                    case -1:
+                        $problem = TRUE;
+                        break;
+                    case 0:
+                        if($current_date[2] < $input_date[1])
+                            $problem = TRUE;
+                        break;
+                }
+                break;
+        }
 
         $req = html_escape($req);
 
-        if($this->form_validation->run()){
+        if($this->form_validation->run() && !$problem){
             if($this->input->post('id') > 0){
                 $this->apprentice_model->update($this->input->post('id'), $req);
             } else {
                 $this->apprentice_model->insert($req);
             }
-            $this->index();
+            redirect('apprentice');
         } else {
-            $outputs["groups"][0] = "Aucun";
-            $outputs["groups"] = array_merge($outputs["groups"], $this->apprentice_model->dropdown('Name_Group'));
-            $this->display_view('apprentice/form', $outputs);
+            redirect('apprentice/form/'.$this->input->post('id'));
         }
     }
 
