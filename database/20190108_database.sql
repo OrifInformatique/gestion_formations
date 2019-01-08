@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `t_groups` (
 --
 
 CREATE TABLE IF NOT EXISTS `t_modules_subjects` (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `FK_Group` int(11) NOT NULL,
   `Description` text COLLATE utf8_unicode_ci NOT NULL,
