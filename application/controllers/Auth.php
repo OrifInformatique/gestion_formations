@@ -77,4 +77,16 @@ class Auth extends MY_Controller {
         session_destroy();
         redirect('Auth');
     }
+
+    public function is_username_unique($username) {
+        $users = $this->user_model->get_all();
+        $is_unique = TRUE;
+        foreach ($users as $user) {
+            if(!$is_unique)
+                break;
+            if($user->User == $username)
+                $is_unique = FALSE;
+        }
+        return $is_unique;
+    }
 }
