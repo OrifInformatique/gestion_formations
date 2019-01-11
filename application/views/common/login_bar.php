@@ -39,6 +39,9 @@
           <li class="nav-item active">
             <a class="nav-link" href="<?php echo base_url('Apprentice');?>"><?php echo $this->lang->line('nav_apprentice');?></a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="<?php echo base_url('Formation');?>"><?php echo $this->lang->line('nav_formation');?></a>
+          </li>
         </ul>
       </div>
     </nav>

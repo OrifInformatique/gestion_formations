@@ -14,6 +14,7 @@ $lang['app_title']                      = 'Gestion de formations';
 $lang['nav_group']                      = 'Groupes';
 $lang['nav_module']                     = 'Modules';
 $lang['nav_apprentice']                 = 'Apprentis';
+$lang['nav_formation']                  = 'Formation';
 
 // Page titles
 $lang['page_prefix']                    = 'Gestion formations';
