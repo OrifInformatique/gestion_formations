@@ -14,6 +14,7 @@ $lang['app_title']                      = 'Gestion de formations';
 $lang['nav_group']                      = 'Groupes';
 $lang['nav_module']                     = 'Modules';
 $lang['nav_apprentice']                 = 'Apprentis';
+$lang['nav_formation']                  = 'Formations';
 
 // Page titles
 $lang['page_prefix']                    = 'Gestion formations';
@@ -41,6 +42,8 @@ $lang['apprentice_datebirth']           = 'Date de naissance';
 $lang['apprentice_formation']           = 'Formation';
 $lang['apprentice_MSP']                 = 'MSP';
 $lang['apprentice_user']                = 'Utilisateur';
+$lang['formation_name']                 = 'Nom de la formation';
+$lang['formation_duration']             = 'Durée de la formation';
 
 // Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
@@ -60,6 +63,10 @@ $lang['apprentice_list']                = 'Liste des apprentis';
 $lang['apprentice_new']                 = 'Nouvel apprenti';
 $lang['apprentice_modify']              = 'Modifier l\'apprenti';
 $lang['apprentice_delete']              = 'Supprimer l\'apprenti';
+$lang['formation_list']                 = 'Liste des formations';
+$lang['formation_new']                  = 'Nouvelle formation';
+$lang['formation_modify']               = 'Modifier la formation';
+$lang['formation_delete']               = 'Supprimer la formation';
 
 // Buttons
 $lang['btn_login']                      = 'Se connecter';
@@ -74,14 +81,17 @@ $lang['none_f']                         = 'Aucune';
 $lang['save']                           = 'Enregistrer';
 $lang['cancel']                         = 'Annuler';
 $lang['return']                         = 'Retour';
+$lang['formation_edit_module']          = 'Éditer les module de la formation';
 
 // Messages
-$lang['group_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer le groupe';
+$lang['group_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer le groupe ?';
 $lang['group_deleted']                  = 'Le groupe a été supprimé';
-$lang['module_delete_confirm']          = 'Etes-vous sûr de vouloir supprimer le module';
+$lang['module_delete_confirm']          = 'Etes-vous sûr de vouloir supprimer le module ?';
 $lang['module_deleted']                 = 'Le module a été supprimé';
-$lang['apprentice_delete_confirm']      = 'Etes-vous sûr de vouloir supprimer l\'apprenti';
+$lang['apprentice_delete_confirm']      = 'Etes-vous sûr de vouloir supprimer l\'apprenti ?';
 $lang['apprentice_deleted']             = 'L\'apprenti a été supprimé';
+$lang['formation_delete_confirm']       = 'Etes-vous sûr de vouloir supprimer la formation ?';
+$lang['formation_deleted']              = 'La formation a été supprimé';
 
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';
@@ -91,3 +101,4 @@ $lang['subject']                        = 'Matière';
 // Other texts
 $lang['redirect_warn_start']            = 'Vous allez être redirigé dans';
 $lang['redirect_warn_end']              = 'secondes';
+$lang['years']                          = 'ans';

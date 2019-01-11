@@ -17,6 +17,6 @@ class formation_model extends MY_Model {
 
     public function get_ordered($main = 'ID', $direction = 'asc'){
         $this->db->order_by($main, $direction);
-        return $this->apprentice_model->get_all();
+        return $this->formation_model->get_all();
     }
 }
