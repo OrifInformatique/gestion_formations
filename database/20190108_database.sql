@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mar. 08 jan. 2019 à 11:10
+-- Généré le :  mar. 08 jan. 2019 à 11:45
 -- Version du serveur :  10.1.35-MariaDB
 -- Version de PHP :  7.2.9
 
@@ -128,10 +128,10 @@ CREATE TABLE `t_groups` (
 
 CREATE TABLE `t_modules_subjects` (
   `ID` int(11) NOT NULL,
+  `Number` int(11) NOT NULL,
   `Title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `FK_Group` int(11) NOT NULL,
-  `Description` text COLLATE utf8_unicode_ci NOT NULL,
-  `Is_Subject` tinyint(1) NOT NULL
+  `Description` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
