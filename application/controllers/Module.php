@@ -39,16 +39,6 @@ class Module extends MY_Controller {
         $this->display_view('module/add', $outputs);
     }
 
-    public function delete($id, $confirmation = 0) {
-        $outputs['module'] = $this->module_subject_model->get($id);
-        if($confirmation == 0)
-            $this->display_view('module/delete', $outputs);
-        elseif($confirmation == 1) {
-            $this->module_subject_model->delete($id);
-            $this->display_view('module/success');
-        }
-    }
-
     public function form_validation($error = NULL){
         $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required');
         $this->form_validation->set_rules('number_module', $this->lang->line('number_module'), 'required');
