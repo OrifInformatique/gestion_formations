@@ -42,8 +42,8 @@ $lang['apprentice_datebirth']           = 'Date de naissance';
 $lang['apprentice_formation']           = 'Formation';
 $lang['apprentice_MSP']                 = 'MSP';
 $lang['apprentice_user']                = 'Utilisateur';
-$lang['formation_name']                 = 'Nom de la formation';
-$lang['formation_duration']             = 'Durée de la formation';
+$lang['formation_name']                 = 'Nom';
+$lang['formation_duration']             = 'Durée';
 
 // Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
