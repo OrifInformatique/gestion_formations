@@ -42,6 +42,8 @@ $lang['apprentice_datebirth']           = 'Date de naissance';
 $lang['apprentice_formation']           = 'Formation';
 $lang['apprentice_MSP']                 = 'MSP';
 $lang['apprentice_user']                = 'Utilisateur';
+$lang['formation_name']                 = 'Nom';
+$lang['formation_duration']             = 'Durée';
 
 // Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
@@ -61,6 +63,10 @@ $lang['apprentice_list']                = 'Liste des apprentis';
 $lang['apprentice_new']                 = 'Nouvel apprenti';
 $lang['apprentice_modify']              = 'Modifier l\'apprenti';
 $lang['apprentice_delete']              = 'Supprimer l\'apprenti';
+$lang['formation_list']                 = 'Liste des formations';
+$lang['formation_new']                  = 'Nouvelle formation';
+$lang['formation_modify']               = 'Modifier la formation';
+$lang['formation_delete']               = 'Supprimer la formation';
 
 // Buttons
 $lang['btn_login']                      = 'Se connecter';
