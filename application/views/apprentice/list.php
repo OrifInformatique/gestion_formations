@@ -17,7 +17,7 @@
                 <div class="col-md-2"><a href="<?php echo base_url().'apprentice/form/'.$apprentice->id; ?>"><?php echo $apprentice->last_name; ?></a></div>
                 <div class="col-md-2"><?php echo $apprentice->date_birth; ?></div>
                 <div class="col-md-2"><?php echo getParentFormation($apprentice->fk_formation, $formations); ?></div>
-                <div class="col-md-2"><?php echo getParentTeacher($apprentice->fk_teacher, $msps); ?></div>
+                <div class="col-md-2"><?php echo getParentTeacher($apprentice->fk_teacher, $teachers); ?></div>
                 <div class="col-md-1"><?php echo getParentUser($apprentice->fk_user, $users); ?></div>
                 <div class="col-md-1"><a href="<?php echo base_url().'apprentice/delete/'.$apprentice->id; ?>">[x]</a></div>
             </div>
@@ -27,8 +27,8 @@
 function getParentFormation($id, $formations) {
     return $formations[$id];
 }
-function getParentTeacher($id, $msps) {
-    return $msps[$id];
+function getParentTeacher($id, $teachers) {
+    return $teachers[$id];
 }
 function getParentUser($id, $users) {
     return $users[$id];

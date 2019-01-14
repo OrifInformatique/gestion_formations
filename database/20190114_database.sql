@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `apprentices`;
 CREATE TABLE IF NOT EXISTS `apprentices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `last_Name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date_birth` date NOT NULL,
   `fk_formation` int(11) NOT NULL,
   `fk_teacher` int(11) NOT NULL,

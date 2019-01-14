@@ -103,7 +103,7 @@ class Apprentice extends MY_Controller {
 
     private function get_parents() {
         $this->load->model('formation_model');
-        $this->load->model('msp_model');
+        $this->load->model('teacher_model');
         $this->load->model('user_model');
 
         $formation_names = $this->formation_model->dropdown('Name_Formation');
@@ -112,15 +112,15 @@ class Apprentice extends MY_Controller {
         $formation_ids[0] = 0;
         $results["formations"] = $this->link_arrays($formation_ids, $formation_names);
 
-        $msps_names = $this->msp_model->dropdown('firstname');
-        $msps_names[0] = $this->lang->line('none');
-        $msps_last_names = $this->msp_model->dropdown('last_name');
-        $msps_last_names[0] = "";
-        for($i = 0; $i < sizeof($msps_names); $i ++)
-            $msps_names[$i] .= " ".$msps_last_names[$i];
-        $msps_ids = $this->msp_model->dropdown('id');
+        $teachers_names = $this->teacher_model->dropdown('firstname');
+        $teachers_names[0] = $this->lang->line('none');
+        $teachers_last_names = $this->teacher_model->dropdown('last_name');
+        $teachers_last_names[0] = "";
+        for($i = 0; $i < sizeof($teachers_names); $i ++)
+            $teachers_names[$i] .= " ".$teachers_last_names[$i];
+        $msps_ids = $this->teacher_model->dropdown('id');
         $msps_ids[0] = 0;
-        $results["msps"] = $this->link_arrays($msps_ids, $msps_names);
+        $results["teachers"] = $this->link_arrays($msps_ids, $teachers_names);
 
         $users_names = $this->user_model->dropdown('User');
         $users_names[0] = $this->lang->line('none');

@@ -7,7 +7,7 @@ class apprentice_model extends MY_Model {
     protected $belongs_to = ["Parent_Formation" => ["primary_key" => "fk_formation",
                                                     "model" => "formation_model"],
                             "Parent_MSP" => ["primary_key" => "fk_teacher",
-                                            "model" => "msp_model"],
+                                            "model" => "taecher_model"],
                             "Parent_User" => ["primary_key" => "fk_user",
                                             "model" => "user_model"]];
     protected $has_many = ["Child_Apprentices_Formation" => ["primary_key" => "fk_apprentice",
