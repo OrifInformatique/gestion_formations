@@ -2,7 +2,7 @@
 
 class group_model extends MY_Model {
     /* SET MY_Model VARIABLES */
-    protected $_table = 'groups';
+    protected $_table = 'modules_groups';
     protected $primary_key = 'id';
     protected $protected_attributes = ['id'];
     protected $belongs_to = ['Parent_Group' => ['primary_key' => 'fk_parent_group',

@@ -117,11 +117,11 @@ CREATE TABLE IF NOT EXISTS `grades` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `groups`
+-- Structure de la table `modules_groups`
 --
 
-DROP TABLE IF EXISTS `groups`;
-CREATE TABLE IF NOT EXISTS `groups` (
+DROP TABLE IF EXISTS `modules_groups`;
+CREATE TABLE IF NOT EXISTS `modules_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name_group` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `weight` int(11) NOT NULL,
