@@ -40,7 +40,7 @@ $attributes = array("id" => "apprenticeForm",
         echo '<div class="alert alert-danger">'.validation_errors().'</div>';
 
     if($update)
-        echo form_hidden('id', $apprentice->ID);
+        echo form_hidden('id', $apprentice->id);
     ?>
 
     <div class="row">
@@ -52,7 +52,7 @@ $attributes = array("id" => "apprenticeForm",
                 <div class="col-md-8">
                     <?php
                     if($update)
-                        echo form_input('firstname', set_value('firstname', $apprentice->Firstname), 'maxlength="65535" class="form-control" id="firstname"');
+                        echo form_input('firstname', set_value('firstname', $apprentice->firstname), 'maxlength="65535" class="form-control" id="firstname"');
                     else
                         echo form_input('firstname', set_value('firstname'), 'maxlength="65535" class="form-control" id="firstname"');
                     ?>
@@ -70,7 +70,7 @@ $attributes = array("id" => "apprenticeForm",
                 <div class="col-md-8">
                     <?php
                     if($update)
-                        echo form_input('lastname', set_value('lastname', $apprentice->Last_Name), 'maxlength="65535" class="form-control" id="lastname"');
+                        echo form_input('lastname', set_value('lastname', $apprentice->last_name), 'maxlength="65535" class="form-control" id="lastname"');
                     else
                         echo form_input('lastname', set_value('lastname'), 'maxlength="65535" class="form-control" id="lastname"');
                     ?>
@@ -88,7 +88,7 @@ $attributes = array("id" => "apprenticeForm",
                 <div class="col-md-8">
                     <?php
                     if($update)
-                        echo form_input(array('type' => 'date', 'name' => 'datebirth'), set_value('datebirth', $apprentice->Date_Birth), 'maxlength="65535" class="form-control" id="datebirth"');
+                        echo form_input(array('type' => 'date', 'name' => 'datebirth'), set_value('datebirth', $apprentice->date_birth), 'maxlength="65535" class="form-control" id="datebirth"');
                     else
                         echo form_input(array('type' => 'date', 'name' => 'datebirth'), set_value('datebirth'), 'maxlength="65535" class="form-control" id="datebirth"');
                     ?>
@@ -107,7 +107,7 @@ $attributes = array("id" => "apprenticeForm",
                     <?php
                     //Find a way to load the formations
                     if($update)
-                        echo form_dropdown('formation', $formations, set_value('formation', $apprentice->FK_Formation), 'class="form-control" id="formation"');
+                        echo form_dropdown('formation', $formations, set_value('formation', $apprentice->fk_formation), 'class="form-control" id="formation"');
                     else
                         echo form_dropdown('formation', $formations, set_value('formation'), 'class="form-control" id="formation"');
                     ?>
@@ -120,15 +120,15 @@ $attributes = array("id" => "apprenticeForm",
         <div class="form-group col-md-12">
             <div class="form-group row">
                 <div class="col-md-4">
-                    <?php echo form_label($this->lang->line('apprentice_MSP'), 'MSP'); ?>
+                    <?php echo form_label($this->lang->line('apprentice_teacher'), 'teacher'); ?>
                 </div>
                 <div class="col-md-8">
                     <?php
                     //Find a way to load the msps
                     if($update)
-                        echo form_dropdown('MSP', $msps, set_value('MSP', $apprentice->FK_MSP), 'class="form-control" id="MSP"');
+                        echo form_dropdown('teacher', $msps, set_value('teacher', $apprentice->fk_teacher), 'class="form-control" id="teacher"');
                     else
-                        echo form_dropdown('MSP', $msps, set_value('MSP'), 'class="form-control" id="MSP"');
+                        echo form_dropdown('teacher', $msps, set_value('teacher'), 'class="form-control" id="teacher"');
                     ?>
                 </div>
             </div>
@@ -145,7 +145,7 @@ $attributes = array("id" => "apprenticeForm",
                     <?php
                     //Find a way to load the users
                     if($update)
-                        echo form_dropdown('user', $users, set_value('user', $apprentice->FK_User), 'class="form-control" id="user"');
+                        echo form_dropdown('user', $users, set_value('user', $apprentice->fk_user), 'class="form-control" id="user"');
                     else
                         echo form_dropdown('user', $users, set_value('user'), 'class="form-control" id="user"');
                     ?>

@@ -45,10 +45,10 @@ class Module extends MY_Controller {
         $this->form_validation->set_rules('group_module', $this->lang->line('group_module'), 'required');
 
         $req = array(
-            'Title' => $this->input->post('title_module'),
-            'Number' => $this->input->post('number_module'),
-            'FK_Group' => $this->input->post('group_module'),
-            'Description' => $this->input->post('description_module')
+            'title' => $this->input->post('title_module'),
+            'number' => $this->input->post('number_module'),
+            'fk_group' => $this->input->post('group_module'),
+            'description' => $this->input->post('description_module')
         );
 
         $req = html_escape($req);

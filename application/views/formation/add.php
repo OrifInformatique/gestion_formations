@@ -36,8 +36,8 @@
         <?php
 
         if($update){
-            echo form_hidden('id', $formation->ID);
-            unset($formation->ID);
+            echo form_hidden('id', $formation->id);
+            unset($formation->id);
         }
 
         ?>
@@ -51,7 +51,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_input('name_formation', set_value('name_formation', $formation->Name_Formation), 'maxlength="65535" class="form-control" id="name_formation"');
+                            echo form_input('name_formation', set_value('name_formation', $formation->name_formation), 'maxlength="65535" class="form-control" id="name_formation"');
                         else
                             echo form_input('name_formation', set_value('name_formation'), 'maxlength="65535" class="form-control" id="name_formation"');
                         ?>
@@ -69,7 +69,7 @@
                     <div class="col-md-7">
                         <?php
                         if($update)
-                            echo form_input('duration_formation', set_value('duration_formation', $formation->Duration), 'class="form-control" id="duration_formation"');
+                            echo form_input('duration_formation', set_value('duration_formation', $formation->duration), 'class="form-control" id="duration_formation"');
                         else
                             echo form_input('duration_formation', set_value('duration_formation'), 'class="form-control" id="duration_formation"');
                         ?>

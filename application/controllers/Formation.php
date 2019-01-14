@@ -59,8 +59,8 @@ class Formation extends MY_Controller {
         $this->form_validation->set_rules('duration_formation', $this->lang->line('formation_duration'), 'required');
 
         $req = array(
-            'Name_Formation' => $this->input->post('name_formation'),
-            'Duration' => $this->input->post('duration_formation')
+            'name_formation' => $this->input->post('name_formation'),
+            'duration' => $this->input->post('duration_formation')
         );
 
         $req = html_escape($req);

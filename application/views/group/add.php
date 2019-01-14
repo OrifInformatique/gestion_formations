@@ -36,8 +36,8 @@
         <?php
 
         if($update){
-            echo form_hidden('id', $group->ID);
-            unset($groups[$group->ID]); // Prevents the ability to put the group in itself
+            echo form_hidden('id', $group->id);
+            unset($groups[$group->id]); // Prevents the ability to put the group in itself
         }
 
         ?>
@@ -51,7 +51,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_input('name_group', set_value('name_group', $group->Name_Group), 'maxlength="65535" class="form-control" id="name_group"');
+                            echo form_input('name_group', set_value('name_group', $group->name_group), 'maxlength="65535" class="form-control" id="name_group"');
                         else
                             echo form_input('name_group', set_value('name_group'), 'maxlength="65535" class="form-control" id="name_group"');
                         ?>
@@ -69,7 +69,7 @@
                     <div class="col-md-7">
                         <?php
                         if($update)
-                            echo form_input('weight', set_value('weight', $group->Weight), 'class="form-control" id="weight"');
+                            echo form_input('weight', set_value('weight', $group->weight), 'class="form-control" id="weight"');
                         else
                             echo form_input('weight', set_value('weight'), 'class="form-control" id="weight"');
                         ?>
@@ -90,7 +90,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_checkbox('eliminatory', 'eliminatory', $group->Eliminatory, 'class="form-control" id="eliminatory"');
+                            echo form_checkbox('eliminatory', 'eliminatory', $group->eliminatory, 'class="form-control" id="eliminatory"');
                         else
                             echo form_checkbox('eliminatory', 'eliminatory', set_value('eliminatory'), 'class="form-control" id="eliminatory"');
                         ?>
@@ -109,7 +109,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_input('position', set_value('position', $group->Position), 'class="form-control" id="position"');
+                            echo form_input('position', set_value('position', $group->position), 'class="form-control" id="position"');
                         else
                             echo form_input('position', set_value('position'), 'class="form-control" id="position"');
                         ?>
@@ -127,7 +127,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_dropdown('parent_group', $groups, set_value('parent_group', $group->FK_Parent_Group), 'class="form-control" id="parent_group"');
+                            echo form_dropdown('parent_group', $groups, set_value('parent_group', $group->fk_parent_group), 'class="form-control" id="parent_group"');
                         else
                             echo form_dropdown('parent_group', $groups, set_value('parent_group'), 'class="form-control" id="parent_group"');
                         ?>

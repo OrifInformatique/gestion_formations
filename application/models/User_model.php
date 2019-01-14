@@ -10,11 +10,15 @@
 class user_model extends MY_Model
 {
     /* SET MY_Model VARIABLES */
-    protected $_table = 't_users';
-    protected $primary_key = 'ID';
-    protected $protected_attributes = ['ID'];
-    protected $belongs_to = ['user_type'=> ['primary_key' => 'FK_User_Type',
+    protected $_table = 'users';
+    protected $primary_key = 'id';
+    protected $protected_attributes = ['id'];
+    protected $belongs_to = ['user_type'=> ['primary_key' => 'fk_user_type',
                                             'model' => 'user_type_model']];
+    protected $has_many = ['Child_Apprentice' => ['primary_key' => 'fk_user',
+                                                    'model' => 'apprentice_model'],
+                            'Child_Teacger' => ['primary_key' => 'fk_user',
+                                                'model' => 'teacher_model']];
 
     /**
      * Constructor
@@ -34,7 +38,7 @@ class user_model extends MY_Model
      */
     public function check_password($username, $password)
     {
-        $user = $this->get_by('User', $username);
+        $user = $this->get_by('user', $username);
 
         if (!is_null($user) && password_verify($password, $user->Password)) {
             return true;

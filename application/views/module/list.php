@@ -11,7 +11,7 @@
             return "";
         } else {
             foreach ($groups as $group) {
-                if($group->ID == $id){
+                if($group->id == $id){
                     return $group->Name_Group;
                 }
             }
@@ -21,16 +21,16 @@
         foreach ($groups as $key => $group) {
             echo '<fieldset class="bob">';
             foreach ($modules as $module) {
-                if($module->FK_Group == $group[0]){
+                if($module->fk_group == $group[0]){
                     echo '<div class="row">';
-                        if($module->Number==0){
-                            $module->Number=$subject;
-                        } else if($module->Number<0){
-                             $module->Number="";
+                        if($module->number==0){
+                            $module->number=$subject;
+                        } else if($module->number<0){
+                             $module->number="";
                         }
-                        echo '<div class="col-md-1">'.$module->Number.'</div>';
-                        echo '<div class="col-md-10"><a href="'.base_url().'module/form/'.$module->ID.'">'.$module->Title.'</a></div>';
-                        echo '<div class="col-md-1"><a href="'.base_url().'module/delete/'.$module->ID.'">[x]</a></div>';
+                        echo '<div class="col-md-1">'.$module->number.'</div>';
+                        echo '<div class="col-md-10"><a href="'.base_url().'module/form/'.$module->id.'">'.$module->title.'</a></div>';
+                        echo '<div class="col-md-1"><a href="'.base_url().'module/delete/'.$module->id.'">[x]</a></div>';
                     echo '</div>';
                 }
             }

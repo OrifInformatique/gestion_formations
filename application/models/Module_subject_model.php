@@ -2,14 +2,14 @@
 
 class module_subject_model extends MY_Model {
     /* SET MY_Model VARIABLES */
-    protected $_table = 't_modules_subjects';
-    protected $primary_key = 'ID';
-    protected $protected_attributes = ['ID'];
-    protected $belongs_to = ['Group' => ['primary_key' => 'FK_Group',
+    protected $_table = 'modules_subjects';
+    protected $primary_key = 'id';
+    protected $protected_attributes = ['id'];
+    protected $belongs_to = ['Group' => ['primary_key' => 'fk_group',
                                          'model' => 'groups_model']];
-    protected $has_many = ['Formation_modules' => ['primary_key' => 'FK_Module',
+    protected $has_many = ['Formation_modules' => ['primary_key' => 'fk_module',
                                                    'model' => 'formation_module_model'],
-                           'Grades' => ['primary_key' => 'FK_Module_Subject',
+                           'Grades' => ['primary_key' => 'fk_module_subject',
                                         'model' => 'grades_model']];
 
     /**
@@ -19,7 +19,7 @@ class module_subject_model extends MY_Model {
         parent::__construct();
     }
 
-    public function get_ordered($main = 'ID', $direction = 'asc'){
+    public function get_ordered($main = 'id', $direction = 'asc'){
         $this->db->order_by($main, $direction);
         return $this->module_subject_model->get_all();
     }

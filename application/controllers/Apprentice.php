@@ -41,19 +41,19 @@ class Apprentice extends MY_Controller {
         $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/^[a-z \-A-Z]+$/]');
         $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), 'required');
         $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), 'required');
-        $this->form_validation->set_rules('MSP', $this->lang->line('apprentice_MSP'), 'required');
+        $this->form_validation->set_rules('teacher', $this->lang->line('apprentice_MSP'), 'required');
         $this->form_validation->set_rules('user', $this->lang->line('apprentice_user'), 'required');
 
         $req = array(
-            'Firstname' => $this->input->post('firstname'),
-            'Last_Name' => $this->input->post('lastname'),
-            'Date_Birth' => $this->input->post('datebirth'),
-            'FK_Formation' => $this->input->post('formation'),
-            'FK_MSP' => $this->input->post('MSP'),
-            'FK_User' => $this->input->post('user')
+            'firstname' => $this->input->post('firstname'),
+            'last_name' => $this->input->post('lastname'),
+            'date_birth' => $this->input->post('datebirth'),
+            'fk_formation' => $this->input->post('formation'),
+            'fk_teacher' => $this->input->post('teacher'),
+            'fk_user' => $this->input->post('user')
         );
         $current_date = explode("-", date("Y-m-d"));
-        $input_date = explode("-", $req["Date_Birth"]);
+        $input_date = explode("-", $req["date_birth"]);
         for($i = 0; $i < sizeof($current_date); $i++) {
             $current_date[$i] = intval($current_date[$i]);
             $input_date[$i] = intval($input_date[$i]);
@@ -108,23 +108,23 @@ class Apprentice extends MY_Controller {
 
         $formation_names = $this->formation_model->dropdown('Name_Formation');
         $formation_names[0] = $this->lang->line('none_f');
-        $formation_ids = $this->formation_model->dropdown('ID');
+        $formation_ids = $this->formation_model->dropdown('id');
         $formation_ids[0] = 0;
         $results["formations"] = $this->link_arrays($formation_ids, $formation_names);
 
-        $msps_names = $this->msp_model->dropdown('Firstname');
+        $msps_names = $this->msp_model->dropdown('firstname');
         $msps_names[0] = $this->lang->line('none');
-        $msps_last_names = $this->msp_model->dropdown('Last_Name');
+        $msps_last_names = $this->msp_model->dropdown('last_name');
         $msps_last_names[0] = "";
         for($i = 0; $i < sizeof($msps_names); $i ++)
             $msps_names[$i] .= " ".$msps_last_names[$i];
-        $msps_ids = $this->msp_model->dropdown('ID');
+        $msps_ids = $this->msp_model->dropdown('id');
         $msps_ids[0] = 0;
         $results["msps"] = $this->link_arrays($msps_ids, $msps_names);
 
         $users_names = $this->user_model->dropdown('User');
         $users_names[0] = $this->lang->line('none');
-        $users_ids = $this->user_model->dropdown('ID');
+        $users_ids = $this->user_model->dropdown('id');
         $users_ids[0] = 0;
         $results["users"] = $this->link_arrays($users_ids, $users_names);
 

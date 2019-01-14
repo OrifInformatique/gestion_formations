@@ -2,14 +2,14 @@
 
 class group_model extends MY_Model {
     /* SET MY_Model VARIABLES */
-    protected $_table = 't_groups';
-    protected $primary_key = 'ID';
-    protected $protected_attributes = ['ID'];
-    protected $belongs_to = ['Parent_Group' => ['primary_key' => 'FK_Parent_Group',
+    protected $_table = 'groups';
+    protected $primary_key = 'id';
+    protected $protected_attributes = ['id'];
+    protected $belongs_to = ['Parent_Group' => ['primary_key' => 'fk_parent_group',
                                             'model' => 'group_model']];
-    protected $has_many = ['Modules_Subjects' => ['primary_key' => 'FK_Group',
+    protected $has_many = ['Modules_Subjects' => ['primary_key' => 'fk_group',
                                                     'model' => 'modules_subjects_model'],
-                           'Child_Groups' => ['primary_key' => 'FK_Parent_Group',
+                           'Child_Groups' => ['primary_key' => 'fk_parent_group',
                                           'model' => 'group_model']];
 
     /**
@@ -28,7 +28,7 @@ class group_model extends MY_Model {
      * @return array
      *      All groups
      */
-    public function get_ordered($main = 'Position', $direction = 'asc'){
+    public function get_ordered($main = 'position', $direction = 'asc'){
         $this->db->order_by($main, $direction);
         return $this->group_model->get_all();
     }
@@ -36,23 +36,23 @@ class group_model extends MY_Model {
     /**
      * Returns the tree of the group and its parents
      * @param integer $parent_group
-     *      The parent group, usually at FK_Parent_Group
+     *      The parent group, usually at fk_parent_group
      * @return array
      *      All groups sorted
      */
     public function get_tree($parent_group = 0){
         
-        $this->db->order_by('Position', 'asc');
-        $groups = $this->group_model->get_many_by("FK_Parent_Group = ".$parent_group);
+        $this->db->order_by('position', 'asc');
+        $groups = $this->group_model->get_many_by("fk_parent_group = ".$parent_group);
 
         if (count($groups) > 0){
             foreach ($groups as $group) {
-                $child_groups = $this->group_model->get_many_by("FK_Parent_Group = ".$group->ID);
+                $child_groups = $this->group_model->get_many_by("fk_parent_group = ".$group->id);
 
                 if(count($child_groups) > 0){
-                    $groups_tree[$group->Name_Group] = array($group->ID, $this->group_model->get_tree($group->ID));
+                    $groups_tree[$group->name_group] = array($group->id, $this->group_model->get_tree($group->id));
                 } else {
-                    $groups_tree[$group->Name_Group] = array($group->ID, $group->Name_Group);
+                    $groups_tree[$group->name_group] = array($group->id, $group->name_group);
                 }
             }
         } else {
@@ -90,7 +90,7 @@ class group_model extends MY_Model {
         }
 
         /**************
-         * ID filter
+         * id filter
         **************/
         $where_id_filter = "";
         if(isset($filters['idf'])) {
@@ -99,11 +99,11 @@ class group_model extends MY_Model {
 
             if($id_search_filter instanceof Traversable) {
                 foreach ($id_search_filter as $search_id) {
-                    $where_id_filter .= 'ID LIKE '.$search_id.' OR ';
+                    $where_id_filter .= 'id LIKE '.$search_id.' OR ';
                 }
                 $where_id_filter = substr($where_id_filter, 0, -4);
             } else {
-                $where_id_filter .= 'ID LIKE '.$id_search_filter;
+                $where_id_filter .= 'id LIKE '.$id_search_filter;
             }
             $where_id_filter .= ')';
 
@@ -114,7 +114,7 @@ class group_model extends MY_Model {
         }
 
         /******************
-         * Weight filter
+         * weight filter
         ******************/
         $where_weight_filter = "";
         if(isset($filters['wgf'])) {
@@ -123,11 +123,11 @@ class group_model extends MY_Model {
 
             if($weight_search_filter instanceof Traversable) {
                 foreach ($weight_search_filter as $search_weight) {
-                    $where_weight_filter .= 'Weight LIKE '.$search_id.' OR ';
+                    $where_weight_filter .= 'weight LIKE '.$search_id.' OR ';
                 }
                 $where_weight_filter = substr($where_weight_filter, 0, -4);
             } else {
-                $where_weight_filter .= 'Weight LIKE '.$weight_search_filter;
+                $where_weight_filter .= 'weight LIKE '.$weight_search_filter;
             }
             $where_weight_filter .= ')';
 
@@ -138,7 +138,7 @@ class group_model extends MY_Model {
         }
 
         /******************
-         * Eliminatory filter
+         * eliminatory filter
         ******************/
         $where_eliminatory_filter = "";
         if(isset($filters['elf'])) {
@@ -147,11 +147,11 @@ class group_model extends MY_Model {
 
             if($eliminatory_search_filter instanceof Traversable) {
                 foreach ($eliminatory_search_filter as $search_eliminatory) {
-                    $where_eliminatory_filter .= 'Weight LIKE '.$search_id.' OR ';
+                    $where_eliminatory_filter .= 'weight LIKE '.$search_id.' OR ';
                 }
                 $where_eliminatory_filter = substr($where_eliminatory_filter, 0, -4);
             } else {
-                $where_eliminatory_filter .= 'Weight LIKE '.$eliminatory_search_filter;
+                $where_eliminatory_filter .= 'weight LIKE '.$eliminatory_search_filter;
             }
             $where_eliminatory_filter .= ')';
 
@@ -162,7 +162,7 @@ class group_model extends MY_Model {
         }
 
         /******************
-         * Position filter
+         * position filter
         ******************/
         $where_position_filter = "";
         if(isset($filters['pof'])) {
@@ -171,11 +171,11 @@ class group_model extends MY_Model {
 
             if($position_search_filter instanceof Traversable) {
                 foreach ($position_search_filter as $search_position) {
-                    $where_position_filter .= 'Position LIKE '.$search_id.' OR ';
+                    $where_position_filter .= 'position LIKE '.$search_id.' OR ';
                 }
                 $where_position_filter = substr($where_position_filter, 0, -4);
             } else {
-                $where_position_filter .= 'Position LIKE '.$position_search_filter;
+                $where_position_filter .= 'position LIKE '.$position_search_filter;
             }
             $where_position_filter .= ')';
 
@@ -195,11 +195,11 @@ class group_model extends MY_Model {
 
             if($parent_search_filter instanceof Traversable) {
                 foreach ($parent_search_filter as $search_parent) {
-                    $where_parent_filter .= 'FK_Parent_Group LIKE '.$search_id.' OR ';
+                    $where_parent_filter .= 'fk_parent_group LIKE '.$search_id.' OR ';
                 }
                 $where_parent_filter = substr($where_parent_filter, 0, -4);
             } else {
-                $where_parent_filter .= 'FK_Parent_Group LIKE '.$parent_search_filter;
+                $where_parent_filter .= 'fk_parent_group LIKE '.$parent_search_filter;
             }
             $where_parent_filter .= ')';
 

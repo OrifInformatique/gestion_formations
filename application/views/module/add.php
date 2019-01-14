@@ -36,7 +36,7 @@
         <?php
 
         if($update){
-            echo form_hidden('id', $module->ID);
+            echo form_hidden('id', $module->id);
         }
 
         ?>
@@ -50,7 +50,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_input('title_module', set_value('title_module', $module->Title), 'maxlength="65535" class="form-control" id="title_module"');
+                            echo form_input('title_module', set_value('title_module', $module->title), 'maxlength="65535" class="form-control" id="title_module"');
                         else
                             echo form_input('title_module', set_value('title_module'), 'maxlength="65535" class="form-control" id="title_module"');
                         ?>
@@ -68,7 +68,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_dropdown('group_module', $groups, set_value('group_module', $module->FK_Group), 'class="form-control" id="group_module"');
+                            echo form_dropdown('group_module', $groups, set_value('group_module', $module->fk_group), 'class="form-control" id="group_module"');
                         else
                             echo form_dropdown('group_module', $groups, set_value('group_module'), 'class="form-control" id="group_module"');
                         ?>
@@ -86,7 +86,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_input('description_module', set_value('description_module', $module->Description), 'maxlength="65535" class="form-control" id="description_module"');
+                            echo form_input('description_module', set_value('description_module', $module->description), 'maxlength="65535" class="form-control" id="description_module"');
                         else
                             echo form_input('description_module', set_value('description_module'), 'maxlength="65535" class="form-control" id="description_module"');
                         ?>
@@ -104,7 +104,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_input('number_module', set_value('number_module', $module->Number), 'maxlength="65535" class="form-control" id="number_module"');
+                            echo form_input('number_module', set_value('number_module', $module->number), 'maxlength="65535" class="form-control" id="number_module"');
                         else
                             echo form_input('number_module', set_value('number_module'), 'maxlength="65535" class="form-control" id="number_module"');
                         ?>

@@ -47,9 +47,9 @@ class Group extends MY_Controller {
         }
         
         $group_names[0] = $this->lang->line('none');
-        $group_names = array_merge($group_names, $this->group_model->dropdown('Name_Group'));
+        $group_names = array_merge($group_names, $this->group_model->dropdown('name_group'));
         $group_ids[0] = 0;
-        $group_ids = array_merge($group_ids, $this->group_model->dropdown('ID'));
+        $group_ids = array_merge($group_ids, $this->group_model->dropdown('id'));
         for ($i=0; $i < sizeof($group_names); $i++) { 
             $outputs["groups"][$group_ids[$i]] = $group_names[$i];
         }
@@ -69,11 +69,11 @@ class Group extends MY_Controller {
         $this->form_validation->set_rules('parent_group', $this->lang->line('group_parent_group'), 'required');
 
         $req = array(
-            'Name_Group' => $this->input->post('name_group'),
-            'Weight' => $this->input->post('weight'),
-            'Eliminatory' => null !== $this->input->post('eliminatory'),
-            'Position' => $this->input->post('position'),
-            'FK_Parent_Group' => $this->input->post('parent_group')
+            'name_group' => $this->input->post('name_group'),
+            'weight' => $this->input->post('weight'),
+            'eliminatory' => null !== $this->input->post('eliminatory'),
+            'position' => $this->input->post('position'),
+            'fk_parent_group' => $this->input->post('parent_group')
         );
 
         $req = html_escape($req);
@@ -87,7 +87,7 @@ class Group extends MY_Controller {
             redirect('group');
         } else {
             $outputs["groups"][0] = $this->lang->line('none');
-            $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('Name_Group'));
+            $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('name_group'));
             $this->display_view('group/add', $outputs);
         }
     }
@@ -106,14 +106,14 @@ class Group extends MY_Controller {
         for($i = 0; $i < max(array_keys($modules)); $i++) {
             if(!isset($modules[$i]))
                 continue;
-            if($id == $modules[$i]->FK_Group)
+            if($id == $modules[$i]->fk_group)
                 $outputs['deletion_allowed'] = FALSE;
         }
         $groups = $this->group_model->get_ordered();
         for($i = 0; $i < max(array_keys($groups)); $i++) {
             if(!isset($groups[$i]))
                 continue;
-            if($id == $groups[$i]->FK_Parent_Group)
+            if($id == $groups[$i]->fk_parent_group)
                 $outputs['deletion_allowed'] = FALSE;
         }
         $outputs['group'] = $this->group_model->get($id);
