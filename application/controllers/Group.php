@@ -103,11 +103,13 @@ class Group extends MY_Controller {
         $this->load->model('module_subject_model');
         $modules = $this->module_subject_model->get_ordered();
         $outputs['deletion_allowed'] = TRUE;
-        for($i = 0; $i < max(array_keys($modules)); $i++) {
-            if(!isset($modules[$i]))
-                continue;
-            if($id == $modules[$i]->fk_group)
-                $outputs['deletion_allowed'] = FALSE;
+        if (sizeof($modules) != 0) {
+            for($i = 0; $i < max(array_keys($modules)); $i++) {
+                if(!isset($modules[$i]))
+                    continue;
+                if($id == $modules[$i]->fk_group)
+                    $outputs['deletion_allowed'] = FALSE;
+            }
         }
         $groups = $this->group_model->get_ordered();
         for($i = 0; $i < max(array_keys($groups)); $i++) {
