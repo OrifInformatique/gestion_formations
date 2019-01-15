@@ -5,7 +5,7 @@
 
     <?php echo $this->lang->line('formation_delete_confirm')." <em>".$formation->name_formation."</em>?"; ?><br>
 
-    <a href="<?php echo base_url().'formation/delete/'.$formation->id.'/1'; ?>" class="btn btn-danger"><?php echo $this->lang->line('yes'); ?></a>
+    <a href="<?php echo base_url().'formation/delete/'.$formation->ID.'/1'; ?>" class="btn btn-danger"><?php echo $this->lang->line('yes'); ?></a>
     <a href="<?php echo base_url().'formation'; ?>" class="btn"><?php echo $this->lang->line('no'); ?></a>
 
     <?php } else {

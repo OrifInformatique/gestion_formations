@@ -4,7 +4,7 @@
 
     <?php echo $this->lang->line('apprentice_delete_confirm')." <em>".$apprentice->firstname." ".$apprentice->last_name."</em>?"; ?><br>
 
-    <a href="<?php echo base_url().'apprentice/delete/'.$apprentice->id.'/1'; ?>" class="btn btn-danger"><?php echo $this->lang->line('yes'); ?></a>
+    <a href="<?php echo base_url().'apprentice/delete/'.$apprentice->ID.'/1'; ?>" class="btn btn-danger"><?php echo $this->lang->line('yes'); ?></a>
     <a href="<?php echo base_url().'apprentice'; ?>" class="btn"><?php echo $this->lang->line('no'); ?></a>
 
     <?php } else {

@@ -84,13 +84,13 @@ $lang['return']                         = 'Retour';
 $lang['formation_edit_module']          = 'Éditer les module de la formation';
 
 // Messages
-$lang['group_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer le groupe ?';
+$lang['group_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer le groupe';
 $lang['group_deleted']                  = 'Le groupe a été supprimé';
-$lang['module_delete_confirm']          = 'Etes-vous sûr de vouloir supprimer le module ?';
+$lang['module_delete_confirm']          = 'Etes-vous sûr de vouloir supprimer le module';
 $lang['module_deleted']                 = 'Le module a été supprimé';
-$lang['apprentice_delete_confirm']      = 'Etes-vous sûr de vouloir supprimer l\'apprenti ?';
+$lang['apprentice_delete_confirm']      = 'Etes-vous sûr de vouloir supprimer l\'apprenti';
 $lang['apprentice_deleted']             = 'L\'apprenti a été supprimé';
-$lang['formation_delete_confirm']       = 'Etes-vous sûr de vouloir supprimer la formation ?';
+$lang['formation_delete_confirm']       = 'Etes-vous sûr de vouloir supprimer la formation';
 $lang['formation_deleted']              = 'La formation a été supprimé';
 
 // Errors

@@ -4,7 +4,7 @@
 
     <?php echo $this->lang->line('module_delete_confirm')." <em>".$module->title."</em>?"; ?><br>
 
-    <a href="<?php echo base_url().'module/delete/'.$module->id.'/1'; ?>" class="btn btn-danger"><?php echo $this->lang->line('yes'); ?></a>
+    <a href="<?php echo base_url().'module/delete/'.$module->ID.'/1'; ?>" class="btn btn-danger"><?php echo $this->lang->line('yes'); ?></a>
     <a href="<?php echo base_url().'module'; ?>" class="btn"><?php echo $this->lang->line('no'); ?></a>
 
     <?php } else {
