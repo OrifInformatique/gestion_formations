@@ -6,7 +6,7 @@
         <div class="col-md-2"><?php echo $this->lang->line('apprentice_lastname'); ?></div>
         <div class="col-md-2"><?php echo $this->lang->line('apprentice_datebirth'); ?></div>
         <div class="col-md-2"><?php echo $this->lang->line('apprentice_formation'); ?></div>
-        <div class="col-md-2"><?php echo $this->lang->line('apprentice_MSP'); ?></div>
+        <div class="col-md-2"><?php echo $this->lang->line('apprentice_teacher'); ?></div>
         <div class="col-md-1"><?php echo $this->lang->line('apprentice_user'); ?></div>
         <div class="col-md-1"></div>
     </div>
