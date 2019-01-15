@@ -36,8 +36,8 @@
         <?php
 
         if($update){
-            echo form_hidden('id', $formation->id);
-            unset($formation->id);
+            echo form_hidden('id', $formation->ID);
+            unset($formation->ID);
         }
 
         ?>

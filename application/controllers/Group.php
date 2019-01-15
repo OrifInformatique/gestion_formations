@@ -49,7 +49,7 @@ class Group extends MY_Controller {
         $group_names[0] = $this->lang->line('none');
         $group_names = array_merge($group_names, $this->group_model->dropdown('name_group'));
         $group_ids[0] = 0;
-        $group_ids = array_merge($group_ids, $this->group_model->dropdown('id'));
+        $group_ids = array_merge($group_ids, $this->group_model->dropdown('ID'));
         for ($i=0; $i < sizeof($group_names); $i++) { 
             $outputs["groups"][$group_ids[$i]] = $group_names[$i];
         }

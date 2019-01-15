@@ -3,8 +3,8 @@
 class group_model extends MY_Model {
     /* SET MY_Model VARIABLES */
     protected $_table = 'modules_groups';
-    protected $primary_key = 'id';
-    protected $protected_attributes = ['id'];
+    protected $primary_key = 'ID';
+    protected $protected_attributes = ['ID'];
     protected $belongs_to = ['Parent_Group' => ['primary_key' => 'fk_parent_group',
                                             'model' => 'group_model']];
     protected $has_many = ['Modules_Subjects' => ['primary_key' => 'fk_group',
@@ -47,12 +47,12 @@ class group_model extends MY_Model {
 
         if (count($groups) > 0){
             foreach ($groups as $group) {
-                $child_groups = $this->group_model->get_many_by("fk_parent_group = ".$group->id);
+                $child_groups = $this->group_model->get_many_by("fk_parent_group = ".$group->ID);
 
                 if(count($child_groups) > 0){
-                    $groups_tree[$group->name_group] = array($group->id, $this->group_model->get_tree($group->id));
+                    $groups_tree[$group->name_group] = array($group->ID, $this->group_model->get_tree($group->ID));
                 } else {
-                    $groups_tree[$group->name_group] = array($group->id, $group->name_group);
+                    $groups_tree[$group->name_group] = array($group->ID, $group->name_group);
                 }
             }
         } else {
@@ -64,6 +64,7 @@ class group_model extends MY_Model {
 
     /**
      * Returns a list of groups depending on the filters
+     * This is just a big get_many_by()
      * @param array $filters
      *      The filters for the search. 'tf' is for text, 'idf' is for ids, 'wgf' is for weight, 'elf' is for eliminatory, 'pof' is for position, 'pgf' is for parent group
      * @return array
@@ -83,14 +84,14 @@ class group_model extends MY_Model {
 
             $where_text_filter .= '(';
             $where_text_filter .=
-                "group_name LIKE '%".$text_search_contents."%' ";
+                "name_group LIKE '%".$text_search_contents."%' ";
             $where_text_filter .= ')';
 
             $where_group_filter .= $where_text_filter;
         }
 
         /**************
-         * id filter
+         * ID filter
         **************/
         $where_id_filter = "";
         if(isset($filters['idf'])) {
@@ -99,11 +100,11 @@ class group_model extends MY_Model {
 
             if($id_search_filter instanceof Traversable) {
                 foreach ($id_search_filter as $search_id) {
-                    $where_id_filter .= 'id LIKE '.$search_id.' OR ';
+                    $where_id_filter .= 'ID LIKE '.$search_id.' OR ';
                 }
                 $where_id_filter = substr($where_id_filter, 0, -4);
             } else {
-                $where_id_filter .= 'id LIKE '.$id_search_filter;
+                $where_id_filter .= 'ID LIKE '.$id_search_filter;
             }
             $where_id_filter .= ')';
 
@@ -147,11 +148,11 @@ class group_model extends MY_Model {
 
             if($eliminatory_search_filter instanceof Traversable) {
                 foreach ($eliminatory_search_filter as $search_eliminatory) {
-                    $where_eliminatory_filter .= 'weight LIKE '.$search_id.' OR ';
+                    $where_eliminatory_filter .= 'eliminatory LIKE '.$search_id.' OR ';
                 }
                 $where_eliminatory_filter = substr($where_eliminatory_filter, 0, -4);
             } else {
-                $where_eliminatory_filter .= 'weight LIKE '.$eliminatory_search_filter;
+                $where_eliminatory_filter .= 'eliminatory LIKE '.$eliminatory_search_filter;
             }
             $where_eliminatory_filter .= ')';
 

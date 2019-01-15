@@ -36,7 +36,7 @@
         <?php
 
         if($update){
-            echo form_hidden('id', $module->id);
+            echo form_hidden('id', $module->ID);
         }
 
         ?>

@@ -36,8 +36,8 @@
         <?php
 
         if($update){
-            echo form_hidden('id', $group->id);
-            unset($groups[$group->id]); // Prevents the ability to put the group in itself
+            echo form_hidden('id', $group->ID);
+            unset($groups[$group->ID]); // Prevents the ability to put the group in itself
         }
 
         ?>

@@ -34,19 +34,19 @@ class Module extends MY_Controller {
             $outputs["module"] = $this->module_subject_model->get($id);
         }
         
-        $outputs["groups"] = $this->group_model->dropdown('Name_Group');
+        $outputs["groups"] = $this->group_model->dropdown('name_group');
 
         $this->display_view('module/add', $outputs);
     }
 
     public function form_validation($error = NULL){
-        $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required');
+        $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|regex_match[/^[a-z \-A-Z]+$/]');
         $this->form_validation->set_rules('number_module', $this->lang->line('number_module'), 'required');
         $this->form_validation->set_rules('group_module', $this->lang->line('group_module'), 'required');
 
         $req = array(
-            'title' => $this->input->post('title_module'),
             'number' => $this->input->post('number_module'),
+            'title' => $this->input->post('title_module'),
             'fk_group' => $this->input->post('group_module'),
             'description' => $this->input->post('description_module')
         );
@@ -61,7 +61,7 @@ class Module extends MY_Controller {
             }
             redirect('module');
         } else {
-            $outputs["groups"] = $this->group_model->dropdown('Name_Group');
+            $outputs["groups"] = $this->group_model->dropdown('name_group');
             $this->display_view('module/add', $outputs);
         }
     }

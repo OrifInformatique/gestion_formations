@@ -40,7 +40,7 @@ $attributes = array("id" => "apprenticeForm",
         echo '<div class="alert alert-danger">'.validation_errors().'</div>';
 
     if($update)
-        echo form_hidden('id', $apprentice->id);
+        echo form_hidden('id', $apprentice->ID );
     ?>
 
     <div class="row">
@@ -124,11 +124,10 @@ $attributes = array("id" => "apprenticeForm",
                 </div>
                 <div class="col-md-8">
                     <?php
-                    //Find a way to load the msps
                     if($update)
-                        echo form_dropdown('teacher', $msps, set_value('teacher', $apprentice->fk_teacher), 'class="form-control" id="teacher"');
+                        echo form_dropdown('teacher', $teachers, set_value('teacher', $apprentice->fk_teacher), 'class="form-control" id="teacher"');
                     else
-                        echo form_dropdown('teacher', $msps, set_value('teacher'), 'class="form-control" id="teacher"');
+                        echo form_dropdown('teacher', $teachers, set_value('teacher'), 'class="form-control" id="teacher"');
                     ?>
                 </div>
             </div>

@@ -2,8 +2,8 @@
 
 class teacher_model extends MY_Model {
     protected $_table = "teachers";
-    protected $primary_key = 'id';
-    protected $protected_attributes = ['id'];
+    protected $primary_key = 'ID';
+    protected $protected_attributes = ['ID'];
     protected $belongs_to = ["Parent_User" => ["primary_key" => "fk_user",
                                                 "model" => "user_model"]];
     protected $has_many = ["Child_Apprentice" => ["primary_key" => "fk_teacher",
@@ -13,7 +13,7 @@ class teacher_model extends MY_Model {
         parent::__construct();
     }
 
-    public function get_ordered($main = 'id', $direction = 'asc'){
+    public function get_ordered($main = 'ID', $direction = 'asc'){
         $this->db->order_by($main, $direction);
         return $this->apprentice_model->get_all();
     }
