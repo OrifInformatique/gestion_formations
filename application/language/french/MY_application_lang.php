@@ -9,9 +9,10 @@
 
 // Application name
 $lang['app_title']                      = 'Gestion de formations';
-$lang['app_welcome']                    = 'Bienvenu sur le logiciel de gestion de formations';
+$lang['app_welcome']                    = 'Bienvenu sur le logiciel de gestion de formations.';
 
 // Navigation menu
+$lang['nav_categories']                 = 'Catégories:';
 $lang['nav_group']                      = 'Groupes';
 $lang['nav_module']                     = 'Modules';
 $lang['nav_apprentice']                 = 'Apprentis';
