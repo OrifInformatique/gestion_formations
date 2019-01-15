@@ -29,8 +29,8 @@
                              $module->number="";
                         }
                         echo '<div class="col-md-1">'.$module->number.'</div>';
-                        echo '<div class="col-md-10"><a href="'.base_url().'module/form/'.$module->ID.'">'.$module->title.'</a></div>';
-                        echo '<div class="col-md-1"><a href="'.base_url().'module/delete/'.$module->ID.'">[x]</a></div>';
+                        echo '<div class="col-md-10"><a href="'.base_url().'module/form/'.$module->id.'">'.$module->title.'</a></div>';
+                        echo '<div class="col-md-1"><a href="'.base_url().'module/delete/'.$module->id.'">[x]</a></div>';
                     echo '</div>';
                 }
             }

@@ -40,7 +40,7 @@ $attributes = array("id" => "apprenticeForm",
         echo '<div class="alert alert-danger">'.validation_errors().'</div>';
 
     if($update)
-        echo form_hidden('id', $apprentice->ID );
+        echo form_hidden('id', $apprentice->id );
     ?>
 
     <div class="row">

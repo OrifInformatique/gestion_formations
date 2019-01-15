@@ -113,11 +113,10 @@ class Apprentice extends MY_Controller {
         $results["formations"] = $this->link_arrays($formation_ids, $formation_names);
 
         $teachers_names = $this->teacher_model->dropdown('firstname');
-        $teachers_names[0] = $this->lang->line('none');
         $teachers_last_names = $this->teacher_model->dropdown('last_name');
-        $teachers_last_names[0] = "";
-        for($i = 0; $i < sizeof($teachers_names); $i ++)
+        for($i = 1; $i < sizeof($teachers_names)+1; $i ++)
             $teachers_names[$i] .= " ".$teachers_last_names[$i];
+        $teachers_names[0] = $this->lang->line('none');
         $msps_ids = $this->teacher_model->dropdown('id');
         $msps_ids[0] = 0;
         $results["teachers"] = $this->link_arrays($msps_ids, $teachers_names);
@@ -132,11 +131,12 @@ class Apprentice extends MY_Controller {
     }
 
     private function link_arrays($array_keys, $array_values) {
+        $results[0] = $this->lang->line('none');
         if(sizeof($array_keys) == 0 || sizeof($array_values) == 0 || sizeof($array_keys) != sizeof($array_values))
             return NULL;
-        for($i = 0; $i < sizeof($array_keys); $i++)
-            $results[$array_keys[$i]] = $array_values[$i];
-
+        for($i = 0; $i < max($array_keys)+1; $i++)
+            if(isset($array_values[$i]))
+                $results[$array_keys[$i]] = $array_values[$i];
         return $results;
     }
 }

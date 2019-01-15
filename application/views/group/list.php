@@ -14,12 +14,12 @@
             <div class="row">
                 <!-- Click here to modify -->
                 <div class="col-md-1"><?php echo $group->position; ?></div>
-                <div class="col-md-3"><a href="<?php echo base_url().'group/form/'.$group->ID; ?>"><?php echo $group->name_group; ?></a></div>
+                <div class="col-md-3"><a href="<?php echo base_url().'group/form/'.$group->id; ?>"><?php echo $group->name_group; ?></a></div>
                 <div class="col-md-2"><?php echo $group->weight . ' %'; ?></div>
                 <div class="col-md-2"><?php echo $group->eliminatory?$this->lang->line('yes'):$this->lang->line('no'); ?></div>
                 <div class="col-md-3"><?php echo getParentGroup($group->fk_parent_group, $groups); ?></div>
                 <!-- Click here to delete -->
-                <div class="col-md-1"><a href="<?php echo base_url().'group/delete/'.$group->ID; ?>">[x]</a></div>
+                <div class="col-md-1"><a href="<?php echo base_url().'group/delete/'.$group->id; ?>">[x]</a></div>
             </div>
         <?php
             }
@@ -32,7 +32,7 @@
             return "";
         } else {
             foreach ($groups as $group) {
-                if($group->ID == $id){
+                if($group->id == $id){
                     return $group->name_group;
                 }
             }

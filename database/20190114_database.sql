@@ -27,21 +27,21 @@ USE `gestion_formations`;
 
 DROP TABLE IF EXISTS `apprentices`;
 CREATE TABLE IF NOT EXISTS `apprentices` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `date_birth` date NOT NULL,
   `fk_formation` int(11) NOT NULL,
   `fk_teacher` int(11) NOT NULL,
   `fk_user` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `apprentices`
 --
 
-INSERT INTO `apprentices` (`ID`, `firstname`, `last_name`, `date_birth`, `fk_formation`, `fk_teacher`, `fk_user`) VALUES
+INSERT INTO `apprentices` (`id`, `firstname`, `last_name`, `date_birth`, `fk_formation`, `fk_teacher`, `fk_user`) VALUES
 (3, 'Lim', 'Jancer', '2000-01-04', 0, 0, 0),
 (4, 'Janc', 'Lime', '1999-09-01', 0, 0, 0),
 (7, 'Fred', 'George', '2019-08-09', 0, 0, 0),
@@ -210,17 +210,17 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 
 DROP TABLE IF EXISTS `formations`;
 CREATE TABLE IF NOT EXISTS `formations` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name_formation` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `duration` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `formations`
 --
 
-INSERT INTO `formations` (`ID`, `name_formation`, `duration`) VALUES
+INSERT INTO `formations` (`id`, `name_formation`, `duration`) VALUES
 (1, 'Stage', 3),
 (2, 'Stage d\'observation', 6),
 (3, 'Stage', 1);
@@ -266,20 +266,20 @@ CREATE TABLE IF NOT EXISTS `grades` (
 
 DROP TABLE IF EXISTS `modules_groups`;
 CREATE TABLE IF NOT EXISTS `modules_groups` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name_group` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `weight` int(11) NOT NULL,
   `eliminatory` tinyint(1) NOT NULL,
   `position` int(11) NOT NULL,
   `fk_parent_group` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `modules_groups`
 --
 
-INSERT INTO `modules_groups` (`ID`, `name_group`, `weight`, `eliminatory`, `position`, `fk_parent_group`) VALUES
+INSERT INTO `modules_groups` (`id`, `name_group`, `weight`, `eliminatory`, `position`, `fk_parent_group`) VALUES
 (1, 'Général', 100, 0, 1, 0),
 (3, 'Vide', 100, 1, 1, 1),
 (5, 'Générique', 50, 1, 2, 8),
@@ -297,19 +297,19 @@ INSERT INTO `modules_groups` (`ID`, `name_group`, `weight`, `eliminatory`, `posi
 
 DROP TABLE IF EXISTS `modules_subjects`;
 CREATE TABLE IF NOT EXISTS `modules_subjects` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `number` int(11) NOT NULL COMMENT '0 pour les matières',
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `fk_group` int(11) NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `modules_subjects`
 --
 
-INSERT INTO `modules_subjects` (`ID`, `number`, `title`, `fk_group`, `description`) VALUES
+INSERT INTO `modules_subjects` (`id`, `number`, `title`, `fk_group`, `description`) VALUES
 (1, 5, 'Grrr', 1, 'rien');
 
 -- --------------------------------------------------------
@@ -320,18 +320,18 @@ INSERT INTO `modules_subjects` (`ID`, `number`, `title`, `fk_group`, `descriptio
 
 DROP TABLE IF EXISTS `teachers`;
 CREATE TABLE IF NOT EXISTS `teachers` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `fk_user` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `teachers`
 --
 
-INSERT INTO `teachers` (`ID`, `firstname`, `last_name`, `fk_user`) VALUES
+INSERT INTO `teachers` (`id`, `firstname`, `last_name`, `fk_user`) VALUES
 (1, 'Joe', 'Doe', 0),
 (2, 'Jane', 'Dae', 0);
 
@@ -343,11 +343,11 @@ INSERT INTO `teachers` (`ID`, `firstname`, `last_name`, `fk_user`) VALUES
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `fk_user_type` int(11) NOT NULL,
   `user` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -358,10 +358,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 DROP TABLE IF EXISTS `user_types`;
 CREATE TABLE IF NOT EXISTS `user_types` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `access_level` int(11) NOT NULL,
-  PRIMARY KEY (`ID`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;

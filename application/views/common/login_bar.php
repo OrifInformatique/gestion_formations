@@ -31,6 +31,9 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
+            <b class="nav-link"><?php echo $this->lang->line('nav_categories');?></b>
+          </li>
+          <li class="nav-item active">
             <a class="nav-link" href="<?php echo base_url('Group');?>"><?php echo $this->lang->line('nav_group');?></a>
           </li>
           <li class="nav-item active">

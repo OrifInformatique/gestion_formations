@@ -1,16 +1,16 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class group_model extends MY_Model {
+class module_group_model extends MY_Model {
     /* SET MY_Model VARIABLES */
     protected $_table = 'modules_groups';
-    protected $primary_key = 'ID';
-    protected $protected_attributes = ['ID'];
+    protected $primary_key = 'id';
+    protected $protected_attributes = ['id'];
     protected $belongs_to = ['Parent_Group' => ['primary_key' => 'fk_parent_group',
-                                            'model' => 'group_model']];
+                                            'model' => 'module_group_model']];
     protected $has_many = ['Modules_Subjects' => ['primary_key' => 'fk_group',
                                                     'model' => 'modules_subjects_model'],
                            'Child_Groups' => ['primary_key' => 'fk_parent_group',
-                                          'model' => 'group_model']];
+                                          'model' => 'module_group_model']];
 
     /**
      * Constructor
@@ -30,7 +30,7 @@ class group_model extends MY_Model {
      */
     public function get_ordered($main = 'position', $direction = 'asc'){
         $this->db->order_by($main, $direction);
-        return $this->group_model->get_all();
+        return $this->module_group_model->get_all();
     }
 
     /**
@@ -43,16 +43,16 @@ class group_model extends MY_Model {
     public function get_tree($parent_group = 0){
         
         $this->db->order_by('position', 'asc');
-        $groups = $this->group_model->get_many_by("fk_parent_group = ".$parent_group);
+        $groups = $this->module_group_model->get_many_by("fk_parent_group = ".$parent_group);
 
         if (count($groups) > 0){
             foreach ($groups as $group) {
-                $child_groups = $this->group_model->get_many_by("fk_parent_group = ".$group->ID);
+                $child_groups = $this->module_group_model->get_many_by("fk_parent_group = ".$group->id);
 
                 if(count($child_groups) > 0){
-                    $groups_tree[$group->name_group] = array($group->ID, $this->group_model->get_tree($group->ID));
+                    $groups_tree[$group->name_group] = array($group->id, $this->module_group_model->get_tree($group->id));
                 } else {
-                    $groups_tree[$group->name_group] = array($group->ID, $group->name_group);
+                    $groups_tree[$group->name_group] = array($group->id, $group->name_group);
                 }
             }
         } else {
@@ -91,7 +91,7 @@ class group_model extends MY_Model {
         }
 
         /**************
-         * ID filter
+         * id filter
         **************/
         $where_id_filter = "";
         if(isset($filters['idf'])) {
@@ -100,11 +100,11 @@ class group_model extends MY_Model {
 
             if($id_search_filter instanceof Traversable) {
                 foreach ($id_search_filter as $search_id) {
-                    $where_id_filter .= 'ID LIKE '.$search_id.' OR ';
+                    $where_id_filter .= 'id LIKE '.$search_id.' OR ';
                 }
                 $where_id_filter = substr($where_id_filter, 0, -4);
             } else {
-                $where_id_filter .= 'ID LIKE '.$id_search_filter;
+                $where_id_filter .= 'id LIKE '.$id_search_filter;
             }
             $where_id_filter .= ')';
 

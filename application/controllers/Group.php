@@ -18,7 +18,7 @@ class Group extends MY_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('group_model');
+        $this->load->model('module_group_model');
         $this->load->helper(array('form', 'url'));
     }
 
@@ -28,7 +28,7 @@ class Group extends MY_Controller {
      *      The error (does nothing)
      */
     public function index($error = 0){
-        $outputs['groups'] = $this->group_model->get_ordered();
+        $outputs['groups'] = $this->module_group_model->get_ordered();
         $this->display_view('group/list', $outputs);
     }
 
@@ -43,13 +43,13 @@ class Group extends MY_Controller {
         $outputs["error"] = ($error == NULL ? NULL : true);
 
         if($id > 0){
-            $outputs["group"] = $this->group_model->get($id);
+            $outputs["group"] = $this->module_group_model->get($id);
         }
         
         $group_names[0] = $this->lang->line('none');
-        $group_names = array_merge($group_names, $this->group_model->dropdown('name_group'));
+        $group_names = array_merge($group_names, $this->module_group_model->dropdown('name_group'));
         $group_ids[0] = 0;
-        $group_ids = array_merge($group_ids, $this->group_model->dropdown('ID'));
+        $group_ids = array_merge($group_ids, $this->module_group_model->dropdown('ID'));
         for ($i=0; $i < sizeof($group_names); $i++) { 
             $outputs["groups"][$group_ids[$i]] = $group_names[$i];
         }
@@ -80,14 +80,14 @@ class Group extends MY_Controller {
 
         if($this->form_validation->run()){
             if($this->input->post('id') > 0){
-                $this->group_model->update($this->input->post('id'), $req);
+                $this->module_group_model->update($this->input->post('id'), $req);
             } else {
-                $this->group_model->insert($req);
+                $this->module_group_model->insert($req);
             }
             redirect('group');
         } else {
             $outputs["groups"][0] = $this->lang->line('none');
-            $outputs["groups"] = array_merge($outputs["groups"], $this->group_model->dropdown('name_group'));
+            $outputs["groups"] = array_merge($outputs["groups"], $this->module_group_model->dropdown('name_group'));
             $this->display_view('group/add', $outputs);
         }
     }
@@ -111,16 +111,16 @@ class Group extends MY_Controller {
                     $outputs['deletion_allowed'] = FALSE;
             }
         }
-        $groups = $this->group_model->get_ordered();
+        $groups = $this->module_group_model->get_ordered();
         for($i = 0; $i < max(array_keys($groups)); $i++) {
             if(!isset($groups[$i]))
                 continue;
             if($id == $groups[$i]->fk_parent_group)
                 $outputs['deletion_allowed'] = FALSE;
         }
-        $outputs['group'] = $this->group_model->get($id);
+        $outputs['group'] = $this->module_group_model->get($id);
         if($confirm == 1) {
-            $this->group_model->delete($id);
+            $this->module_group_model->delete($id);
             $this->display_view('group/success');
         } elseif ($confirm == 0)
             $this->display_view('group/delete', $outputs);
