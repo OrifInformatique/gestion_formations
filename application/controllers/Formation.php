@@ -88,6 +88,9 @@ class Formation extends MY_Controller {
      */
     public function delete($id, $confirm = 0) {
         $outputs['formation'] = $this->formation_model->get($id);
+        $outputs['deletion_allowed'] = TRUE;
+        $modules = $this->formation_module_model->with('Modules')->get_many_by('fk_formation='.$id);
+        if(sizeof($modules) > 0) $outputs['deletion_allowed'] = FALSE;
         if($confirm == 1) {
             $this->formation_model->delete($id);
             $this->display_view('formation/success');

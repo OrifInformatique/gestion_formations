@@ -56,7 +56,7 @@ $lang['group_list']                     = 'Liste des groupes';
 $lang['group_new']                      = 'Nouveau groupe';
 $lang['group_modify']                   = 'Modifier le groupe';
 $lang['group_delete']                   = 'Supprimer le groupe';
-$lang['group_delete_not']               = 'Le groupe ne peut pas être supprimé car un autre groupe/module y est associé';
+$lang['group_delete_not']               = 'Le groupe ne peut pas être supprimé car un autre groupe/module y est associé.';
 $lang['module_list']                    = 'Liste des modules';
 $lang['module_new']                     = 'Nouveau module';
 $lang['module_modify']                  = 'Modifier le module';
@@ -69,6 +69,7 @@ $lang['formation_list']                 = 'Liste des formations';
 $lang['formation_new']                  = 'Nouvelle formation';
 $lang['formation_modify']               = 'Modifier la formation';
 $lang['formation_delete']               = 'Supprimer la formation';
+$lang['formation_delete_not']           = 'La formation ne peut pas être supprimée car un module y est associé.';
 
 // Buttons
 $lang['btn_login']                      = 'Se connecter';
