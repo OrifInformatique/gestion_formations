@@ -11,8 +11,8 @@ class user_model extends MY_Model
 {
     /* SET MY_Model VARIABLES */
     protected $_table = 'users';
-    protected $primary_key = 'ID';
-    protected $protected_attributes = ['ID'];
+    protected $primary_key = 'id';
+    protected $protected_attributes = ['id'];
     protected $belongs_to = ['user_type'=> ['primary_key' => 'fk_user_type',
                                             'model' => 'user_type_model']];
     protected $has_many = ['Child_Apprentice' => ['primary_key' => 'fk_user',

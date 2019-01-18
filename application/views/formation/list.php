@@ -13,6 +13,7 @@
                 <!-- Click here to modify -->
                 <div class="col-md-3"><a href="<?php echo base_url().'formation/form/'.$formation->id; ?>"><?php echo $formation->name_formation; ?></a></div>
                 <div class="col-md-3"><?php echo $formation->duration." ".$this->lang->line('years'); ?></div>
+                <div class="col-md-3"><a href="<?php echo base_url().'formation/edit_modules/'.$formation->id; ?>"><?php echo $this->lang->line('formation_edit_module'); ?></a></div>
                 <!-- Click here to delete -->
                 <div class="col-md-3"><a href="<?php echo base_url().'formation/delete/'.$formation->id; ?>">[x]</a></div>
             </div>

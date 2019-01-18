@@ -19,6 +19,8 @@ class Formation extends MY_Controller {
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('formation_model');
+        $this->load->model('formation_module_model');
+        $this->load->model('module_subject_model');
         $this->load->helper(array('form', 'url'));
     }
 
@@ -93,5 +95,53 @@ class Formation extends MY_Controller {
             $this->display_view('formation/delete', $outputs);
         else
             redirect('formation');
+    }
+
+
+
+    public function edit_modules($id){
+        $outputs["formation"] = $this->formation_model->get($id);
+        $outputs["modules"] = $this->formation_module_model->with('Modules')->get_many_by('fk_formation='.$id);
+        $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
+        $this->display_view('formation/edit_modules', $outputs);
+    }
+
+    public function edit_modules_post(){
+        $id = $this->input->post('id');
+
+        $add_module = $this->input->post('add_module');
+        $del_module = $this->input->post('del_module');
+        $quit = $this->input->post('quit');
+        $modules = $this->input->post('modules');
+
+        if(!is_null($modules)){
+            foreach ($modules as $key => $module) {
+                $req = array(
+                    'fk_formation' => $id,
+                    'fk_module' => $module
+                );
+                if(is_null($this->formation_module_model->get($key))){
+                    $this->formation_module_model->insert($req);
+                } else {
+                    $this->formation_module_model->update($key, $req);
+                }
+            }
+        }
+
+        if(isset($add_module)){
+            $outputs["add_module"] = true;
+        } else if(isset($del_module)) {
+            $this->formation_module_model->delete(array_keys($del_module)[0]);
+        }
+
+        if(isset($quit)) {
+            $this->index();
+        } else {
+            $outputs["formation"] = $this->formation_model->get($id);
+            $outputs["modules"] = $this->formation_module_model->with('Modules')->get_many_by('fk_formation='.$id);
+            $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
+        
+            $this->display_view('formation/edit_modules', $outputs);
+        }
     }
 }

@@ -10,8 +10,8 @@
 class user_type_model extends MY_Model
 {
     protected $_table = 'users_types';
-    protected $primary_key = 'ID';
-    protected $protected_attributes = ['ID'];
+    protected $primary_key = 'id';
+    protected $protected_attributes = ['id'];
     public $has_many = ['users' => ['primary_key' => 'fk_user_type',
                                     'model' => 'user_model']];
 
