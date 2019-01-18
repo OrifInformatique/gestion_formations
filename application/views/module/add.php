@@ -14,7 +14,7 @@
     $attributes = array("id" => "addModuleForm",
                         "name" => "addModuleForm");
     echo form_open('Module/form_validation', $attributes);
-    ?>        
+    ?>
         <!-- Display buttons and display topic and question type as information -->
         <div class="row">
             <div class="form-group">

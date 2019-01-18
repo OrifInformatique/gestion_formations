@@ -46,6 +46,10 @@ $lang['apprentice_teacher']             = 'MSP';
 $lang['apprentice_user']                = 'Utilisateur';
 $lang['formation_name']                 = 'Nom';
 $lang['formation_duration']             = 'Durée';
+$lang['user_create']                    = 'Nouvel utilisateur';
+$lang['user_username']                  = 'Nom d\'utilisateur';
+$lang['user_password']                  = 'Mot de passe';
+$lang['user_type']                      = 'Type d\'utilisateur';
 
 // Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';

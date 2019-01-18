@@ -22,4 +22,9 @@ class user_type_model extends MY_Model
     {
         parent::__construct();
     }
+
+    public function get_ordered($main = 'id', $direction = 'asc'){
+        $this->db->order_by($main, $direction);
+        return $this->user_type_model->get_all();
+    }
 }

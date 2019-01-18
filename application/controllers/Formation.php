@@ -75,7 +75,7 @@ class Formation extends MY_Controller {
             }
             redirect('formation');
         } else {
-            $this->display_view('formation/add', $outputs);
+            $this->display_view('formation/add');
         }
     }
 

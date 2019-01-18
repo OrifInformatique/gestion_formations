@@ -70,6 +70,36 @@ class Auth extends MY_Controller {
         }
     }
 
+    public function form($error = NULL) {
+        $outputs["error"] = ($error == NULL ? NULL : true);
+        $outputs['user_types'] = $this->user_type_model->get_ordered();
+        $outputs['user_type'][0] = $this->lang->line('none');
+
+        $this->display_view('login/form', $outputs);
+    }
+
+    public function form_validation($error = NULL) {
+        $this->form_validation->set_rules('username', strtolower($this->lang->line('field_username')), 'trim|required|min_length['.USERNAME_MIN_LENGTH.']');
+        $this->form_validation->set_rules('password', strtolower($this->lang->line('field_password')), 'trim|required|min_length['.PASSWORD_MIN_LENGTH.']');
+        $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
+
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
+        $user_type = $this->input->post('user_type');
+
+        $req = array(
+            'username' => $this->input->post('username'),
+            'password' => $this->input->post('password'),
+            'user_type' => $this->input->post('user_type')
+        );
+
+        if($this->form_validation->run() && $this->is_username_unique($username)) {
+            $this->formation_model->insert($req);
+        } else {
+            $this->display_view('login/form');
+        }
+    }
+
     /**
      * Destroy the session and redirect to login page
      */
