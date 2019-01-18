@@ -84,12 +84,10 @@ class Auth extends MY_Controller {
         $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
 
         $username = $this->input->post('username');
-        $password = $this->input->post('password');
-        $user_type = $this->input->post('user_type');
 
         $req = array(
             'user' => $this->input->post('username'),
-            'password' => $this->input->post('password'),
+            'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
             'fk_user_type' => $this->input->post('user_type')
         );
 
