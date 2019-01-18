@@ -88,15 +88,16 @@ class Auth extends MY_Controller {
         $user_type = $this->input->post('user_type');
 
         $req = array(
-            'username' => $this->input->post('username'),
+            'user' => $this->input->post('username'),
             'password' => $this->input->post('password'),
-            'user_type' => $this->input->post('user_type')
+            'fk_user_type' => $this->input->post('user_type')
         );
 
         if($this->form_validation->run() && $this->is_username_unique($username)) {
-            $this->formation_model->insert($req);
+            $this->user_model->insert($req);
+            $this->index();
         } else {
-            $this->display_view('login/form');
+            $this->form();
         }
     }
 

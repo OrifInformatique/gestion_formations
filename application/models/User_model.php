@@ -40,7 +40,7 @@ class user_model extends MY_Model
     {
         $user = $this->get_by('user', $username);
 
-        if (!is_null($user) && password_verify($password, $user->Password)) {
+        if (!is_null($user) && password_verify($password, $user->password)) {
             return true;
         }else{
             return false;

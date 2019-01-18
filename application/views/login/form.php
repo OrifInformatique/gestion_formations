@@ -13,7 +13,7 @@
     <?php
     $attributes = array("id" => "addUser",
                         "name" => "addUser");
-    echo form_open('user/form_validation', $attributes);
+    echo form_open('auth/form_validation', $attributes);
     ?>
 
     <!-- Display buttons and display topic and question type as information -->
