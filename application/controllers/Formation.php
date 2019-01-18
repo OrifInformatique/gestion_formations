@@ -138,7 +138,7 @@ class Formation extends MY_Controller {
         }
 
         if(isset($quit)) {
-            $this->index();
+            redirect('formation');
         } else {
             $outputs["formation"] = $this->formation_model->get($id);
             $outputs["modules"] = $this->formation_module_model->with('Modules')->get_many_by('fk_formation='.$id);

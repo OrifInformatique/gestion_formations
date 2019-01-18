@@ -61,6 +61,7 @@ $lang['module_list']                    = 'Liste des modules';
 $lang['module_new']                     = 'Nouveau module';
 $lang['module_modify']                  = 'Modifier le module';
 $lang['module_delete']                  = 'Supprimer le module';
+$lang['module_delete_not']              = 'Le module ne peut pas être supprimé car une formation y est associée.';
 $lang['apprentice_list']                = 'Liste des apprentis';
 $lang['apprentice_new']                 = 'Nouvel apprenti';
 $lang['apprentice_modify']              = 'Modifier l\'apprenti';

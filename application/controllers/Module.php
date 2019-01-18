@@ -67,7 +67,11 @@ class Module extends MY_Controller {
     }
 
     public function delete($id, $confirm = 0) {
+        $this->load->model('formation_module_model');
         $outputs['module'] = $this->module_subject_model->get($id);
+        $outputs['deletion_allowed'] = TRUE;
+        $modules = $this->formation_module_model->with('Modules')->get_many_by('fk_module='.$id);
+        if(sizeof($modules) > 0) $outputs['deletion_allowed'] = FALSE;
         if($confirm == 1) {
             $this->module_subject_model->delete($id);
             $this->display_view('module/success');
