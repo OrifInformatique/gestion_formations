@@ -73,7 +73,7 @@ class Auth extends MY_Controller {
     public function form($error = NULL) {
         $outputs["error"] = ($error == NULL ? NULL : true);
         $outputs['user_types'] = $this->user_type_model->get_ordered();
-        $outputs['user_type'][0] = $this->lang->line('none');
+        $outputs['user_types'][0] = $this->lang->line('none');
 
         $this->display_view('login/form', $outputs);
     }

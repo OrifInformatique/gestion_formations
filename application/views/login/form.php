@@ -67,12 +67,7 @@
                     <?php echo form_label($this->lang->line('user_type'), 'user_type'); ?>
                 </div>
                 <div class="col-md-8">
-                    <?php
-                    if($update)
-                        echo form_dropdown('user_type', $groups, set_value('user_type', $module->fk_group), 'class="form-control" id="user_type"');
-                    else
-                        echo form_dropdown('user_type', $groups, set_value('user_type'), 'class="form-control" id="user_type"');
-                    ?>
+                    <?php echo form_dropdown('user_type', $user_types, set_value('user_type'), 'class="form-control" id="user_type"'); ?>
                 </div>
             </div>
         </div>
