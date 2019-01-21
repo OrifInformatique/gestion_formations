@@ -35,7 +35,7 @@ class Apprentice extends MY_Controller {
     * @param integer $id
     *       The apprentice to modify (0 for new)
     * @param integer $error
-    *       The error (does nothing)
+    *       The error (probably does nothing)
     */
     public function form($id = 0, $error = NULL) {
         $outputs = $this->get_parents();

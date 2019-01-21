@@ -73,7 +73,7 @@ class Auth extends MY_Controller {
     /**
     * Displays the form to create a new user
     * @param object $error
-    *       The error (does nothing)
+    *       The error (probably does nothing)
     */
     public function form($error = NULL) {
         $outputs["error"] = ($error == NULL ? NULL : true);
