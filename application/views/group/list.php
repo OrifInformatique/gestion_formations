@@ -27,6 +27,15 @@
     ?>
 </div>
 <?php
+    /**
+    * Returns the parent group
+    * @param integer $id
+    *       The id of the parent group
+    * @param array $groups
+    *       The entirety of groups
+    * @return string
+    *       The name of the parent group
+    */
     function getParentGroup($id = 0, $groups){
         if($id == 0){
             return "";

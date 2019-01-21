@@ -70,6 +70,11 @@ class Auth extends MY_Controller {
         }
     }
 
+    /**
+    * Displays the form to create a new user
+    * @param object $error
+    *       The error (does nothing)
+    */
     public function form($error = NULL) {
         $outputs["error"] = ($error == NULL ? NULL : true);
         $outputs['user_types'] = $this->user_type_model->get_ordered();
@@ -78,6 +83,11 @@ class Auth extends MY_Controller {
         $this->display_view('login/form', $outputs);
     }
 
+    /**
+    * Validates the entered user
+    * @param object $error
+    *       The error (does nothing)
+    */
     public function form_validation($error = NULL) {
         $this->form_validation->set_rules('username', strtolower($this->lang->line('field_username')), 'trim|required|min_length['.USERNAME_MIN_LENGTH.']');
         $this->form_validation->set_rules('password', strtolower($this->lang->line('field_password')), 'trim|required|min_length['.PASSWORD_MIN_LENGTH.']');
@@ -107,6 +117,13 @@ class Auth extends MY_Controller {
         redirect('Auth');
     }
 
+    /**
+    * Checks if the username is unique
+    * @param string $username
+    *       Username to check
+    * @return boolean
+    *       TRUE if the username is unique
+    */
     public function is_username_unique($username) {
         $users = $this->user_model->get_all();
         $is_unique = TRUE;

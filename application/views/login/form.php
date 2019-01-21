@@ -19,7 +19,7 @@
     <!-- Display buttons and display topic and question type as information -->
     <div class="row">
         <div class="form-group">
-            <a name="cancel" class="btn btn-danger" href="<?=base_url('/user')?>"><?=$this->lang->line('cancel')?></a>
+            <a name="cancel" class="btn btn-danger" href="<?=base_url('/auth')?>"><?=$this->lang->line('cancel')?></a>
             <?php
                 echo form_submit('save', $this->lang->line('save'), 'class="btn btn-success"'); 
                 //echo form_reset('reset', $this->lang->line('btn_reset'), 'class="btn btn-danger"');

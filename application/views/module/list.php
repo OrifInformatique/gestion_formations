@@ -6,6 +6,15 @@
 
 </div>
 <?php
+    /**
+    * Returns the parent group
+    * @param integer $id
+    *       The id of the parent group
+    * @param array $groups
+    *       The entirety of groups
+    * @return string
+    *       The name of the parent group
+    */
     function getParentGroup($id = 0, $groups){
         if($id == 0){
             return "";
@@ -17,6 +26,15 @@
             }
         }
     }
+    /**
+    * Displays the entire tree of groups with the modules inside
+    * @param array $groups
+    *       All the groups
+    * @param array $modules
+    *       All the modules
+    * @param string $subject
+    *       No idea
+    */
     function get_tree($groups = array(), $modules = array(), $subject = ""){
         foreach ($groups as $key => $group) {
             echo '<fieldset class="bob">';

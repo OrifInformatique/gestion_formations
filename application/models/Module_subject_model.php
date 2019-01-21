@@ -19,6 +19,13 @@ class module_subject_model extends MY_Model {
         parent::__construct();
     }
 
+    /**
+    * Gets all the database entries ordered
+    * @param string $main
+    *       Column that is looked at for the sorting
+    * @param string $direction
+    *       Ascendent or descentent
+    */
     public function get_ordered($main = 'id', $direction = 'asc'){
         $this->db->order_by($main, $direction);
         return $this->module_subject_model->get_all();
