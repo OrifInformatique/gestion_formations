@@ -101,10 +101,10 @@ class Formation extends MY_Controller {
     }
 
     /**
-    * Edit a module
-    * @param integer $id
-    *       The id of the module to edit
-    */
+     * Edit a module
+     * @param integer $id
+     *      The id of the module to edit
+     */
     public function edit_modules($id){
         $outputs["formation"] = $this->formation_model->get($id);
         $outputs["modules"] = $this->formation_module_model->with('Modules')->get_many_by('fk_formation='.$id);

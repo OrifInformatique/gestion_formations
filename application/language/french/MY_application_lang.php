@@ -107,6 +107,8 @@ $lang['formation_deleted']              = 'La formation a été supprimé';
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';
 $lang['module_missing']                 = 'Aucun module trouvé avec les paramètres entrés';
+$lang['apprentice_missing']             = 'Aucun apprenti trouvé avec les paramètres entrés';
+$lang['formation_missing']              = 'Aucune formation trouvée avec les paramètres entrés';
 $lang['subject']                        = 'Matière';
 
 // Other texts

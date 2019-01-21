@@ -8,7 +8,7 @@
     <a href="<?php echo base_url().'apprentice'; ?>" class="btn"><?php echo $this->lang->line('no'); ?></a>
 
     <?php } else {
-    echo $this->lang->line('group_missing');?>
+    echo $this->lang->line('apprentice_missing');?>
     <br><a href="<?php echo base_url().'apprentice'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a>
     <?php } ?>
 </div>

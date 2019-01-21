@@ -11,6 +11,7 @@
 <div class="container">
     <h1 class="title-section"><?php echo $this->lang->line('formation_edit_module'); ?></h1>
     <?php
+    if(isset($formation)) {
     $attributes = array("id" => "addFormationForm",
                         "name" => "addFormationForm");
     echo form_open('Formation/edit_modules_post', $attributes);
@@ -51,5 +52,8 @@
         </div>
     </div>
             
-    <?php echo form_close(); ?>
+    <?php echo form_close(); } else { 
+    echo $this->lang->line('formation_missing');?>
+    <br><a href="<?php echo base_url().'formation'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a>
+    <?php } ?>
 </div>

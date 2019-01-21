@@ -10,7 +10,7 @@
     <a href="<?php echo base_url().'module'; ?>" class="btn"><?php echo $this->lang->line('no'); ?></a>
 
     <?php } else {
-    echo $this->lang->line('group_missing');?>
+    echo $this->lang->line('module_missing');?>
     <br><a href="<?php echo base_url().'module'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a>
     <?php } } else { ?>
     <div class="row"><a href="<?php echo base_url().'group'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a></div>

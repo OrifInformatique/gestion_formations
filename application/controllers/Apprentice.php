@@ -20,10 +20,10 @@ class Apprentice extends MY_Controller {
     }
 
     /**
-    * Shows the list of apprentices
-    * @param integer $error
-    *       The error (does nothing)
-    */
+     * Shows the list of apprentices
+     * @param integer $error
+     *      The error (does nothing)
+     */
     public function index($error = 0) {
         $outputs = $this->get_parents();
         $outputs["apprentices"] = $this->apprentice_model->get_ordered();
@@ -31,12 +31,12 @@ class Apprentice extends MY_Controller {
     }
 
     /**
-    * Shows the form to create / modify an apprentice
-    * @param integer $id
-    *       The apprentice to modify (0 for new)
-    * @param integer $error
-    *       The error (probably does nothing)
-    */
+     * Shows the form to create / modify an apprentice
+     * @param integer $id
+     *      The apprentice to modify (0 for new)
+     * @param integer $error
+     *      The error (does nothing)
+     */
     public function form($id = 0, $error = NULL) {
         $outputs = $this->get_parents();
 
@@ -49,10 +49,10 @@ class Apprentice extends MY_Controller {
     }
 
     /**
-    * Validates the entry for a new apprentice
-    * @param integer $error
-    *       The error (does nothing)
-    */
+     * Validates the entry for a new apprentice
+     * @param integer $error
+     *      The error (does nothing)
+     */
     public function form_validation($error = NULL){
         $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/^[a-z \-A-Z]+$/]');
         $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/^[a-z \-A-Z]+$/]');
@@ -108,12 +108,12 @@ class Apprentice extends MY_Controller {
     }
 
     /**
-    * Deletes an apprentice
-    * @param integer $id
-    *       id of the apprentice to delete
-    * @param integer $confirm
-    *       1 to delete, 0 to ask the user
-    */
+     * Deletes an apprentice
+     * @param integer $id
+     *      id of the apprentice to delete
+     * @param integer $confirm
+     *      1 to delete, 0 to ask the user, other to go back to index
+     */
     public function delete($id, $confirm = 0) {
         $outputs['apprentice'] = $this->apprentice_model->get($id);
         if($confirm == 1) {
@@ -126,10 +126,10 @@ class Apprentice extends MY_Controller {
     }
 
     /**
-    * Returns all formations, teachers and users
-    * @return array
-    *       All formations, teachers and users in an array
-    */
+     * Returns all formations, teachers and users
+     * @return array
+     *      All formations, teachers and users in an array
+     */
     private function get_parents() {
         $this->load->model('formation_model');
         $this->load->model('teacher_model');
@@ -160,15 +160,15 @@ class Apprentice extends MY_Controller {
     }
 
     /**
-    * Puts 2 arrays as key => value
-    * Both need numbers (and the same ones) to work
-    * @param array $array_keys
-    *       Keys of the future array
-    * @param array $array_values
-    *       Values of the future array
-    * @return array
-    *       An array with the 2 input as key => value
-    */
+     * Puts 2 arrays as key => value
+     * Both need numbers (and the same ones) to work
+     * @param array $array_keys
+     *      Keys of the future array
+     * @param array $array_values
+     *      Values of the future array
+     * @return array
+     *      An array with the 2 input as key => value
+     */
     private function link_arrays($array_keys, $array_values) {
         $results[0] = $this->lang->line('none');
         if(sizeof($array_keys) == 0 || sizeof($array_values) == 0 || sizeof($array_keys) != sizeof($array_values))
