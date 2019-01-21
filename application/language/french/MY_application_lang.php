@@ -63,6 +63,7 @@ $lang['group_delete']                   = 'Supprimer le groupe';
 $lang['group_delete_not']               = 'Le groupe ne peut pas être supprimé car un autre groupe/module y est associé.';
 $lang['module_list']                    = 'Liste des modules';
 $lang['module_new']                     = 'Nouveau module';
+$lang['module_new_not']                 = 'Impossible de créer un module car il n\'y a aucun groupe existant.';
 $lang['module_modify']                  = 'Modifier le module';
 $lang['module_delete']                  = 'Supprimer le module';
 $lang['module_delete_not']              = 'Le module ne peut pas être supprimé car une formation y est associée.';

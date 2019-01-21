@@ -9,6 +9,7 @@
 ?>
 
 <div class="container">
+    <?php if(sizeof($groups) > 0) { ?>
     <h1 class="title-section"><?php if(isset($module)) {echo $this->lang->line('module_modify'); $update = true;} else {echo $this->lang->line('module_new'); $update = false;} ?></h1>
     <?php
     $attributes = array("id" => "addModuleForm",
@@ -113,5 +114,9 @@
             </div>
         </div>
 
-    <?php echo form_close(); ?>
+    <?php echo form_close();
+    } else { ?>
+    <div class="row"><a href="<?php echo base_url().'group'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a></div>
+    <div class="alert alert-warning row"><?php echo $this->lang->line('module_new_not'); ?></div>
+    <?php } ?>
 </div>

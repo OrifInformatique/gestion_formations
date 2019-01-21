@@ -23,6 +23,8 @@ class Module extends MY_Controller {
     public function index($error = 0){
         $outputs['groups'] = $this->module_group_model->get_ordered();
         $outputs['groups_tree'] = $this->module_group_model->get_tree();
+        if(is_null($outputs['groups_tree']))
+            $outputs['groups_tree'] = array();
         $outputs['modules'] = $this->module_subject_model->get_ordered();
         $this->display_view('module/list', $outputs);
     }

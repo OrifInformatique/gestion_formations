@@ -17,7 +17,7 @@ class user_model extends MY_Model
                                             'model' => 'user_type_model']];
     protected $has_many = ['Child_Apprentice' => ['primary_key' => 'fk_user',
                                                     'model' => 'apprentice_model'],
-                            'Child_Teacger' => ['primary_key' => 'fk_user',
+                            'Child_Teacher' => ['primary_key' => 'fk_user',
                                                 'model' => 'teacher_model']];
 
     /**

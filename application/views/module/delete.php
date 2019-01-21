@@ -14,6 +14,6 @@
     <br><a href="<?php echo base_url().'module'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a>
     <?php } } else { ?>
     <div class="row"><a href="<?php echo base_url().'group'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a></div>
-    <div class="alert alert-warning row"><?php echo $this->lang->line('module_delete_not') ?></div>
+    <div class="alert alert-warning row"><?php echo $this->lang->line('module_delete_not'); ?></div>
     <?php } ?>
 </div>
