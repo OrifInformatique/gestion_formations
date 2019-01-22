@@ -33,7 +33,7 @@
      * @param array $modules
      *      All the modules
      * @param string $subject
-     *      No idea
+     *      Text displayed if the module number is 0
      */
     function get_tree($groups = array(), $modules = array(), $subject = ""){
         foreach ($groups as $key => $group) {

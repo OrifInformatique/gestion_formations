@@ -131,9 +131,7 @@ class Apprentice extends MY_Controller {
      *      All formations, teachers and users in an array
      */
     private function get_parents() {
-        $this->load->model('formation_model');
-        $this->load->model('teacher_model');
-        $this->load->model('user_model');
+        $this->load->model(['formation_model','teacher_model','user_model']);
 
         $formation_names = $this->formation_model->dropdown('Name_Formation');
         $formation_names[0] = $this->lang->line('none_f');
@@ -167,7 +165,7 @@ class Apprentice extends MY_Controller {
      * @param array $array_values
      *      Values of the future array
      * @return array
-     *      An array with the 2 input as key => value
+     *      An array with the 2 input as $array_keys => $array_values
      */
     private function link_arrays($array_keys, $array_values) {
         $results[0] = $this->lang->line('none');

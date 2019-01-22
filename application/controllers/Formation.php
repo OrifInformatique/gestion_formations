@@ -18,9 +18,7 @@ class Formation extends MY_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('formation_model');
-        $this->load->model('formation_module_model');
-        $this->load->model('module_subject_model');
+        $this->load->model(['formation_model','formation_module_model','module_subject_model']);
         $this->load->helper(array('form', 'url'));
     }
 
