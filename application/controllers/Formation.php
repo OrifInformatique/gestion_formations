@@ -27,7 +27,7 @@ class Formation extends MY_Controller {
     /**
      * Shows the index with all the groups
      * @param integer $error
-     *      The error (does nothing)
+     *      Unused in the function and in list.php
      */
     public function index($error = 0){
         $outputs['formations'] = $this->formation_model->get_ordered();
@@ -39,7 +39,7 @@ class Formation extends MY_Controller {
      * @param integer $id
      *      If a group with the id exists, it will update it, otherwise it will create a new group
      * @param integer $error
-     *      If there is an error
+     *      Unused in add.php
      */
     public function form($id = 0, $error = NULL){
         $outputs["error"] = ($error == NULL ? NULL : true);
@@ -54,7 +54,7 @@ class Formation extends MY_Controller {
     /**
      * Opens the form and deals with updating or creating the group
      * @param integer $error
-     *      If there is an error (does nothing)
+     *      Unused in the function and in add.php
      */
     public function form_validation($error = NULL){
         $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required');
@@ -112,6 +112,9 @@ class Formation extends MY_Controller {
         $this->display_view('formation/edit_modules', $outputs);
     }
 
+    /**
+    * Displays the form to add / remove / change the modules in the formation
+    */
     public function edit_modules_post(){
         $id = $this->input->post('id');
 

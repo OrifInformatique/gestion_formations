@@ -23,7 +23,7 @@ class Module extends MY_Controller {
     /**
      * Displays the list of modules
      * @param integer $error
-     *      The error (does nothing)
+     *      Unused in function and in list.php
      */
     public function index($error = 0){
         $outputs['groups'] = $this->module_group_model->get_ordered();
@@ -39,7 +39,7 @@ class Module extends MY_Controller {
      * @param integer $id
      *      The id of the module to modify (0 for a new module)
      * @param object $error
-     *      Probably has a text message included so the user can know what they did wrong
+     *      Unused in add.php
      */
     public function form($id = 0, $error = NULL){
         $outputs["error"] = ($error == NULL ? NULL : true);
@@ -56,7 +56,7 @@ class Module extends MY_Controller {
     /**
      * Validates the input from the form
      * @param object $error
-     *      The error (does nothing)
+     *      Unused in the function and in add.php
      */
     public function form_validation($error = NULL){
         $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|alpha_numeric_spaces');
@@ -90,7 +90,7 @@ class Module extends MY_Controller {
      * @param integer $id
      *      The id of the module to delete
      * @param integer $confirm
-     *      0 to display confirmation, 1 to confirm
+     *      0 to display confirmation, 1 to confirm, 0 to go back to the index
      */
     public function delete($id, $confirm = 0) {
         $this->load->model('formation_module_model');

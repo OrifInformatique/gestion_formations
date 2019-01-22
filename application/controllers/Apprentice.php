@@ -22,7 +22,7 @@ class Apprentice extends MY_Controller {
     /**
      * Shows the list of apprentices
      * @param integer $error
-     *      The error (does nothing)
+     *      Unused in the fuction and in list.php
      */
     public function index($error = 0) {
         $outputs = $this->get_parents();
@@ -35,7 +35,7 @@ class Apprentice extends MY_Controller {
      * @param integer $id
      *      The apprentice to modify (0 for new)
      * @param integer $error
-     *      The error (does nothing)
+     *      Unused in form.php
      */
     public function form($id = 0, $error = NULL) {
         $outputs = $this->get_parents();
@@ -51,7 +51,7 @@ class Apprentice extends MY_Controller {
     /**
      * Validates the entry for a new apprentice
      * @param integer $error
-     *      The error (does nothing)
+     *      Unused in the function and in form.php
      */
     public function form_validation($error = NULL){
         $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/^[a-z \-A-Z]+$/]');

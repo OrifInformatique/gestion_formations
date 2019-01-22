@@ -73,7 +73,7 @@ class Auth extends MY_Controller {
     /**
      * Displays the form to create a new user
      * @param object $error
-     *      The error (probably does nothing)
+     *      Unused in form.php
      */
     public function form($error = NULL) {
         $outputs["error"] = ($error == NULL ? NULL : true);
@@ -86,7 +86,7 @@ class Auth extends MY_Controller {
     /**
      * Validates the entered user
      * @param object $error
-     *      The error (does nothing)
+     *      Unused in the function, in form.php and in list.php
      */
     public function form_validation($error = NULL) {
         $this->form_validation->set_rules('username', strtolower($this->lang->line('field_username')), 'trim|required|min_length['.USERNAME_MIN_LENGTH.']');
