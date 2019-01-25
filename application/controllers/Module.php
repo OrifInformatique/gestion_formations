@@ -16,7 +16,7 @@ class Module extends MY_Controller {
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model(["module_subject_model", "module_group_model"]);
-        $this->load->helper(array('form', 'url');
+        $this->load->helper(array('form', 'url'));
     }
 
     /**
