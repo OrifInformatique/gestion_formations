@@ -58,9 +58,10 @@ class Module extends MY_Controller {
      *      Unused in the function and in add.php
      */
     public function form_validation($error = NULL){
-        $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|alpha_numeric_spaces');
+        $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('number_module', $this->lang->line('number_module'), 'required');
         $this->form_validation->set_rules('group_module', $this->lang->line('group_module'), 'required');
+        $this->form_validation->set_rules('description_module', $this->lang->line('module_description'), 'regex_match[/[A-Za-zÀ-ÿ0-9 \-\.,]+/]');
 
         $req = array(
             'number' => $this->input->post('number_module'),

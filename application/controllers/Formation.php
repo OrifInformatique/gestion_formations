@@ -55,7 +55,7 @@ class Formation extends MY_Controller {
      *      Unused in the function and in add.php
      */
     public function form_validation($error = NULL){
-        $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required');
+        $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('duration_formation', $this->lang->line('formation_duration'), 'required');
 
         $req = array(
