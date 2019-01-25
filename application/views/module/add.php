@@ -100,6 +100,25 @@
             <div class="form-group col-md-12">
                 <div class="form-group row">
                     <div class="col-md-4">
+                        <?php echo form_label($this->lang->line('module_is_subject'), 'is_subject'); ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?php
+                        if($update)
+                            echo form_checkbox('is_subject', 'is_subject', $module->number == 0, 'class="form-control" id="is_subject" onclick="setDisplay()"');
+                        else
+                            echo form_checkbox('is_subject', 'is_subject', set_value('is_subject'), 'class="form-control" id="is_subject" onclick="setDisplay()"');
+                        ?>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="div_module_number">
+            <div class="form-group col-md-12">
+                <div class="form-group row">
+                    <div class="col-md-4">
                         <?php echo form_label($this->lang->line('module_number'), 'number_module'); ?>
                     </div>
                     <div class="col-md-8">
@@ -120,3 +139,4 @@
     <div class="alert alert-warning row"><?php echo $this->lang->line('module_new_not'); ?></div>
     <?php } ?>
 </div>
+<script type="text/javascript" src="<?php echo base_url('assets/js/module_add.js'); ?>"></script>

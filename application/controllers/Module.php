@@ -59,19 +59,23 @@ class Module extends MY_Controller {
      */
     public function form_validation($error = NULL){
         $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|alpha_numeric_spaces');
-        $this->form_validation->set_rules('number_module', $this->lang->line('number_module'), 'required');
         $this->form_validation->set_rules('group_module', $this->lang->line('group_module'), 'required');
 
-        $req = array(
-            'number' => $this->input->post('number_module'),
-            'title' => $this->input->post('title_module'),
-            'fk_group' => $this->input->post('group_module'),
-            'description' => $this->input->post('description_module')
-        );
+        if($this->form_validation->run() & (null !== $this->input->post('is_subject') || $this->input->post('module_number') > 0)){
+            if(null !== $this->input->post('is_subject')){
+                $number_module = 0;
+            } else {
+                $number_module = $this->input->post('module_number');
+            }
+            $req = array(
+                'number' => $number_module,
+                'title' => $this->input->post('title_module'),
+                'fk_group' => $this->input->post('group_module'),
+                'description' => $this->input->post('description_module')
+            );
 
-        $req = html_escape($req);
+            $req = html_escape($req);
 
-        if($this->form_validation->run()){
             if($this->input->post('id') > 0){
                 $this->module_subject_model->update($this->input->post('id'), $req);
             } else {
