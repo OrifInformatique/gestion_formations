@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Authentication controller
- * 
+ *
  * @author      Orif, section informatique (UlSi, ViDi)
  * @link        https://github.com/OrifInformatique/gestion_formations
  * @copyright   Copyright (c) Orif (http://www.orif.ch)

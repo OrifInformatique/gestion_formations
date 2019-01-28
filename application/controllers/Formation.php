@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Authentication controller
- * 
+ *
  * @author      Orif, section informatique (UlSi, ViDi, BuYa)
  * @link        https://github.com/OrifInformatique/gestion_formations
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
@@ -147,7 +147,7 @@ class Formation extends MY_Controller {
             $outputs["formation"] = $this->formation_model->get($id);
             $outputs["modules"] = $this->formation_module_model->with('Modules')->get_many_by('fk_formation='.$id);
             $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
-        
+
             $this->display_view('formation/edit_modules', $outputs);
         }
     }

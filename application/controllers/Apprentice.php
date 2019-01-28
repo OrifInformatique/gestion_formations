@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Authentication controller
- * 
+ *
  * @author      Orif, section informatique (UlSi, ViDi, BuYa)
  * @link        https://github.com/OrifInformatique/gestion_formations
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
@@ -86,7 +86,7 @@ class Apprentice extends MY_Controller {
                         $problem = TRUE;
                         break;
                     case 0:
-                        if($current_date[2] < $input_date[1])
+                        if($current_date[2] < $input_date[2])
                             $problem = TRUE;
                         break;
                 }

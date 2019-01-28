@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Authentication controller
- * 
+ *
  * @author      Orif, section informatique (UlSi, ViDi, BuYa)
  * @link        https://github.com/OrifInformatique/gestion_formations
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
@@ -45,12 +45,12 @@ class Group extends MY_Controller {
         if($id > 0){
             $outputs["group"] = $this->module_group_model->get($id);
         }
-        
+
         $group_names[0] = $this->lang->line('none');
         $group_names = array_merge($group_names, $this->module_group_model->dropdown('name_group'));
         $group_ids[0] = 0;
         $group_ids = array_merge($group_ids, $this->module_group_model->dropdown('ID'));
-        for ($i=0; $i < sizeof($group_names); $i++) { 
+        for ($i=0; $i < sizeof($group_names); $i++) {
             $outputs["groups"][$group_ids[$i]] = $group_names[$i];
         }
 

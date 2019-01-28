@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * Module controller
- * 
+ *
  * @author      Orif, section informatique (UlSi, ViDi)
  * @link        https://github.com/OrifInformatique/gestion_formations
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
@@ -46,7 +46,7 @@ class Module extends MY_Controller {
         if($id > 0){
             $outputs["module"] = $this->module_subject_model->get($id);
         }
-        
+
         $outputs["groups"] = $this->module_group_model->dropdown('name_group');
 
         $this->display_view('module/add', $outputs);
