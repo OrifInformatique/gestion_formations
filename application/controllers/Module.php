@@ -114,14 +114,13 @@ class Module extends MY_Controller {
      * @return boolean
      *      TRUE if the module name is unique
      */
-    private function is_module_name_unique($module_name) {
+    private function is_module_name_unique($module_name, $case_sensitive = TRUE) {
         $modules = $this->module_subject_model->get_all();
         $is_unique = TRUE;
         foreach ($modules as $module) {
             if(!$is_unique)
                 break;
-            if($module->title == $module_name)
-            //if(strtolower($module->title) == strtolower($module_name)) //In case you want it case insensitive
+            if(($module->title == $module_name && $case_sensitive) || (strtolower($module->title) == strtolower($module_name) && !$case_sensitive))
                 $is_unique = FALSE;
         }
         return $is_unique;
