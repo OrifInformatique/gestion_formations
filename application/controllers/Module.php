@@ -106,4 +106,24 @@ class Module extends MY_Controller {
         else
             redirect('module');
     }
+
+    /**
+     * Checks if the module name is unique
+     * @param string $module_name
+     *      Module name to check
+     * @return boolean
+     *      TRUE if the module name is unique
+     */
+    private function is_module_name_unique($module_name) {
+        $modules = $this->module_subject_model->get_all();
+        $is_unique = TRUE;
+        foreach ($modules as $module) {
+            if(!$is_unique)
+                break;
+            if($module->title == $module_name)
+            //if(strtolower($module->title) == strtolower($module_name)) //In case you want it case insensitive
+                $is_unique = FALSE;
+        }
+        return $is_unique;
+    }
 }

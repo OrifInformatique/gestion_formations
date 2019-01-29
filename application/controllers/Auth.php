@@ -121,7 +121,7 @@ class Auth extends MY_Controller {
      * @return boolean
      *      TRUE if the username is unique
      */
-    public function is_username_unique($username) {
+    private function is_username_unique($username) {
         $users = $this->user_model->get_all();
         $is_unique = TRUE;
         foreach ($users as $user) {
