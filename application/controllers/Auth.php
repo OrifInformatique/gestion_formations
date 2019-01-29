@@ -92,15 +92,13 @@ class Auth extends MY_Controller {
         $this->form_validation->set_rules('password', strtolower($this->lang->line('field_password')), 'trim|required|min_length['.PASSWORD_MIN_LENGTH.']');
         $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
 
-        $username = $this->input->post('username');
-
         $req = array(
             'user' => $this->input->post('username'),
             'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
             'fk_user_type' => $this->input->post('user_type')
         );
 
-        if($this->form_validation->run() && $this->is_username_unique($username)) {
+        if($this->form_validation->run() && $this->is_username_unique($req['user'])) {
             $this->user_model->insert($req);
             $this->index();
         } else {
