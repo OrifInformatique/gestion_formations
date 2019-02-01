@@ -2,7 +2,6 @@
 
 class formation_module_model extends MY_Model {
     protected $_table = "formations_modules";
-    protected $primary_key = 'id';
     protected $protected_attributes = ['id'];
     protected $belongs_to = ["Formations" => ["primary_key" => "fk_formation",
                                                   "model" => "formation_model"],

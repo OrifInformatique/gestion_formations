@@ -1,8 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class teacher_model extends MY_Model {
-    protected $_table = "teachers";
-    protected $primary_key = 'id';
     protected $protected_attributes = ['id'];
     protected $belongs_to = ["Parent_User" => ["primary_key" => "fk_user",
                                                 "model" => "user_model"]];

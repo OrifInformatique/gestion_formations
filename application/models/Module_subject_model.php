@@ -3,7 +3,6 @@
 class module_subject_model extends MY_Model {
     /* SET MY_Model VARIABLES */
     protected $_table = 'modules_subjects';
-    protected $primary_key = 'id';
     protected $protected_attributes = ['id'];
     protected $belongs_to = ['Group' => ['primary_key' => 'fk_group',
                                          'model' => 'groups_model']];
