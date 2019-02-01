@@ -109,6 +109,7 @@ class Module extends MY_Controller {
 
     /**
      * Checks if the module name is unique
+     * Unused
      * @param string $module_name
      *      Module name to check
      * @return boolean
@@ -118,10 +119,10 @@ class Module extends MY_Controller {
         $modules = $this->module_subject_model->get_all();
         $is_unique = TRUE;
         foreach ($modules as $module) {
-            if(!$is_unique)
-                break;
-            if(($module->title == $module_name && $case_sensitive) || (strtolower($module->title) == strtolower($module_name) && !$case_sensitive))
+            if(($module->title == $module_name && $case_sensitive) || (strtolower($module->title) == strtolower($module_name) && !$case_sensitive)) {
                 $is_unique = FALSE;
+                break;
+            }
         }
         return $is_unique;
     }

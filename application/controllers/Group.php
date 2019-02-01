@@ -46,10 +46,14 @@ class Group extends MY_Controller {
             $outputs["group"] = $this->module_group_model->get($id);
         }
 
+        $groups = $this->module_group_model->get_all();
+        $groups = $this->recursive_remove($groups, $id);
         $group_names[0] = $this->lang->line('none');
-        $group_names = array_merge($group_names, $this->module_group_model->dropdown('name_group'));
         $group_ids[0] = 0;
-        $group_ids = array_merge($group_ids, $this->module_group_model->dropdown('ID'));
+        foreach($groups as $group) {
+            array_push($group_names, $group->name_group);
+            array_push($group_ids, $group->id);
+        }
         for ($i=0; $i < sizeof($group_names); $i++) {
             $outputs["groups"][$group_ids[$i]] = $group_names[$i];
         }
@@ -126,5 +130,30 @@ class Group extends MY_Controller {
             $this->display_view('group/delete', $outputs);
         else
             redirect('group');
+    }
+
+    /**
+     * Attempts to (recursively) remove the array and its children
+     * @param array $group
+     *      The groups affected
+     * @param integer $id
+     *      The id of the parent group
+     * @param integer $max_depth
+     *      Maximum depth of recursion
+     * @param integer $depth
+     *      Current depth of recursion, to prevent infinite recursion
+     * @return array
+     *      The array without the children and sub-children
+     */
+    private function recursive_remove($groups, $id, $depth = 0, $max_depth = 5) {
+        if($depth >= $max_depth)
+            return $groups;
+        foreach ($groups as $group) {
+            if($group->fk_parent_group == $id || $group->id == $id) {
+                unset($groups[array_search($group, $groups)]);
+                $groups = $this->recursive_remove($groups, $group->id, $depth+1);
+            }
+        }
+        return $groups;
     }
 }
