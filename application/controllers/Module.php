@@ -16,7 +16,7 @@ class Module extends MY_Controller {
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model(["module_subject_model", "module_group_model"]);
-        $this->load->helper(array('form', 'url'));
+        $this->load->helper(['form', 'url']);
     }
 
     /**
@@ -101,10 +101,11 @@ class Module extends MY_Controller {
         if($confirm == 1) {
             $this->module_subject_model->delete($id);
             $this->display_view('module/success');
-        } elseif ($confirm == 0)
+        } elseif ($confirm == 0) {
             $this->display_view('module/delete', $outputs);
-        else
+        } else {
             redirect('module');
+        }
     }
 
     /**
@@ -117,13 +118,11 @@ class Module extends MY_Controller {
      */
     private function is_module_name_unique($module_name, $case_sensitive = TRUE) {
         $modules = $this->module_subject_model->get_all();
-        $is_unique = TRUE;
         foreach ($modules as $module) {
             if(($module->title == $module_name && $case_sensitive) || (strtolower($module->title) == strtolower($module_name) && !$case_sensitive)) {
-                $is_unique = FALSE;
-                break;
+                return FALSE;
             }
         }
-        return $is_unique;
+        return TRUE;
     }
 }

@@ -19,7 +19,7 @@ class Formation extends MY_Controller {
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model(['formation_model','formation_module_model','module_subject_model']);
-        $this->load->helper(array('form', 'url'));
+        $this->load->helper(['form', 'url']);
     }
 
     /**
@@ -88,12 +88,15 @@ class Formation extends MY_Controller {
         $outputs['formation'] = $this->formation_model->get($id);
         $outputs['deletion_allowed'] = TRUE;
         $modules = $this->formation_module_model->with('Modules')->get_many_by('fk_formation='.$id);
-        if(sizeof($modules) > 0) $outputs['deletion_allowed'] = FALSE;
+        if(sizeof($modules) > 0) {
+            $outputs['deletion_allowed'] = FALSE;
+        }
         if($confirm == 1) {
             $this->formation_model->delete($id);
             $this->display_view('formation/success');
-        } elseif ($confirm == 0)
+        } elseif ($confirm == 0) {
             $this->display_view('formation/delete', $outputs);
+        }
         else
             redirect('formation');
     }

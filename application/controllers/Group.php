@@ -19,7 +19,7 @@ class Group extends MY_Controller {
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('module_group_model');
-        $this->load->helper(array('form', 'url'));
+        $this->load->helper(['form', 'url']);
     }
 
     /**
@@ -126,10 +126,11 @@ class Group extends MY_Controller {
         if($confirm == 1) {
             $this->module_group_model->delete($id);
             $this->display_view('group/success');
-        } elseif ($confirm == 0)
+        } elseif ($confirm == 0) {
             $this->display_view('group/delete', $outputs);
-        else
+        } else {
             redirect('group');
+        }
     }
 
     /**
@@ -146,8 +147,9 @@ class Group extends MY_Controller {
      *      The array without the children and sub-children
      */
     private function recursive_remove($groups, $id, $depth = 0, $max_depth = 5) {
-        if($depth >= $max_depth)
+        if($depth >= $max_depth) {
             return $groups;
+        }
         foreach ($groups as $group) {
             if($group->fk_parent_group == $id || $group->id == $id) {
                 unset($groups[array_search($group, $groups)]);

@@ -16,7 +16,7 @@ class Apprentice extends MY_Controller {
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('apprentice_model');
-        $this->load->helper(array('form', 'url'));
+        $this->load->helper(['form', 'url']);
     }
 
     /**
@@ -42,8 +42,9 @@ class Apprentice extends MY_Controller {
 
         $outputs["error"] = ($error == NULL ? NULL : true);
 
-        if($id > 0)
+        if($id > 0) {
             $outputs["apprentice"] = $this->apprentice_model->get($id);
+        }
 
         $this->display_view("apprentice/form", $outputs);
     }
@@ -54,7 +55,6 @@ class Apprentice extends MY_Controller {
      *      Unused in the function and in form.php
      */
     public function form_validation($error = NULL){
-
         $req = array(
             'firstname' => $this->input->post('firstname'),
             'last_name' => $this->input->post('lastname'),
@@ -63,6 +63,7 @@ class Apprentice extends MY_Controller {
             'fk_teacher' => $this->input->post('teacher'),
             'fk_user' => $this->input->post('user')
         );
+
         $current_date = explode("-", date("Y-m-d"));
         $input_date = explode("-", $req["date_birth"]);
         for($i = 0; $i < sizeof($current_date); $i++) {
@@ -80,8 +81,9 @@ class Apprentice extends MY_Controller {
                         $problem = TRUE;
                         break;
                     case 0:
-                        if($current_date[2] < $input_date[2])
+                        if($current_date[2] < $input_date[2]) {
                             $problem = TRUE;
+                        }
                         break;
                 }
                 break;
@@ -96,7 +98,7 @@ class Apprentice extends MY_Controller {
         $req = html_escape($req);
 
         if($this->form_validation->run()){
-            if($this->input->post('id') > 0){
+            if($this->input->post('id') > 0) {
                 $this->apprentice_model->update($this->input->post('id'), $req);
             } else {
                 $this->apprentice_model->insert($req);
@@ -119,10 +121,11 @@ class Apprentice extends MY_Controller {
         if($confirm == 1) {
             $this->apprentice_model->delete($id);
             $this->display_view('apprentice/success');
-        } elseif ($confirm == 0)
+        } elseif ($confirm == 0) {
             $this->display_view('apprentice/delete', $outputs);
-        else
+        } else {
             redirect('group');
+        }
     }
 
     /**
@@ -141,8 +144,9 @@ class Apprentice extends MY_Controller {
 
         $teachers_names = $this->teacher_model->dropdown('firstname');
         $teachers_last_names = $this->teacher_model->dropdown('last_name');
-        for($i = 1; $i < sizeof($teachers_names)+1; $i ++)
+        for($i = 1; $i < sizeof($teachers_names)+1; $i ++) {
             $teachers_names[$i] .= " ".$teachers_last_names[$i];
+        }
         $teachers_names[0] = $this->lang->line('none');
         $msps_ids = $this->teacher_model->dropdown('id');
         $msps_ids[0] = 0;
@@ -169,11 +173,14 @@ class Apprentice extends MY_Controller {
      */
     private function link_arrays($array_keys, $array_values) {
         $results[0] = $this->lang->line('none');
-        if(sizeof($array_keys) == 0 || sizeof($array_values) == 0 || sizeof($array_keys) != sizeof($array_values))
+        if(sizeof($array_keys) == 0 || sizeof($array_values) == 0 || sizeof($array_keys) != sizeof($array_values)) {
             return NULL;
-        for($i = 0; $i < max($array_keys)+1; $i++)
-            if(isset($array_values[$i]) && isset($array_keys[$i]))
+        }
+        for($i = 0; $i < max($array_keys)+1; $i++) {
+            if(isset($array_values[$i]) && isset($array_keys[$i])) {
                 $results[$array_keys[$i]] = $array_values[$i];
+            }
+        }
         return $results;
     }
 }

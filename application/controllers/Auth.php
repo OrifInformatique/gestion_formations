@@ -16,7 +16,7 @@ class Auth extends MY_Controller {
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model(['user_model','user_type_model']);
-        $this->load->helper(array('form', 'url'));
+        $this->load->helper(['form', 'url']);
     }
 
     /**
@@ -46,7 +46,6 @@ class Auth extends MY_Controller {
         $password = $this->input->post('password');
 
         if ($this->form_validation->run() == true) {
-
             if($this->user_model->check_password($username, $password)) {
                 $user = $this->user_model->with('users_type')->get_by('User', $username);
 
@@ -56,14 +55,11 @@ class Auth extends MY_Controller {
                 $this->session->logged_in = true;
 
                 redirect('index.php');
-            }
-            else {
+            } else {
                 // Login informations error : display login page again, with error message
                 $this->index(1);
             }
-
-        }
-        else {
+        } else {
             // Validation error : display login page again, with error messages
             $this->index(2);
         }
