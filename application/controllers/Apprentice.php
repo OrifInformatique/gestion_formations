@@ -54,12 +54,6 @@ class Apprentice extends MY_Controller {
      *      Unused in the function and in form.php
      */
     public function form_validation($error = NULL){
-        $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
-        $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
-        $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), 'required');
-        $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), 'required');
-        $this->form_validation->set_rules('teacher', $this->lang->line('apprentice_MSP'), 'required');
-        $this->form_validation->set_rules('user', $this->lang->line('apprentice_user'), 'required');
 
         $req = array(
             'firstname' => $this->input->post('firstname'),
@@ -92,10 +86,16 @@ class Apprentice extends MY_Controller {
                 }
                 break;
         }
+        $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
+        $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
+        $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), array('required',$problem));
+        $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), 'required');
+        $this->form_validation->set_rules('teacher', $this->lang->line('apprentice_MSP'), 'required');
+        $this->form_validation->set_rules('user', $this->lang->line('apprentice_user'), 'required');
 
         $req = html_escape($req);
 
-        if($this->form_validation->run() && !$problem){
+        if($this->form_validation->run()){
             if($this->input->post('id') > 0){
                 $this->apprentice_model->update($this->input->post('id'), $req);
             } else {
