@@ -9,7 +9,8 @@
 ?>
 
 <div class="container">
-    <?php if(sizeof($groups) > 0) { ?>
+    <?php unset($groups[0]);
+    if(sizeof($groups) > 0) { ?>
     <h1 class="title-section"><?php if(isset($module)) {echo $this->lang->line('module_modify'); $update = true;} else {echo $this->lang->line('module_new'); $update = false;} ?></h1>
     <?php
     $attributes = array("id" => "addModuleForm",

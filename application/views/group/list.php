@@ -10,7 +10,8 @@
         <div class="col-md-1"></div>
     </div>
     <?php if(isset($groups)) {
-        foreach ($groups as $group) { ?>
+        foreach ($groups as $group) { 
+            if($group->id == 0) continue; ?>
             <div class="row">
                 <!-- Click here to modify -->
                 <div class="col-md-1"><?php echo $group->position; ?></div>
