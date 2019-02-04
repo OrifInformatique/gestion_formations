@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `modules_groups` (
   `weight` int(11) NOT NULL,
   `eliminatory` tinyint(1) NOT NULL,
   `position` int(11) NOT NULL,
-  `fk_parent_group` int(11) DEFAULT NULL,
+  `fk_parent_group` int(11) DEFAULT NULL COMMENT 'Ne pas mettre sur soi-même',
   PRIMARY KEY (`id`),
   KEY `fk_parent_group` (`fk_parent_group`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
