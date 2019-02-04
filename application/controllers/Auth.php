@@ -88,7 +88,7 @@ class Auth extends MY_Controller {
      *      Unused in the function, in form.php and in list.php
      */
     public function form_validation($error = NULL) {
-        $this->form_validation->set_rules('username', strtolower($this->lang->line('field_username')), 'trim|required|min_length['.USERNAME_MIN_LENGTH.']');
+        $this->form_validation->set_rules('username', strtolower($this->lang->line('field_username')), 'trim|required|min_length['.USERNAME_MIN_LENGTH.']|is_unique[users.user]');
         $this->form_validation->set_rules('password', strtolower($this->lang->line('field_password')), 'trim|required|min_length['.PASSWORD_MIN_LENGTH.']');
         $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
 
@@ -98,7 +98,7 @@ class Auth extends MY_Controller {
             'fk_user_type' => $this->input->post('user_type')
         );
 
-        if($this->form_validation->run() && $this->is_username_unique($req['user'])) {
+        if($this->form_validation->run()) {
             $this->user_model->insert($req);
             $this->index();
         } else {
@@ -116,6 +116,7 @@ class Auth extends MY_Controller {
 
     /**
      * Checks if the username is unique
+     * Unused because I forgot there was a is_unique filter
      * @param string $username
      *      Username to check
      * @return boolean
