@@ -64,33 +64,14 @@ class Apprentice extends MY_Controller {
             'fk_user' => $this->input->post('user')
         );
 
-        $current_date = explode("-", date("Y-m-d"));
-        $input_date = explode("-", $req["date_birth"]);
-        for($i = 0; $i < sizeof($current_date); $i++) {
-            $current_date[$i] = intval($current_date[$i]);
-            $input_date[$i] = intval($input_date[$i]);
-        }
-        $problem = FALSE;
-        switch($current_date[0] <=> $input_date[0]) {
-            case -1:
-                $problem = TRUE;
-                break;
-            case 0:
-                switch($current_date[1] <=> $input_date[1]) {
-                    case -1:
-                        $problem = TRUE;
-                        break;
-                    case 0:
-                        if($current_date[2] < $input_date[2]) {
-                            $problem = TRUE;
-                        }
-                        break;
-                }
-                break;
-        }
+        //Verification that the date is not in the future
+        $current_date = strtotime(date("d-m-Y"));
+        $input_date = strtotime($req["date_birth"]);
+        $problem = ($current_date >= $input_date);
+
         $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
-        $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), array('required',$problem));
+        $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), array('required', function() {return $problem;}));
         $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), 'required');
         $this->form_validation->set_rules('teacher', $this->lang->line('apprentice_MSP'), 'required');
         $this->form_validation->set_rules('user', $this->lang->line('apprentice_user'), 'required');
@@ -106,6 +87,7 @@ class Apprentice extends MY_Controller {
             redirect('apprentice');
         } else {
             redirect('apprentice/form/'.$this->input->post('id'));
+            //$this->display_view('apprentice/form/'.$this->input->post('id'));
         }
     }
 
@@ -144,7 +126,9 @@ class Apprentice extends MY_Controller {
 
         $teachers_names = $this->teacher_model->dropdown('firstname');
         $teachers_last_names = $this->teacher_model->dropdown('last_name');
-        for($i = 1; $i < sizeof($teachers_names)+1; $i ++) {
+        for($i = 1; $i < max(array_keys($teachers_names))+1; $i ++) {
+            if(!isset($teachers_names[$i]) || is_null($teachers_names[$i]))
+                continue;
             $teachers_names[$i] .= " ".$teachers_last_names[$i];
         }
         $teachers_names[0] = $this->lang->line('none');
