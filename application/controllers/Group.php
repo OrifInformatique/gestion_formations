@@ -43,9 +43,11 @@ class Group extends MY_Controller {
         }
 
         $groups = $this->module_group_model->get_all();
-        if($id != 0)
+        if($id != 0) {
             $groups = $this->recursive_remove($groups, $id);
-            // Important to prevent a group from being in itself. Should this happen, anything touching group will collapse.
+            /* Important to prevent a group from being in itself.
+            Should this happen, anything touching group will collapse.*/
+        }
         $group_names[0] = $this->lang->line('none');
         $group_ids[0] = 0;
         foreach($groups as $group) {
