@@ -42,6 +42,9 @@
             return "";
         } else {
             foreach ($groups as $group) {
+                if($group->id == 0){
+                    return "";
+                }
                 if($group->id == $id){
                     return $group->name_group;
                 }

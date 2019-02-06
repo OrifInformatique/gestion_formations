@@ -139,8 +139,6 @@ class Group extends MY_Controller {
      *      Maximum depth of recursion
      * @param integer $depth
      *      Current depth of recursion, to prevent infinite recursion
-     * @return array
-     *      The array without the children and sub-children
      */
     private function recursive_remove($groups, $id, $depth = 5) {
         if($depth <= 0) {
