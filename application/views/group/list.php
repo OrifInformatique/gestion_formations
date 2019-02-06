@@ -42,7 +42,7 @@
             return "";
         } else {
             foreach ($groups as $group) {
-                if($group->id == 0){
+                if($group->fk_parent_group == $group->id || $group->id == 0){
                     return "";
                 }
                 if($group->id == $id){
