@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 06 fév. 2019 à 11:42
+-- Généré le :  mer. 06 fév. 2019 à 13:21
 -- Version du serveur :  10.1.34-MariaDB
 -- Version de PHP :  7.2.8
 
@@ -53,20 +53,6 @@ CREATE TABLE IF NOT EXISTS `apprentices_formations` (
   KEY `fk_apprentice` (`fk_apprentice`),
   KEY `fk_formation` (`fk_formation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `ci_sessions`
---
-
-CREATE TABLE IF NOT EXISTS `ci_sessions` (
-  `id` varchar(128) NOT NULL,
-  `ip_address` varchar(45) NOT NULL,
-  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `data` blob NOT NULL,
-  KEY `ci_sessions_timestamp` (`timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -135,17 +121,10 @@ CREATE TABLE IF NOT EXISTS `modules_groups` (
   `weight` int(11) NOT NULL,
   `eliminatory` tinyint(1) NOT NULL,
   `position` int(11) NOT NULL,
-  `fk_parent_group` int(11) NOT NULL DEFAULT '0' COMMENT 'Ne pas mettre sur soi-même',
+  `fk_parent_group` int(11) DEFAULT '0' COMMENT 'Ne pas mettre sur soi-même',
   PRIMARY KEY (`id`),
   KEY `fk_parent_group` (`fk_parent_group`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Déchargement des données de la table `modules_groups`
---
-
-INSERT INTO `modules_groups` (`id`, `name_group`, `weight`, `eliminatory`, `position`, `fk_parent_group`) VALUES
-(0, 'Aucun', 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
