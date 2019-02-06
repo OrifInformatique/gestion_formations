@@ -36,11 +36,9 @@ class Formation extends MY_Controller {
      * Shows the form
      * @param integer $id
      *      If a group with the id exists, it will update it, otherwise it will create a new group
-     * @param integer $error
-     *      Unused in add.php
      */
-    public function form($id = 0, $error = NULL){
-        $outputs["error"] = ($error == NULL ? NULL : true);
+    public function form($id = 0){
+        $outputs = array();
 
         if($id > 0){
             $outputs["formation"] = $this->formation_model->get($id);
@@ -51,10 +49,8 @@ class Formation extends MY_Controller {
 
     /**
      * Opens the form and deals with updating or creating the group
-     * @param integer $error
-     *      Unused in the function and in add.php
      */
-    public function form_validation($error = NULL){
+    public function form_validation(){
         $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('duration_formation', $this->lang->line('formation_duration'), 'required');
 

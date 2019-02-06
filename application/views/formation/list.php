@@ -8,7 +8,8 @@
         <div class="col-md-3"></div>
     </div>
     <?php if(isset($formations)) {
-        foreach ($formations as $formation) { ?>
+        foreach ($formations as $formation) { 
+            if($formation->id == 0) continue; ?>
             <div class="row">
                 <!-- Click here to modify -->
                 <div class="col-md-3"><a href="<?php echo base_url().'formation/form/'.$formation->id; ?>"><?php echo $formation->name_formation; ?></a></div>

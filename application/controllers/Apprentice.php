@@ -21,10 +21,8 @@ class Apprentice extends MY_Controller {
 
     /**
      * Shows the list of apprentices
-     * @param integer $error
-     *      Unused in the fuction and in list.php
      */
-    public function index($error = 0) {
+    public function index() {
         $outputs = $this->get_parents();
         $outputs["apprentices"] = $this->apprentice_model->get_ordered();
         $this->display_view("apprentice/list", $outputs);
@@ -37,10 +35,8 @@ class Apprentice extends MY_Controller {
      * @param integer $error
      *      Unused in form.php
      */
-    public function form($id = 0, $error = NULL) {
+    public function form($id = 0) {
         $outputs = $this->get_parents();
-
-        $outputs["error"] = ($error == NULL ? NULL : true);
 
         if($id > 0) {
             $outputs["apprentice"] = $this->apprentice_model->get($id);
@@ -54,7 +50,7 @@ class Apprentice extends MY_Controller {
      * @param integer $error
      *      Unused in the function and in form.php
      */
-    public function form_validation($error = NULL){
+    public function form_validation(){
         $req = array(
             'firstname' => $this->input->post('firstname'),
             'last_name' => $this->input->post('lastname'),
@@ -127,8 +123,9 @@ class Apprentice extends MY_Controller {
         $teachers_names = $this->teacher_model->dropdown('firstname');
         $teachers_last_names = $this->teacher_model->dropdown('last_name');
         for($i = 1; $i < max(array_keys($teachers_names))+1; $i ++) {
-            if(!isset($teachers_names[$i]) || is_null($teachers_names[$i]))
+            if(!isset($teachers_names[$i]) || is_null($teachers_names[$i])) {
                 continue;
+            }
             $teachers_names[$i] .= " ".$teachers_last_names[$i];
         }
         $teachers_names[0] = $this->lang->line('none');

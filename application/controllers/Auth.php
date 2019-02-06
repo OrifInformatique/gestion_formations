@@ -67,11 +67,8 @@ class Auth extends MY_Controller {
 
     /**
      * Displays the form to create a new user
-     * @param object $error
-     *      Unused in form.php
      */
-    public function form($error = NULL) {
-        $outputs["error"] = ($error == NULL ? NULL : true);
+    public function form() {
         $outputs['user_types'] = $this->user_type_model->get_ordered();
         $outputs['user_types'][0] = $this->lang->line('none');
 
@@ -80,10 +77,8 @@ class Auth extends MY_Controller {
 
     /**
      * Validates the entered user
-     * @param object $error
-     *      Unused in the function, in form.php and in list.php
      */
-    public function form_validation($error = NULL) {
+    public function form_validation() {
         $this->form_validation->set_rules('username', strtolower($this->lang->line('field_username')), 'trim|required|min_length['.USERNAME_MIN_LENGTH.']|is_unique[users.user]');
         $this->form_validation->set_rules('password', strtolower($this->lang->line('field_password')), 'trim|required|min_length['.PASSWORD_MIN_LENGTH.']');
         $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');

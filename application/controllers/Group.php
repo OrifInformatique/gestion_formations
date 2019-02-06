@@ -24,10 +24,8 @@ class Group extends MY_Controller {
 
     /**
      * Shows the index with all the groups
-     * @param integer $error
-     *      Unused in the function and in list.php
      */
-    public function index($error = 0){
+    public function index(){
         $outputs['groups'] = $this->module_group_model->get_ordered();
         $this->display_view('group/list', $outputs);
     }
@@ -36,11 +34,9 @@ class Group extends MY_Controller {
      * Shows the form
      * @param integer $id
      *      If a group with the id exists, it will update it, otherwise it will create a new group
-     * @param integer $error
-     *      Unused in add.php
      */
-    public function form($id = 0, $error = NULL){
-        $outputs["error"] = ($error == NULL ? NULL : true);
+    public function form($id = 0){
+        $outputs = array();
 
         if($id > 0){
             $outputs["group"] = $this->module_group_model->get($id);
@@ -65,10 +61,8 @@ class Group extends MY_Controller {
 
     /**
      * Opens the form and deals with updating or creating the group
-     * @param integer $error
-     *      Unused in the function and in add.php
      */
-    public function form_validation($error = NULL){
+    public function form_validation(){
         $this->form_validation->set_rules('name_group', $this->lang->line('group_name'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('weight', $this->lang->line('group_weight'), 'required');
         $this->form_validation->set_rules('position', $this->lang->line('group_position'), 'required');
@@ -148,14 +142,14 @@ class Group extends MY_Controller {
      * @return array
      *      The array without the children and sub-children
      */
-    private function recursive_remove($groups, $id, $depth = 0, $max_depth = 5) {
-        if($depth >= $max_depth) {
+    private function recursive_remove($groups, $id, $depth = 5) {
+        if($depth <= 0) {
             return $groups;
         }
         foreach ($groups as $group) {
             if($group->fk_parent_group == $id || $group->id == $id) {
                 unset($groups[array_search($group, $groups)]);
-                $groups = $this->recursive_remove($groups, $group->id, $depth+1);
+                $groups = $this->recursive_remove($groups, $group->id, $depth-1);
             }
         }
         return $groups;

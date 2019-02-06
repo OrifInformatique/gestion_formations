@@ -21,10 +21,8 @@ class Module extends MY_Controller {
 
     /**
      * Displays the list of modules
-     * @param integer $error
-     *      Unused in function and in list.php
      */
-    public function index($error = 0){
+    public function index(){
         $outputs['groups'] = $this->module_group_model->get_ordered();
         $outputs['groups_tree'] = $this->module_group_model->get_tree();
         if(is_null($outputs['groups_tree']))
@@ -37,11 +35,9 @@ class Module extends MY_Controller {
      * Displays the form to create / modify a module
      * @param integer $id
      *      The id of the module to modify (0 for a new module)
-     * @param object $error
-     *      Unused in add.php
      */
-    public function form($id = 0, $error = NULL){
-        $outputs["error"] = ($error == NULL ? NULL : true);
+    public function form($id = 0){
+        $outputs = array();
 
         if($id > 0){
             $outputs["module"] = $this->module_subject_model->get($id);
@@ -54,10 +50,8 @@ class Module extends MY_Controller {
 
     /**
      * Validates the input from the form
-     * @param object $error
-     *      Unused in the function and in add.php
      */
-    public function form_validation($error = NULL){
+    public function form_validation(){
         $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('number_module', $this->lang->line('number_module'), 'required');
         $this->form_validation->set_rules('group_module', $this->lang->line('group_module'), 'required');
