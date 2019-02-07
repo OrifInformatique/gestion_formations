@@ -46,6 +46,8 @@ class module_group_model extends MY_Model {
 
         if (count($groups) > 0){
             foreach ($groups as $group) {
+                if($group->id == 0 || $group->id == $group->fk_parent_group)
+                    continue;
                 $child_groups = $this->module_group_model->get_many_by("fk_parent_group = ".$group->id);
 
                 if(count($child_groups) > 0){
@@ -54,9 +56,9 @@ class module_group_model extends MY_Model {
                     $groups_tree[$group->name_group] = array($group->id, $group->name_group);
                 }
             }
-        } else {
-            $groups_tree = NULL;
         }
+        if(!isset($groups_tree) || is_null($groups_tree))
+            $groups_tree = NULL;
 
         return $groups_tree;
     }
