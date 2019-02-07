@@ -91,7 +91,9 @@ class Module extends MY_Controller {
         $outputs['module'] = $this->module_subject_model->get($id);
         $outputs['deletion_allowed'] = TRUE;
         $modules = $this->formation_module_model->with('Modules')->get_many_by('fk_module='.$id);
-        if(sizeof($modules) > 0) $outputs['deletion_allowed'] = FALSE;
+        if(sizeof($modules) > 0) {
+            $outputs['deletion_allowed'] = FALSE;
+        }
         if($confirm == 1) {
             $this->module_subject_model->delete($id);
             $this->display_view('module/success');
@@ -100,23 +102,5 @@ class Module extends MY_Controller {
         } else {
             redirect('module');
         }
-    }
-
-    /**
-     * Checks if the module name is unique
-     * Unused
-     * @param string $module_name
-     *      Module name to check
-     * @return boolean
-     *      TRUE if the module name is unique
-     */
-    private function is_module_name_unique($module_name, $case_sensitive = TRUE) {
-        $modules = $this->module_subject_model->get_all();
-        foreach ($modules as $module) {
-            if(($module->title == $module_name && $case_sensitive) || (strtolower($module->title) == strtolower($module_name) && !$case_sensitive)) {
-                return FALSE;
-            }
-        }
-        return TRUE;
     }
 }

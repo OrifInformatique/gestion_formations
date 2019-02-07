@@ -114,12 +114,14 @@ class Apprentice extends MY_Controller {
     private function get_parents() {
         $this->load->model(['formation_model','teacher_model','user_model']);
 
+        //Puts the formations names and their corresponding ids together
         $formation_names = $this->formation_model->dropdown('Name_Formation');
         $formation_names[0] = $this->lang->line('none_f');
         $formation_ids = $this->formation_model->dropdown('id');
         $formation_ids[0] = 0;
         $results["formations"] = $this->link_arrays($formation_ids, $formation_names);
 
+        //Puts the teacher first names, last names and their corresponding ids together
         $teachers_names = $this->teacher_model->dropdown('firstname');
         $teachers_last_names = $this->teacher_model->dropdown('last_name');
         for($i = 1; $i < max(array_keys($teachers_names))+1; $i ++) {
@@ -133,6 +135,7 @@ class Apprentice extends MY_Controller {
         $msps_ids[0] = 0;
         $results["teachers"] = $this->link_arrays($msps_ids, $teachers_names);
 
+        //Puts the user names and their corresponding ids together
         $users_names = $this->user_model->dropdown('User');
         $users_names[0] = $this->lang->line('none');
         $users_ids = $this->user_model->dropdown('id');
@@ -155,6 +158,7 @@ class Apprentice extends MY_Controller {
     private function link_arrays($array_keys, $array_values) {
         $results[0] = $this->lang->line('none');
         if(sizeof($array_keys) == 0 || sizeof($array_values) == 0 || sizeof($array_keys) != sizeof($array_values)) {
+            //In case either array is empty or they are not from the same place
             return NULL;
         }
         for($i = 0; $i < max($array_keys)+1; $i++) {

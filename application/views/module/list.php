@@ -40,8 +40,6 @@
      */
     function get_tree($groups = array(), $modules = array(), $subject = ""){
         foreach ($groups as $key => $group) {
-            if($group->fk_parent_group == 0 || $group->id == 0)
-                continue;
             echo '<fieldset class="bob">';
             foreach ($modules as $module) {
                 if($module->fk_group == 0)
