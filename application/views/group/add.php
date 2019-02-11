@@ -14,7 +14,7 @@
     $attributes = array("id" => "addGroupForm",
                         "name" => "addGroupForm");
     echo form_open('Group/form_validation', $attributes);
-    ?>        
+    ?>
         <!-- Display buttons and display topic and question type as information -->
         <div class="row">
             <div class="form-group">
@@ -134,6 +134,6 @@
                 </div>
             </div>
         </div>
-            
+
     <?php echo form_close(); ?>
 </div>

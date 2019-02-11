@@ -49,6 +49,7 @@ $lang['formation_duration']             = 'Durée';
 $lang['user_create']                    = 'Nouvel utilisateur';
 $lang['user_username']                  = 'Nom d\'utilisateur';
 $lang['user_password']                  = 'Mot de passe';
+$lang['user_password_again']            = 'Répétez le mot de passe';
 $lang['user_type']                      = 'Type d\'utilisateur';
 
 // Log Error
@@ -77,6 +78,8 @@ $lang['formation_modify']               = 'Modifier la formation';
 $lang['formation_delete']               = 'Supprimer la formation';
 $lang['formation_delete_not']           = 'La formation ne peut pas être supprimée car un module y est associé.';
 $lang['user_list']                      = 'Liste des utilisateurs';
+$lang['user_new']                       = 'Nouvel utilisateur';
+$lang['user_modify']                    = 'Modifer l\'utilisateur';
 
 // Buttons
 $lang['btn_login']                      = 'Se connecter';
