@@ -76,6 +76,7 @@ $lang['formation_new']                  = 'Nouvelle formation';
 $lang['formation_modify']               = 'Modifier la formation';
 $lang['formation_delete']               = 'Supprimer la formation';
 $lang['formation_delete_not']           = 'La formation ne peut pas être supprimée car un module y est associé.';
+$lang['user_list']                      = 'Liste des utilisateurs';
 
 // Buttons
 $lang['btn_login']                      = 'Se connecter';

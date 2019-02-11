@@ -83,7 +83,6 @@ class Apprentice extends MY_Controller {
             redirect('apprentice');
         } else {
             redirect('apprentice/form/'.$this->input->post('id'));
-            //$this->display_view('apprentice/form/'.$this->input->post('id'));
         }
     }
 
