@@ -1,4 +1,8 @@
 <div class="container">
+    <div class="row">
+        <a class="btn" href="<?php echo base_url('admin/user_index'); ?>"><?php echo $this->lang->line('nav_admin_users'); ?></a>
+        <a class="btn" href="<?php echo base_url('admin/user_type_index'); ?>"><?php echo $this->lang->line('nav_admin_user_types'); ?></a>
+    </div>
     <h1><?php echo $this->lang->line('user_list'); ?></h1>
     <a class="btn btn-success" href="<?=base_url('admin/user_form')?>"><?php echo $this->lang->line('user_new'); ?></a>
     <div class="row">

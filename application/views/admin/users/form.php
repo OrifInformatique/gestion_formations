@@ -108,9 +108,9 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_dropdown('user_type', $user_types, set_value('user_type', $user->fk_user_type), 'class="form-control" id="parent_group"');
+                            echo form_dropdown('user_type', $user_types, set_value('user_type', $user->fk_user_type), 'class="form-control" id="user_type"');
                         else
-                            echo form_dropdown('user_type', $user_types, set_value('user_type'), 'class="form-control" id="parent_group"');
+                            echo form_dropdown('user_type', $user_types, set_value('user_type'), 'class="form-control" id="user_type"');
                         ?>
                     </div>
                 </div>

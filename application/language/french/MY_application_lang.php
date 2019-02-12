@@ -17,6 +17,8 @@ $lang['nav_group']                      = 'Groupes';
 $lang['nav_module']                     = 'Modules';
 $lang['nav_apprentice']                 = 'Apprentis';
 $lang['nav_formation']                  = 'Formations';
+$lang['nav_admin_users']                = 'Utilisateurs';
+$lang['nav_admin_user_types']           = 'Types d\'utilisateur';
 
 // Page titles
 $lang['page_prefix']                    = 'Gestion formations';
@@ -51,6 +53,8 @@ $lang['user_username']                  = 'Nom d\'utilisateur';
 $lang['user_password']                  = 'Mot de passe';
 $lang['user_password_again']            = 'Répétez le mot de passe';
 $lang['user_type']                      = 'Type d\'utilisateur';
+$lang['user_type_type']                 = 'Type d\'utilisateur';
+$lang['user_type_access']               = 'Niveau d\'accès';
 
 // Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
@@ -77,11 +81,17 @@ $lang['formation_new']                  = 'Nouvelle formation';
 $lang['formation_modify']               = 'Modifier la formation';
 $lang['formation_delete']               = 'Supprimer la formation';
 $lang['formation_delete_not']           = 'La formation ne peut pas être supprimée car un module y est associé.';
+$lang['admin_menu']                     = 'Menus d\'administration';
 $lang['user_list']                      = 'Liste des utilisateurs';
 $lang['user_new']                       = 'Nouvel utilisateur';
 $lang['user_modify']                    = 'Modifer l\'utilisateur';
 $lang['user_delete']                    = 'Supprimer l\'utilisateur';
 $lang['user_delete_not']                = 'L\'utilisateur ne peut pas être supprimé car une personne y est associée';
+$lang['user_type_list']                 = 'Liste des types d\'utilisateur';
+$lang['user_type_new']                  = 'Nouveau type d\'utilisateur';
+$lang['user_type_modify']               = 'Modfier le type d\'utilsateur';
+$lang['user_type_delete']               = 'Supprimer le type d\'utilisateur';
+$lang['user_type_delete_not']           = 'Le type d\'utilisateur ne peut pas être supprimé car un utilisateur y est associé';
 
 // Buttons
 $lang['btn_login']                      = 'Se connecter';
@@ -111,6 +121,8 @@ $lang['formation_delete_confirm']       = 'Etes-vous sûr de vouloir supprimer l
 $lang['formation_deleted']              = 'La formation a été supprimé';
 $lang['user_delete_confirm']            = 'Etes-vous sûr de vouloir supprimer l\'utilisateur';
 $lang['user_deleted']                   = 'L\'utilisateur a été supprimé';
+$lang['user_type_delete_confirm']       = 'Etes-vous sûr de vouloir supprimer le type d\'utilisateur';
+$lang['user_type_deleted']              = 'Le type d\'utilisateur a été supprimé';
 
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';
@@ -118,6 +130,7 @@ $lang['module_missing']                 = 'Aucun module trouvé avec les paramè
 $lang['apprentice_missing']             = 'Aucun apprenti trouvé avec les paramètres entrés';
 $lang['formation_missing']              = 'Aucune formation trouvée avec les paramètres entrés';
 $lang['user_missing']                   = 'Aucun utilisateur trouvé avec les paramètres entrés';
+$lang['user_type_missing']              = 'Aucun type d\'utilisateur trouvé avec les paramètres entrés';
 $lang['subject']                        = 'Matière';
 
 // Other texts
