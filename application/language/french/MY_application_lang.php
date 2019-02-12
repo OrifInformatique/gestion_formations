@@ -80,6 +80,8 @@ $lang['formation_delete_not']           = 'La formation ne peut pas être suppri
 $lang['user_list']                      = 'Liste des utilisateurs';
 $lang['user_new']                       = 'Nouvel utilisateur';
 $lang['user_modify']                    = 'Modifer l\'utilisateur';
+$lang['user_delete']                    = 'Supprimer l\'utilisateur';
+$lang['user_delete_not']                = 'L\'utilisateur ne peut pas être supprimé car une personne y est associée';
 
 // Buttons
 $lang['btn_login']                      = 'Se connecter';
@@ -107,12 +109,15 @@ $lang['apprentice_delete_confirm']      = 'Etes-vous sûr de vouloir supprimer l
 $lang['apprentice_deleted']             = 'L\'apprenti a été supprimé';
 $lang['formation_delete_confirm']       = 'Etes-vous sûr de vouloir supprimer la formation';
 $lang['formation_deleted']              = 'La formation a été supprimé';
+$lang['user_delete_confirm']            = 'Etes-vous sûr de vouloir supprimer l\'utilisateur';
+$lang['user_deleted']                   = 'L\'utilisateur a été supprimé';
 
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';
 $lang['module_missing']                 = 'Aucun module trouvé avec les paramètres entrés';
 $lang['apprentice_missing']             = 'Aucun apprenti trouvé avec les paramètres entrés';
 $lang['formation_missing']              = 'Aucune formation trouvée avec les paramètres entrés';
+$lang['user_missing']                   = 'Aucun utilisateur trouvé avec les paramètres entrés';
 $lang['subject']                        = 'Matière';
 
 // Other texts
