@@ -8,8 +8,7 @@
  */
 
 class Admin extends MY_Controller {
-    //protected $access_level = ACCESS_LVLS['ADMIN'];
-    protected $access_level = "*";
+    protected $access_level = ACCESS_LVLS['ADMIN'];
 
     /**
      * Constructor
@@ -21,6 +20,10 @@ class Admin extends MY_Controller {
         $this->load->helper('form');
     }
 
+    /**
+     * Shows the index of admin side
+     * It's just a list of links to the other indexes.
+     */
     public function index() {
         $this->display_view('admin/list');
     }
@@ -28,12 +31,20 @@ class Admin extends MY_Controller {
     /************************
      * User-related functions
      ************************/
+    /**
+     * Shows the list of users.
+     */
     public function user_index() {
         $outputs['users'] = $this->user_model->get_all();
         $outputs['user_types'] = $this->user_type_model->get_all();
         $this->display_view('admin/users/list', $outputs);
     }
 
+    /**
+     * Shows the form for new/existing users
+     * @param integer $id
+     *      ID of the user to modify. Leave at 0 to create a new user
+     */
     public function user_form($id = 0) {
         if($id > 0) {
             $outputs['user'] = $this->user_model->get($id);
@@ -51,6 +62,9 @@ class Admin extends MY_Controller {
         $this->display_view('admin/users/form', $outputs);
     }
 
+    /**
+     * Makes sure that the form was filled correctly.
+     */
     public function user_form_validation() {
         $update = (null !== $this->input->post('id'));
 
@@ -90,6 +104,13 @@ class Admin extends MY_Controller {
         }
     }
 
+    /**
+     * Deletes a user.
+     * @param integer $id
+     *      ID of the user to delete
+     * @param integer $confirm
+     *      0 leads to the confirmation prompt, 1 deletes the user.
+     */
     public function user_delete($id, $confirm = 0) {
         $this->load->model(['teacher_model','apprentice_model']);
 
@@ -116,12 +137,20 @@ class Admin extends MY_Controller {
     /*****************************
      * User type-related functions
      *****************************/
+    /**
+     * Shows the list of user types.
+     */
     public function user_type_index() {
         $outputs['access_levels'] = array_flip(ACCESS_LVLS);
         $outputs['user_types'] = $this->user_type_model->get_all();
         $this->display_view('admin/user_types/list', $outputs);
     }
 
+    /**
+     * Shows the form for new/existing user types
+     * @param integer $id
+     *      ID of the user to modify. Leave at 0 to create a new user type
+     */
     public function user_type_form($id = 0) {
         $outputs['access_levels'] = array_flip(ACCESS_LVLS);
 
@@ -132,6 +161,9 @@ class Admin extends MY_Controller {
         $this->display_view('admin/user_types/form', $outputs);
     }
 
+    /**
+     * Makes sure that the form was filled correctly.
+     */
     public function user_type_form_validation() {
         $this->form_validation->set_rules('user_type_type', $this->lang->line('user_type_type'), 'required|alpha');
         $this->form_validation->set_rules('user_type_access_level', $this->lang->line('user_type_access_level'), 'required');
@@ -154,6 +186,13 @@ class Admin extends MY_Controller {
         }
     }
 
+    /**
+     * Deletes a user type.
+     * @param integer $id
+     *      ID of the user type to delete
+     * @param integer $confirm
+     *      0 leads to the confirmation prompt, 1 deletes the user.
+     */
     public function user_type_delete($id, $confirm = 0) {
         $outputs['user_type'] = $this->user_type_model->get($id);
 
