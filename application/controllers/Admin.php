@@ -8,7 +8,7 @@
  */
 
 class Admin extends MY_Controller {
-    protected $access_level = ACCESS_LVLS['ADMIN'];
+    protected $access_level = ACCESS_LVL_ADMIN;
 
     /**
      * Constructor

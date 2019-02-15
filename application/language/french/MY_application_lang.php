@@ -108,7 +108,7 @@ $lang['quit']                           = 'Fermer';
 $lang['save_quit']                      = 'Enregistrer et fermer';
 $lang['cancel']                         = 'Annuler';
 $lang['return']                         = 'Retour';
-$lang['formation_edit_module']          = 'Éditer les module de la formation';
+$lang['formation_edit_module']          = 'Éditer les modules de la formation';
 
 // Messages
 $lang['group_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer le groupe';

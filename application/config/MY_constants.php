@@ -22,6 +22,6 @@ defined('USERNAME_MIN_LENGTH') OR define('USERNAME_MIN_LENGTH', 2);
 | Access levels
 |--------------------------------------------------------------------------
 */
-define('ACCESS_LVLS', array('GUEST' => 1,
-                            'REGISTERED' => 2,
-                            'ADMIN' => 4));
+define('ACCESS_LVL_GUEST', 1);
+define('ACCESS_LVL_REGISTERED', 2);
+define('ACCESS_LVL_ADMIN', 4);
