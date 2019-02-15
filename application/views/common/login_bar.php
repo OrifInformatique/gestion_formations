@@ -12,7 +12,7 @@
           
           <!-- ADMIN ACCESS ONLY -->
           <?php if ($_SESSION['user_access'] >= ACCESS_LVLS['ADMIN']) { ?>
-              <a href="<?php echo base_url("admin/"); ?>" ><?php echo $this->lang->line('btn_admin'); ?></a><br />
+              <a href="<?php echo base_url("admin/"); ?>" style="margin-right: 10px;"><?php echo $this->lang->line('btn_admin'); ?></a><br />
           <?php } ?>
           <!-- END OF ADMIN ACCESS -->
 
