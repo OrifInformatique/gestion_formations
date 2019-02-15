@@ -70,6 +70,10 @@ class Auth extends MY_Controller {
      */
     public function form() {
         $outputs['user_types'] = $this->user_type_model->get_ordered();
+        for ($i = 0; $i <= max(array_keys($outputs['user_types'])); $i++) {
+            if(isset($outputs['user_types'][$i]))
+                $outputs['user_types'][$i] = $outputs['user_types'][$i]->type;
+        }
         $outputs['user_types'][0] = $this->lang->line('none');
 
         $this->display_view('login/form', $outputs);

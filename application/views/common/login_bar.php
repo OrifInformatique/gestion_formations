@@ -11,7 +11,7 @@
         <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) { ?>
           
           <!-- ADMIN ACCESS ONLY -->
-          <?php if ($_SESSION['user_access'] >= ACCESS_LVL_ADMIN) { ?>
+          <?php if ($_SESSION['user_access'] >= ACCESS_LVLS['ADMIN']) { ?>
               <a href="<?php echo base_url("admin/"); ?>" ><?php echo $this->lang->line('btn_admin'); ?></a><br />
           <?php } ?>
           <!-- END OF ADMIN ACCESS -->
