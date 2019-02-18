@@ -22,6 +22,15 @@
             <div class="col-md-1"><a href="<?php echo base_url().'admin/user_delete/'.$user->id; ?>">[x]</a></div>
         </div>
     <?php } }
+    /**
+     * Returns the usertype
+     * @param integer $id
+     *      ID of the user type
+     * @param array $user_types
+     *      The array containing all user types
+     * @param string $ifempty
+     *      The string to return if the id is 0
+     */
     function get_user_type($id, $user_types, $ifempty) {
         if($id == 0)
             return $ifempty;
@@ -32,6 +41,7 @@
                 }
             }
         }
+        return $ifempty;
     }
 ?>
 </div>

@@ -24,6 +24,13 @@
     <?php } } ?>
 </div>
 <?php
+/**
+ * Returns the name of the access level
+ * @param integer $level
+ *      The access level in question
+ * @param array $access_levels
+ *      The array of all access levels
+ */
 function get_access_level_name($level, $access_levels) {
     return $access_levels[$level];
 }

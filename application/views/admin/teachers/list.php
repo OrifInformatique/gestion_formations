@@ -22,6 +22,15 @@
             <div class="col-md-1"><a href="<?php echo base_url().'admin/teacher_delete/'.$teacher->id; ?>">[x]</a></div>
         </div>
     <?php } }
+    /**
+     * Returns the username
+     * @param integer $id
+     *      The id of the user
+     * @param array $users
+     *      The array of users
+     * @param string $ifempty
+     *      The text returned if the $id is 0
+     */
     function get_user_name($id, $users, $ifempty) {
         if($id == 0)
             return $ifempty;
@@ -32,6 +41,7 @@
                 }
             }
         }
+        return $ifempty;
     }
     ?>
 </div>

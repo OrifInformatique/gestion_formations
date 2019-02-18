@@ -214,12 +214,20 @@ class Admin extends MY_Controller {
     /****************************
      * Teachers-related functions
      ****************************/
+    /**
+     * Shows the list of teachers
+     */
     public function teacher_index() {
         $outputs['teachers'] = $this->teacher_model->get_all();
         $outputs['users'] = $this->user_model->get_all();
         $this->display_view('admin/teachers/list', $outputs);
     }
 
+    /**
+     * Shows the form for new/existing teachers
+     * @param integer $id
+     *      ID of the teacher to modify
+     */
     public function teacher_form($id = 0) {
         //Puts the user names and their corresponding ids together
         $outputs['users'] = array();
@@ -240,6 +248,9 @@ class Admin extends MY_Controller {
         $this->display_view('admin/teachers/form', $outputs);
     }
 
+    /**
+     * Validates the inputs in the teacher form
+     */
     public function teacher_form_validation() {
         $this->form_validation->set_rules('teacher_firstname', $this->lang->line('teacher_firstname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('teacher_name', $this->lang->line('teacher_name'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
@@ -264,6 +275,13 @@ class Admin extends MY_Controller {
         }
     }
 
+    /**
+     * Deletes a teacher
+     * @param integer $id
+     *      ID of the teacher to delete
+     * @param integer $confirm
+     *      0 leads to the confirmation prompt, 1 deletes the teacher
+     */
     public function teacher_delete($id, $confirm = 0) {
         $this->load->model(['apprentice_model']);
         $outputs['teacher'] = $this->teacher_model->get($id);
