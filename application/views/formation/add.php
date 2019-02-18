@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * View of question's details to update
+ * View of formation's details to update
  *
  * @author      Orif, section informatique (BuYa, ViDi)
  * @link        https://github.com/OrifInformatique/gestion_questionnaires
@@ -15,7 +15,7 @@
                         "name" => "addFormationForm");
     echo form_open('Formation/form_validation', $attributes);
     ?>        
-        <!-- Display buttons and display topic and question type as information -->
+        <!-- Display buttons -->
         <div class="row">
             <div class="form-group">
                 <a name="cancel" class="btn btn-danger" href="<?=base_url('/formation')?>"><?=$this->lang->line('cancel')?></a>
@@ -32,7 +32,7 @@
             echo '<div class="alert alert-danger">'.validation_errors().'</div>';}
         ?>
 
-        <!-- QUESTION FIELDS -->
+        <!-- FORMATION FIELDS -->
         <?php
 
         if($update){

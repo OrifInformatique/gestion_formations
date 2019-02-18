@@ -2,6 +2,7 @@
     <div class="row">
         <a class="btn" href="<?php echo base_url('admin/user_index'); ?>"><?php echo $this->lang->line('nav_admin_users'); ?></a>
         <a class="btn" href="<?php echo base_url('admin/user_type_index'); ?>"><?php echo $this->lang->line('nav_admin_user_types'); ?></a>
+        <a class="btn" href="<?php echo base_url('admin/teacher_index'); ?>"><?php echo $this->lang->line('nav_admin_teachers'); ?></a>
     </div>
     <h1><?php echo $this->lang->line('user_list'); ?></h1>
     <a class="btn btn-success" href="<?=base_url('admin/user_form')?>"><?php echo $this->lang->line('user_new'); ?></a>
@@ -21,7 +22,7 @@
             <div class="col-md-1"><a href="<?php echo base_url().'admin/user_delete/'.$user->id; ?>">[x]</a></div>
         </div>
     <?php } }
-    function get_user_type($id = 0, $user_types, $ifempty) {
+    function get_user_type($id, $user_types, $ifempty) {
         if($id == 0)
             return $ifempty;
         else {

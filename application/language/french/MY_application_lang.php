@@ -19,6 +19,7 @@ $lang['nav_apprentice']                 = 'Apprentis';
 $lang['nav_formation']                  = 'Formations';
 $lang['nav_admin_users']                = 'Utilisateurs';
 $lang['nav_admin_user_types']           = 'Types d\'utilisateur';
+$lang['nav_admin_teachers']             = 'MSPs';
 
 // Page titles
 $lang['page_prefix']                    = 'Gestion formations';
@@ -55,6 +56,9 @@ $lang['user_password_again']            = 'Répétez le mot de passe';
 $lang['user_type']                      = 'Type d\'utilisateur';
 $lang['user_type_type']                 = 'Type d\'utilisateur';
 $lang['user_type_access']               = 'Niveau d\'accès';
+$lang['teacher_name']                   = 'Nom';
+$lang['teacher_firstname']              = 'Prénom';
+$lang['teacher_username']               = 'Nom d\'utilisateur';
 
 // Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
@@ -92,6 +96,10 @@ $lang['user_type_new']                  = 'Nouveau type d\'utilisateur';
 $lang['user_type_modify']               = 'Modfier le type d\'utilsateur';
 $lang['user_type_delete']               = 'Supprimer le type d\'utilisateur';
 $lang['user_type_delete_not']           = 'Le type d\'utilisateur ne peut pas être supprimé car un utilisateur y est associé';
+$lang['teacher_new']                    = 'Nouveau MSP';
+$lang['teacher_modify']                 = 'Modifier le MSP';
+$lang['teacher_delete']                 = 'Supprimer le MSP';
+$lang['teacher_delete_not']             = 'Le MSP ne peut pas être supprimé car un apprenti y est associé';
 
 // Buttons
 $lang['btn_login']                      = 'Se connecter';
@@ -123,6 +131,8 @@ $lang['user_delete_confirm']            = 'Etes-vous sûr de vouloir supprimer l
 $lang['user_deleted']                   = 'L\'utilisateur a été supprimé';
 $lang['user_type_delete_confirm']       = 'Etes-vous sûr de vouloir supprimer le type d\'utilisateur';
 $lang['user_type_deleted']              = 'Le type d\'utilisateur a été supprimé';
+$lang['teacher_delete_confirm']         = 'Etes-vous sûr de vouloir supprimé le MSP';
+$lang['teacher_deleted']                = 'Le MSP a été supprimé';
 
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';
@@ -131,6 +141,7 @@ $lang['apprentice_missing']             = 'Aucun apprenti trouvé avec les param
 $lang['formation_missing']              = 'Aucune formation trouvée avec les paramètres entrés';
 $lang['user_missing']                   = 'Aucun utilisateur trouvé avec les paramètres entrés';
 $lang['user_type_missing']              = 'Aucun type d\'utilisateur trouvé avec les paramètres entrés';
+$lang['teacher_missing']                = 'Aucun MSP trouvé avec les paramètres entrés';
 $lang['subject']                        = 'Matière';
 
 // Other texts

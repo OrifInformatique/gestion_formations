@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Authentication controller
+ * Admin controller
  *
  * @author      Orif, section informatique (UlSi, ViDi, BuYa)
  * @link        https://github.com/OrifInformatique/gestion_formations
@@ -16,7 +16,7 @@ class Admin extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model(['user_model','user_type_model']);
+        $this->load->model(['user_model','user_type_model','teacher_model']);
         $this->load->helper('form');
     }
 
@@ -112,7 +112,7 @@ class Admin extends MY_Controller {
      *      0 leads to the confirmation prompt, 1 deletes the user.
      */
     public function user_delete($id, $confirm = 0) {
-        $this->load->model(['teacher_model','apprentice_model']);
+        $this->load->model(['apprentice_model']);
 
         $outputs['user'] = $this->user_model->get($id);
 
@@ -165,7 +165,7 @@ class Admin extends MY_Controller {
      * Makes sure that the form was filled correctly.
      */
     public function user_type_form_validation() {
-        $this->form_validation->set_rules('user_type_type', $this->lang->line('user_type_type'), 'required|alpha');
+        $this->form_validation->set_rules('user_type_type', $this->lang->line('user_type_type'), 'required|regex_match[/[A-Za-zÀ-ÿ ]+/]');
         $this->form_validation->set_rules('user_type_access_level', $this->lang->line('user_type_access_level'), 'required');
 
         $req = array(
@@ -208,6 +208,78 @@ class Admin extends MY_Controller {
             $this->display_view('admin/user_types/delete', $outputs);
         } else {
             redirect('admin/user_type_index');
+        }
+    }
+
+    /****************************
+     * Teachers-related functions
+     ****************************/
+    public function teacher_index() {
+        $outputs['teachers'] = $this->teacher_model->get_all();
+        $outputs['users'] = $this->user_model->get_all();
+        $this->display_view('admin/teachers/list', $outputs);
+    }
+
+    public function teacher_form($id = 0) {
+        //Puts the user names and their corresponding ids together
+        $outputs['users'] = array();
+        $users_names = $this->user_model->dropdown('User');
+        $users_names[0] = $this->lang->line('none');
+        $users_ids = $this->user_model->dropdown('id');
+        $users_ids[0] = 0;
+        for($i = 0; $i < max($users_ids)+1; $i++) {
+            if(isset($users_names[$i]) && isset($users_ids[$i])) {
+                $outputs['users'][$users_ids[$i]] = $users_names[$i];
+            }
+        }
+
+        if($id > 0) {
+            $outputs['teacher'] = $this->teacher_model->get($id);
+        }
+
+        $this->display_view('admin/teachers/form', $outputs);
+    }
+
+    public function teacher_form_validation() {
+        $this->form_validation->set_rules('teacher_firstname', $this->lang->line('teacher_firstname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
+        $this->form_validation->set_rules('teacher_name', $this->lang->line('teacher_name'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
+        $this->form_validation->set_rules('teacher_user', $this->lang->line('teacher_username'), 'required');
+
+        $req = array(
+            'firstname' => $this->input->post('teacher_firstname'),
+            'last_name' => $this->input->post('teacher_name'),
+            'fk_user' => $this->input->post('teacher_user'));
+
+        if($this->form_validation->run()) {
+            if($this->input->post('id') > 0) {
+                $this->teacher_model->update($this->input->post('id'), $req);
+            } else {
+                $this->teacher_model->insert($req);
+            }
+            redirect('admin/teacher_index');
+        } else {
+            if($this->input->post('id') > 0)
+                $this->teacher_form($this->input->post('id'));
+            $this->teacher_form();
+        }
+    }
+
+    public function teacher_delete($id, $confirm = 0) {
+        $this->load->model(['apprentice_model']);
+        $outputs['teacher'] = $this->teacher_model->get($id);
+
+        $outputs['deletion_allowed'] = TRUE;
+        $apprentices = $this->apprentice_model->with('Apprentices')->get_many_by('fk_teacher='.$id);
+        if(sizeof($apprentices) > 0)
+            $outputs['deletion_allowed'] = FALSE;
+
+        if($confirm == 1) {
+            $this->teacher_model->delete($id);
+            $this->display_view('admin/teachers/success');
+        } elseif($confirm == 0) {
+            $this->display_view('admin/teachers/delete', $outputs);
+        } else {
+            redirect('admin/teacher_index');
         }
     }
 }

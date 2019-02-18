@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * View of question's details to update
+ * View of user type's details to update
  *
  * @author      Orif, section informatique (BuYa, ViDi)
  * @link        https://github.com/OrifInformatique/gestion_questionnaires
@@ -23,7 +23,7 @@
         'id' => 'addFormUserType');
     echo form_open('admin/user_type_form_validation', $attributes); ?>
 
-        <!-- Display buttons and display topic and question type as information -->
+        <!-- Display buttons and display topic and user type as information -->
         <div class="row">
             <div class="form-group">
                 <a name="cancel" class="btn btn-danger" href="<?=base_url('/admin/user_type_index')?>"><?=$this->lang->line('cancel')?></a>
@@ -40,7 +40,7 @@
             echo '<div class="alert alert-danger">'.validation_errors().'</div>';}
         ?>
 
-        <!-- QUESTION FIELDS -->
+        <!-- USER TYPE FIELDS -->
         <?php
 
         if($update) {

@@ -67,42 +67,6 @@ class Auth extends MY_Controller {
     }
 
     /**
-     * Displays the form to create a new user
-     */
-    public function form() {
-        $outputs['user_types'] = $this->user_type_model->get_ordered();
-        for ($i = 0; $i <= max(array_keys($outputs['user_types'])); $i++) {
-            if(isset($outputs['user_types'][$i]))
-                $outputs['user_types'][$i] = $outputs['user_types'][$i]->type;
-        }
-        $outputs['user_types'][0] = $this->lang->line('none');
-
-        $this->display_view('login/form', $outputs);
-    }
-
-    /**
-     * Validates the entered user
-     */
-    public function form_validation() {
-        $this->form_validation->set_rules('username', strtolower($this->lang->line('field_username')), 'trim|required|min_length['.USERNAME_MIN_LENGTH.']|is_unique[users.user]');
-        $this->form_validation->set_rules('password', strtolower($this->lang->line('field_password')), 'trim|required|min_length['.PASSWORD_MIN_LENGTH.']');
-        $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
-
-        $req = array(
-            'user' => $this->input->post('username'),
-            'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-            'fk_user_type' => $this->input->post('user_type')
-        );
-
-        if($this->form_validation->run()) {
-            $this->user_model->insert($req);
-            $this->index();
-        } else {
-            $this->form();
-        }
-    }
-
-    /**
      * Destroy the session and redirect to login page
      */
     public function logout(){
