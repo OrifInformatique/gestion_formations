@@ -76,9 +76,6 @@ class Admin extends MY_Controller {
             $req['password'] = password_hash($this->input->post('user_password'), PASSWORD_DEFAULT);
         }
 
-        $problem = FALSE;
-        $problem = ($this->input->post('user_password') !== $this->input->post('user_password_again'));
-
         $this->form_validation->set_rules('user_username', $this->lang->line('user_username'),
             'trim|required|min_length['.USERNAME_MIN_LENGTH.']|is_unique[users.user]');
         $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
@@ -87,7 +84,9 @@ class Admin extends MY_Controller {
                 array('trim',
                     'required',
                     'min_length['.PASSWORD_MIN_LENGTH.']',
-                    function($problem) {return $problem;}));
+                    function() {
+                        return ($this->input->post('user_password') !== $this->input->post('user_password_again'));
+                    }));
         }
 
         if($this->form_validation->run()) {
@@ -101,6 +100,52 @@ class Admin extends MY_Controller {
             if($this->input->post('id') > 0)
                 $this->user_form($this->input->post('id'));
             $this->user_form();
+        }
+    }
+
+    public function user_change_password($id) {
+        $outputs['user'] = $this->user_model->get($id);
+        
+        $this->display_view('admin/users/cp', $outputs);
+    }
+
+    public function user_change_password_validation() {
+        $req = array(
+            'password' => password_hash($this->input->post('user_password_new'), PASSWORD_DEFAULT)
+        );
+
+        //Checks that the passwords are correct
+
+        $this->form_validation->set_rules('user_password_old', $this->lang->line('user_password_old'),
+            array('trim',
+                'required',
+                'min_length['.PASSWORD_MIN_LENGTH.']',
+                function($old_password_in) {
+                    $user = $this->user_model->get($this->input->post('id'));
+                    return $this->user_model->check_password($user->user, $old_password_in);
+                }));
+        $this->form_validation->set_rules('user_password_new', $this->lang->line('user_password_new'),
+            array('trim',
+                'required',
+                'min_length['.PASSWORD_MIN_LENGTH.']'));
+        $this->form_validation->set_rules('user_password_again', $this->lang->line('user_password_again'),
+            array('trim',
+                'required',
+                'min_length['.PASSWORD_MIN_LENGTH.']',
+                function($new_password_conf) {
+                    $problem_new = FALSE;
+                    $new_password = $this->input->post('user_password_new');
+                    if(strcmp($new_password, $new_password_conf) != 0) {
+                        $problem_new = TRUE;
+                    }
+                    return !$problem_new;
+                }));
+
+        if($this->form_validation->run()) {
+            $this->user_model->update($this->input->post('id'), $req);
+            redirect('admin/user_index');
+        } else {
+            $this->user_change_password($this->input->post('id'));
         }
     }
 

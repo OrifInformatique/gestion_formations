@@ -8,7 +8,8 @@
     <a class="btn btn-success" href="<?=base_url('admin/user_form')?>"><?php echo $this->lang->line('user_new'); ?></a>
     <div class="row">
         <div class="col-md-8"><strong><?php echo $this->lang->line('user_username'); ?></strong></div>
-        <div class="col-md-3"><strong><?php echo $this->lang->line('user_type'); ?></strong></div>
+        <div class="col-md-2"><strong><?php echo $this->lang->line('user_type'); ?></strong></div>
+        <div class="col-md-1"></div>
         <div class="col-md-1"></div>
     </div>
     <?php if(isset($users) && isset($user_types)) {
@@ -17,7 +18,8 @@
         <div class="row">
             <!-- Click here to modify -->
             <div class="col-md-8"><a href="<?php echo base_url().'admin/user_form/'.$user->id; ?>"><?php echo $user->user; ?></a></div>
-            <div class="col-md-3"><?php echo get_user_type($user->fk_user_type, $user_types, $this->lang->line('none')); ?></div>
+            <div class="col-md-2"><?php echo get_user_type($user->fk_user_type, $user_types, $this->lang->line('none')); ?></div>
+            <div class="col-md-1"><a href="<?php echo base_url().'admin/user_change_password/'.$user->id; ?>">[o]</a></div>
             <!-- Click here to delete -->
             <div class="col-md-1"><a href="<?php echo base_url().'admin/user_delete/'.$user->id; ?>">[x]</a></div>
         </div>

@@ -16,8 +16,5 @@
                 <!-- Click here to delete -->
                 <div class="col-md-2"><a href="<?php echo base_url().'formation/delete/'.$formation->id; ?>">[x]</a></div>
             </div>
-        <?php
-            }
-        }
-    ?>
+        <?php } } ?>
 </div>
