@@ -15,7 +15,7 @@ class Module extends MY_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model(["module_subject_model", "module_group_model"]);
+        $this->load->model(["module_subject_model", "formation_module_group_model"]);
         $this->load->helper(['form', 'url']);
     }
 
@@ -23,8 +23,8 @@ class Module extends MY_Controller {
      * Displays the list of modules
      */
     public function index(){
-        $outputs['groups'] = $this->module_group_model->get_ordered();
-        $outputs['groups_tree'] = $this->module_group_model->get_tree();
+        $outputs['groups'] = $this->formation_module_group_model->get_ordered();
+        $outputs['groups_tree'] = $this->formation_module_group_model->get_tree();
         if(is_null($outputs['groups_tree']))
             $outputs['groups_tree'] = array();
         $outputs['modules'] = $this->module_subject_model->get_ordered();
@@ -43,8 +43,6 @@ class Module extends MY_Controller {
             $outputs["module"] = $this->module_subject_model->get($id);
         }
 
-        $outputs["groups"] = $this->module_group_model->dropdown('name_group');
-
         $this->display_view('module/add', $outputs);
     }
 
@@ -54,13 +52,11 @@ class Module extends MY_Controller {
     public function form_validation(){
         $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('number_module', $this->lang->line('number_module'), 'required');
-        $this->form_validation->set_rules('group_module', $this->lang->line('group_module'), 'required');
         $this->form_validation->set_rules('description_module', $this->lang->line('module_description'), 'trim|regex_match[/[A-Za-zÀ-ÿ0-9 \-\.,\?\!:;]+/]');
 
         $req = array(
             'number' => $this->input->post('number_module'),
             'title' => $this->input->post('title_module'),
-            'fk_group' => $this->input->post('group_module'),
             'description' => $this->input->post('description_module')
         );
 
@@ -74,7 +70,7 @@ class Module extends MY_Controller {
             }
             redirect('module');
         } else {
-            $outputs["groups"] = $this->module_group_model->dropdown('name_group');
+            $outputs["groups"] = $this->formation_module_group_model->dropdown('name_group');
             $this->display_view('module/add', $outputs);
         }
     }

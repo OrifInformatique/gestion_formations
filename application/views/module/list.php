@@ -1,69 +1,24 @@
 <div class="container">
     <h1><?php echo $this->lang->line('module_list') ?></h1>
     <a class="btn btn-success" href="<?=base_url('module/form')?>"><?=$this->lang->line('module_new')?></a>
+    <div class="row">
+        <div class="col-md-2"><strong><?php echo $this->lang->line('module_title') ?></strong></div>
+        <div class="col-md-2"><strong><?php echo $this->lang->line('module_number') ?></strong></div>
+        <div class="col-md-7"><strong><?php echo $this->lang->line('module_description') ?></strong></div>
+        <div class="col-md-1"></div>
+    </div>
 
-    <?php get_tree($groups_tree, $modules, $this->lang->line('subject')); ?>
+    <?php if(isset($modules)) {
+        foreach ($modules as $module) { 
+            if($module->id == 0) continue; ?>
+            <div class="row">
+                <!-- Click here to modify -->
+                <div class="col-md-2"><a href="<?php echo base_url().'module/form/'.$module->id; ?>"><?php echo $module->title; ?></a></div>
+                <div class="col-md-2"><?php echo $module->number . ' %'; ?></div>
+                <div class="col-md-7"><?php echo $module->description; ?></div>
+                <!-- Click here to delete -->
+                <div class="col-md-1"><a href="<?php echo base_url().'module/delete/'.$module->id; ?>">[x]</a></div>
+            </div>
+    <?php } } ?>
 
 </div>
-<?php
-    /**
-     * Returns the parent group
-     * @param integer $id
-     *      The id of the parent group
-     * @param array $groups
-     *      The entirety of groups
-     * @return string
-     *      The name of the parent group
-     */
-    function getParentGroup($id = 0, $groups){
-        if($id == 0){
-            return "";
-        } else {
-            foreach ($groups as $group) {
-                if($group->fk_parent_group == $group->id || $group->id == 0){
-                    return "";
-                }
-                if($group->ID == $id){
-                    return $group->name_group;
-                }
-            }
-        }
-    }
-    /**
-     * Displays the entire tree of groups with the modules inside
-     * @param array $groups
-     *      All the groups
-     * @param array $modules
-     *      All the modules
-     * @param string $subject
-     *      Text displayed if the module number is 0
-     */
-    function get_tree($groups = array(), $modules = array(), $subject = ""){
-        foreach ($groups as $key => $group) {
-            echo '<fieldset class="bob">';
-            foreach ($modules as $module) {
-                if($module->fk_group == 0)
-                    continue;
-                if($module->fk_group == $group[0]){
-                    echo '<div class="row">';
-                        if($module->number==0){
-                            $module->number=$subject;
-                        } else if($module->number<0){
-                             $module->number="";
-                        }
-                        echo '<div class="col-md-1">'.$module->number.'</div>';
-                        echo '<div class="col-md-10"><a href="'.base_url().'module/form/'.$module->id.'">'.$module->title.'</a></div>';
-                        echo '<div class="col-md-1"><a href="'.base_url().'module/delete/'.$module->id.'">[x]</a></div>';
-                    echo '</div>';
-                }
-            }
-            if(is_array($group[1])){
-                echo '<legend class="bob">'.$key.'</legend>';
-                get_tree($group[1], $modules, $subject);
-            } else {
-                echo '<legend class="bob">'.$group[1].'</legend>';
-            }
-            echo '</fieldset>';
-        }
-    }
-?>

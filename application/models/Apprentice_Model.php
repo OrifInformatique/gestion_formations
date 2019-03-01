@@ -2,9 +2,7 @@
 
 class apprentice_model extends MY_Model {
     protected $protected_attributes = ['id'];
-    protected $belongs_to = ["Parent_Formation" => ["primary_key" => "fk_formation",
-                                                    "model" => "formation_model"],
-                            "Parent_MSP" => ["primary_key" => "fk_teacher",
+    protected $belongs_to = ["Parent_MSP" => ["primary_key" => "fk_teacher",
                                             "model" => "taecher_model"],
                             "Parent_User" => ["primary_key" => "fk_user",
                                             "model" => "user_model"]];

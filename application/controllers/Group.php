@@ -18,7 +18,7 @@ class Group extends MY_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model('module_group_model');
+        $this->load->model('formation_module_group_model');
         $this->load->helper(['form', 'url']);
     }
 
@@ -26,7 +26,7 @@ class Group extends MY_Controller {
      * Shows the index with all the groups
      */
     public function index(){
-        $outputs['groups'] = $this->module_group_model->get_ordered();
+        $outputs['groups'] = $this->formation_module_group_model->get_ordered();
         $this->display_view('group/list', $outputs);
     }
 
@@ -39,10 +39,10 @@ class Group extends MY_Controller {
         $outputs = array();
 
         if($id > 0){
-            $outputs["group"] = $this->module_group_model->get($id);
+            $outputs["group"] = $this->formation_module_group_model->get($id);
         }
 
-        $groups = $this->module_group_model->get_all();
+        $groups = $this->formation_module_group_model->get_all();
         if($id != 0) {
             $groups = $this->recursive_remove($groups, $id);
             /* Important to prevent a group from being in itself.
@@ -82,14 +82,14 @@ class Group extends MY_Controller {
 
         if($this->form_validation->run()){
             if($this->input->post('id') > 0){
-                $this->module_group_model->update($this->input->post('id'), $req);
+                $this->formation_module_group_model->update($this->input->post('id'), $req);
             } else {
-                $this->module_group_model->insert($req);
+                $this->formation_module_group_model->insert($req);
             }
             redirect('group');
         } else {
             $outputs["groups"][0] = $this->lang->line('none');
-            $outputs["groups"] = array_merge($outputs["groups"], $this->module_group_model->dropdown('name_group'));
+            $outputs["groups"] = array_merge($outputs["groups"], $this->formation_module_group_model->dropdown('name_group'));
             $this->display_view('group/add', $outputs);
         }
     }
@@ -112,14 +112,14 @@ class Group extends MY_Controller {
             $outputs['deletion_allowed'] = FALSE;
         }
         //Checks all groups for their parents
-        $groups = $this->module_group_model->with('Modules')->get_many_by('fk_parent_group='.$id);
+        $groups = $this->formation_module_group_model->with('Modules')->get_many_by('fk_parent_group='.$id);
         if(sizeof($groups) > 0) {
             $outputs['deletion_allowed'] = FALSE;
         }
-        $outputs['group'] = $this->module_group_model->get($id);
+        $outputs['group'] = $this->formation_module_group_model->get($id);
 
         if($confirm == 1) {
-            $this->module_group_model->delete($id);
+            $this->formation_module_group_model->delete($id);
             $this->display_view('group/success');
         } elseif ($confirm == 0) {
             $this->display_view('group/delete', $outputs);

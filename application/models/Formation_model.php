@@ -3,11 +3,9 @@
 class formation_model extends MY_Model {
     protected $protected_attributes = ["id"];
     protected $has_many = ["Child_Apprentices_Formation" => ["primary_key" => "fk_formation",
-                                                            "model" => "model_formation"],
-                            "Child_Formations_Modules" => ["primary_key" => "fk_formation",
-                                                            "model" => "model_formation"],
-                            "Child_Apprentice" => ["primary_key" => "fk_formation",
-                                                    "model" => "model_formation"]];
+                                                            "model" => "formation_model"],
+                            "Child_Formations_Modules_Groups" => ["primary_key" => "fk_formation",
+                                                                "model" => "formation_module_group_model"]];
 
     public function __construct() {
         parent::__construct();

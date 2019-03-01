@@ -9,8 +9,6 @@
 ?>
 
 <div class="container">
-    <?php unset($groups[0]);
-    if(sizeof($groups) > 0) { ?>
     <h1 class="title-section"><?php if(isset($module)) {echo $this->lang->line('module_modify'); $update = true;} else {echo $this->lang->line('module_new'); $update = false;} ?></h1>
     <?php
     $attributes = array("id" => "addModuleForm",
@@ -55,24 +53,6 @@
                             echo form_input('title_module', set_value('title_module', $module->title), 'maxlength="65535" class="form-control" id="title_module"');
                         else
                             echo form_input('title_module', set_value('title_module'), 'maxlength="65535" class="form-control" id="title_module"');
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-12">
-                <div class="form-group row">
-                    <div class="col-md-4">
-                        <?php echo form_label($this->lang->line('module_group'), 'group_module'); ?>
-                    </div>
-                    <div class="col-md-8">
-                        <?php
-                        if($update)
-                            echo form_dropdown('group_module', $groups, set_value('group_module', $module->fk_group), 'class="form-control" id="group_module"');
-                        else
-                            echo form_dropdown('group_module', $groups, set_value('group_module'), 'class="form-control" id="group_module"');
                         ?>
                     </div>
                 </div>
@@ -134,10 +114,6 @@
             </div>
         </div>
 
-    <?php echo form_close();
-    } else { ?>
-    <div class="row"><a href="<?php echo base_url().'group'; ?>" class="btn"><?php echo $this->lang->line('return'); ?></a></div>
-    <div class="alert alert-warning row"><?php echo $this->lang->line('module_new_not'); ?></div>
-    <?php } ?>
+    <?php echo form_close(); ?>
 </div>
 <script type="text/javascript" src="<?php echo base_url('assets/js/module_add.js'); ?>"></script>

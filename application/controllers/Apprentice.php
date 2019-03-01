@@ -55,7 +55,6 @@ class Apprentice extends MY_Controller {
             'firstname' => $this->input->post('firstname'),
             'last_name' => $this->input->post('lastname'),
             'date_birth' => $this->input->post('datebirth'),
-            'fk_formation' => $this->input->post('formation'),
             'fk_teacher' => $this->input->post('teacher'),
             'fk_user' => $this->input->post('user')
         );
@@ -64,11 +63,11 @@ class Apprentice extends MY_Controller {
         $current_date = strtotime(date("d-m-Y"));
         $input_date = strtotime($req["date_birth"]);
         $problem = ($current_date >= $input_date);
+        echo $problem;
 
         $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
-        $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), array('required', function() {return $problem;}));
-        $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), 'required');
+        $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), array('required', function($problem) {return $problem;}));
         $this->form_validation->set_rules('teacher', $this->lang->line('apprentice_MSP'), 'required');
         $this->form_validation->set_rules('user', $this->lang->line('apprentice_user'), 'required');
 
@@ -82,7 +81,7 @@ class Apprentice extends MY_Controller {
             }
             redirect('apprentice');
         } else {
-            redirect('apprentice/form/'.$this->input->post('id'));
+            //redirect('apprentice/form/'.$this->input->post('id'));
         }
     }
 
@@ -111,14 +110,7 @@ class Apprentice extends MY_Controller {
      *      All formations, teachers and users in an array
      */
     private function get_parents() {
-        $this->load->model(['formation_model','teacher_model','user_model']);
-
-        //Puts the formations names and their corresponding ids together
-        $formation_names = $this->formation_model->dropdown('Name_Formation');
-        $formation_names[0] = $this->lang->line('none_f');
-        $formation_ids = $this->formation_model->dropdown('id');
-        $formation_ids[0] = 0;
-        $results["formations"] = $this->link_arrays($formation_ids, $formation_names);
+        $this->load->model(['teacher_model','user_model']);
 
         //Puts the teacher first names, last names and their corresponding ids together
         $teachers_names = $this->teacher_model->dropdown('firstname');

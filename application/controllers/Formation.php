@@ -18,7 +18,7 @@ class Formation extends MY_Controller {
     {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model(['formation_model','formation_module_model','module_subject_model']);
+        $this->load->model(['formation_model','module_group_model','module_subject_model']);
         $this->load->helper(['form', 'url']);
     }
 
@@ -83,7 +83,7 @@ class Formation extends MY_Controller {
     public function delete($id, $confirm = 0) {
         $outputs['formation'] = $this->formation_model->get($id);
         $outputs['deletion_allowed'] = TRUE;
-        $modules = $this->formation_module_model->with('Modules')->get_many_by('fk_formation='.$id);
+        $modules = $this->module_group_model->with('Modules')->get_many_by('fk_formation='.$id);
         if(sizeof($modules) > 0) {
             $outputs['deletion_allowed'] = FALSE;
         }
@@ -95,59 +95,5 @@ class Formation extends MY_Controller {
         }
         else
             redirect('formation');
-    }
-
-    /**
-     * Edit a module
-     * @param integer $id
-     *      The id of the module to edit
-     */
-    public function edit_modules($id){
-        $outputs["formation"] = $this->formation_model->get($id);
-        $outputs["modules"] = $this->formation_module_model->with('Modules')->get_many_by('fk_formation='.$id);
-        $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
-        $this->display_view('formation/edit_modules', $outputs);
-    }
-
-    /**
-    * Displays the form to add / remove / change the modules in the formation
-    */
-    public function edit_modules_post(){
-        $id = $this->input->post('id');
-
-        $add_module = $this->input->post('add_module');
-        $del_module = $this->input->post('del_module');
-        $quit = $this->input->post('quit');
-        $modules = $this->input->post('modules');
-
-        if(!is_null($modules)){
-            foreach ($modules as $key => $module) {
-                $req = array(
-                    'fk_formation' => $id,
-                    'fk_module' => $module
-                );
-                if(is_null($this->formation_module_model->get($key))){
-                    $this->formation_module_model->insert($req);
-                } else {
-                    $this->formation_module_model->update($key, $req);
-                }
-            }
-        }
-
-        if(isset($add_module)){
-            $outputs["add_module"] = true;
-        } else if(isset($del_module)) {
-            $this->formation_module_model->delete(array_keys($del_module)[0]);
-        }
-
-        if(isset($quit)) {
-            redirect('formation');
-        } else {
-            $outputs["formation"] = $this->formation_model->get($id);
-            $outputs["modules"] = $this->formation_module_model->with('Modules')->get_many_by('fk_formation='.$id);
-            $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
-
-            $this->display_view('formation/edit_modules', $outputs);
-        }
     }
 }

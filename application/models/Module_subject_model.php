@@ -4,10 +4,8 @@ class module_subject_model extends MY_Model {
     /* SET MY_Model VARIABLES */
     protected $_table = 'modules_subjects';
     protected $protected_attributes = ['id'];
-    protected $belongs_to = ['Group' => ['primary_key' => 'fk_group',
-                                         'model' => 'groups_model']];
-    protected $has_many = ['Formation_modules' => ['primary_key' => 'fk_module',
-                                                   'model' => 'formation_module_model'],
+    protected $has_many = ['Modules_Groups' => ['primary_key' => 'fk_module',
+                                                   'model' => 'module_group_model'],
                            'Grades' => ['primary_key' => 'fk_module_subject',
                                         'model' => 'grades_model']];
 

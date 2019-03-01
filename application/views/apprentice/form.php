@@ -101,25 +101,6 @@ $attributes = array("id" => "apprenticeForm",
         <div class="form-group col-md-12">
             <div class="form-group row">
                 <div class="col-md-4">
-                    <?php echo form_label($this->lang->line('apprentice_formation'), 'formation'); ?>
-                </div>
-                <div class="col-md-8">
-                    <?php
-                    //Find a way to load the formations
-                    if($update)
-                        echo form_dropdown('formation', $formations, set_value('formation', $apprentice->fk_formation), 'class="form-control" id="formation"');
-                    else
-                        echo form_dropdown('formation', $formations, set_value('formation'), 'class="form-control" id="formation"');
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="form-group col-md-12">
-            <div class="form-group row">
-                <div class="col-md-4">
                     <?php echo form_label($this->lang->line('apprentice_teacher'), 'teacher'); ?>
                 </div>
                 <div class="col-md-8">
