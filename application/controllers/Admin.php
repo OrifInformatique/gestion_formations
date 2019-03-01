@@ -103,12 +103,21 @@ class Admin extends MY_Controller {
         }
     }
 
+    /**
+     * Opens the form to change a password
+     * @param integer $id
+     *      ID of the user's password to change
+     */
     public function user_change_password($id) {
         $outputs['user'] = $this->user_model->get($id);
         
         $this->display_view('admin/users/cp', $outputs);
     }
 
+    /**
+     * Verifies that the old password corresponds to the user's password
+     * and that the new password is repeated twice
+     */
     public function user_change_password_validation() {
         $req = array(
             'password' => password_hash($this->input->post('user_password_new'), PASSWORD_DEFAULT)

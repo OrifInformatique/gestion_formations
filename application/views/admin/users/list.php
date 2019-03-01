@@ -19,7 +19,8 @@
             <!-- Click here to modify -->
             <div class="col-md-8"><a href="<?php echo base_url().'admin/user_form/'.$user->id; ?>"><?php echo $user->user; ?></a></div>
             <div class="col-md-2"><?php echo get_user_type($user->fk_user_type, $user_types, $this->lang->line('none')); ?></div>
-            <div class="col-md-1"><a href="<?php echo base_url().'admin/user_change_password/'.$user->id; ?>">[o]</a></div>
+            <div class="col-md-1"><a href="<?php echo base_url().'admin/user_change_password/'.$user->id; ?>"
+                title="<?php echo $this->lang->line('user_change_password'); ?>">[🖍]</a></div>
             <!-- Click here to delete -->
             <div class="col-md-1"><a href="<?php echo base_url().'admin/user_delete/'.$user->id; ?>">[x]</a></div>
         </div>
