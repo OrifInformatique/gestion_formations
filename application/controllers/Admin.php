@@ -66,40 +66,34 @@ class Admin extends MY_Controller {
      * Makes sure that the form was filled correctly.
      */
     public function user_form_validation() {
-        $update = (null !== $this->input->post('id'));
+        $user_id = $this->input->post('id');
+        $update = (null !== $user_id);
 
-        $req = array(
-            'user' => $this->input->post('user_username'),
-            'fk_user_type' => $this->input->post('user_type')
-        );
-        if(!$update) {
-            $req['password'] = password_hash($this->input->post('user_password'), PASSWORD_DEFAULT);
-        }
+        $req = array( 'user' => $this->input->post('user_username'),
+            'fk_user_type' => $this->input->post('user_type') );
+        //If it's a new user, hash their password
+        if(!$update) $req['password'] = password_hash($this->input->post('user_password'), PASSWORD_DEFAULT);
 
         $this->form_validation->set_rules('user_username', $this->lang->line('user_username'),
             'trim|required|min_length['.USERNAME_MIN_LENGTH.']|is_unique[users.user]');
         $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
+        //If it's a new user, create a password with it
         if(!$update) {
             $this->form_validation->set_rules('user_password', $this->lang->line('user_password'),
-                array('trim',
-                    'required',
-                    'min_length['.PASSWORD_MIN_LENGTH.']',
+                array('trim', 'required', 'min_length['.PASSWORD_MIN_LENGTH.']',
                     function() {
                         return ($this->input->post('user_password') !== $this->input->post('user_password_again'));
-                    }));
+                    } ));
         }
 
         if($this->form_validation->run()) {
-            if($this->input->post('id') > 0){
-                $this->user_model->update($this->input->post('id'), $req);
-            } else {
+            if($user_id > 0)
+                $this->user_model->update($user_id, $req);
+            else
                 $this->user_model->insert($req);
-            }
             redirect('admin/user_index');
         } else {
-            if($this->input->post('id') > 0)
-                $this->user_form($this->input->post('id'));
-            $this->user_form();
+            $this->user_form($user_id);
         }
     }
 
@@ -116,46 +110,72 @@ class Admin extends MY_Controller {
 
     /**
      * Verifies that the old password corresponds to the user's password
-     * and that the new password is repeated twice
+     * and that the new password is repeated twice.
+     *
+     * Function is not pretty.
      */
     public function user_change_password_validation() {
+        $user_id = $this->input->post('id');
+
         $req = array(
             'password' => password_hash($this->input->post('user_password_new'), PASSWORD_DEFAULT)
         );
 
-        //Checks that the passwords are correct
-
+        //Check user password
+        $username = $this->user_model->get(user_id)->user;
         $this->form_validation->set_rules('user_password_old', $this->lang->line('user_password_old'),
-            array('trim',
-                'required',
-                'min_length['.PASSWORD_MIN_LENGTH.']',
-                function($old_password_in) {
-                    $user = $this->user_model->get($this->input->post('id'));
-                    return $this->user_model->check_password($user->user, $old_password_in);
-                }));
+            array('trim', 'required', 'min_length['.PASSWORD_MIN_LENGTH.']', 'callback_cb_check_old_password['.$username.']'));
+        //Check that the new password did get in
         $this->form_validation->set_rules('user_password_new', $this->lang->line('user_password_new'),
-            array('trim',
-                'required',
-                'min_length['.PASSWORD_MIN_LENGTH.']'));
+            array('trim', 'required', 'min_length['.PASSWORD_MIN_LENGTH.']'));
+        //Check that the new password was repeated twice
+        $new_password = $this->input->post('user_password_new');
         $this->form_validation->set_rules('user_password_again', $this->lang->line('user_password_again'),
-            array('trim',
-                'required',
-                'min_length['.PASSWORD_MIN_LENGTH.']',
-                function($new_password_conf) {
-                    $problem_new = FALSE;
-                    $new_password = $this->input->post('user_password_new');
-                    if(strcmp($new_password, $new_password_conf) != 0) {
-                        $problem_new = TRUE;
-                    }
-                    return !$problem_new;
-                }));
+            array('trim', 'required', 'min_length['.PASSWORD_MIN_LENGTH.']','callback_cb_check_new_password['.$new_password.']'));
 
         if($this->form_validation->run()) {
-            $this->user_model->update($this->input->post('id'), $req);
+            $this->user_model->update(user_id, $req);
             redirect('admin/user_index');
         } else {
-            $this->user_change_password($this->input->post('id'));
+            $this->user_change_password(user_id);
         }
+    }
+
+    /**
+     * Checks if the password corresponds to a username.
+     *
+     * Used as a callback in user_change_password_validation()
+     * because adding 2 anonymous functions in there is ugly.
+     *
+     * @param string $old_password
+     *      The user's password
+     * @param string $username
+     *      The username
+     * @return boolean
+     *      TRUE if it corresponds
+     */
+    public function cb_check_old_password($old_password, $username) {
+        return $this->user_model->check_password($username, $old_password);
+    }
+
+    /**
+     * Checks if the new password and its confirmation are the same.
+     *
+     * Used as a callback in user_change_password_validation()
+     * because adding 2 anonymous functions in there is ugly.
+     *
+     * @param string $new_password
+     *      The new password
+     * @param string new_password_conf
+     *      Should be the same as above
+     * @return boolean
+     *      TRUE if the passwords are the same
+     */
+    public function cb_check_new_password($new_password, $new_password_conf) {
+        $password_ok = TRUE;
+        if(strcmp($new_password, $new_password_conf) != 0)
+            $password_ok = FALSE;
+        return $password_ok;
     }
 
     /**
@@ -234,9 +254,7 @@ class Admin extends MY_Controller {
             }
             redirect('admin/user_type_index');
         } else {
-            if($this->input->post('id') > 0)
-                $this->user_type_form($this->input->post('id'));
-            $this->user_type_form();
+            $this->user_type_form($this->input->post('id'));
         }
     }
 
@@ -306,6 +324,7 @@ class Admin extends MY_Controller {
      * Validates the inputs in the teacher form
      */
     public function teacher_form_validation() {
+        $teacher_id = $this->input->post('id');
         $this->form_validation->set_rules('teacher_firstname', $this->lang->line('teacher_firstname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('teacher_name', $this->lang->line('teacher_name'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('teacher_user', $this->lang->line('teacher_username'), 'required');
@@ -316,16 +335,14 @@ class Admin extends MY_Controller {
             'fk_user' => $this->input->post('teacher_user'));
 
         if($this->form_validation->run()) {
-            if($this->input->post('id') > 0) {
-                $this->teacher_model->update($this->input->post('id'), $req);
+            if($teacher_id > 0) {
+                $this->teacher_model->update($teacher_id, $req);
             } else {
                 $this->teacher_model->insert($req);
             }
             redirect('admin/teacher_index');
         } else {
-            if($this->input->post('id') > 0)
-                $this->teacher_form($this->input->post('id'));
-            $this->teacher_form();
+            $this->teacher_form($teacher_id);
         }
     }
 

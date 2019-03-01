@@ -45,8 +45,7 @@ class Group extends MY_Controller {
         $groups = $this->formation_module_group_model->get_all();
         if($id != 0) {
             $groups = $this->recursive_remove($groups, $id);
-            /* Important to prevent a group from being in itself.
-            Should this happen, anything touching group will collapse.*/
+            /* Important to prevent a group from being in itself.*/
         }
         $group_names[0] = $this->lang->line('none');
         $group_ids[0] = 0;
@@ -54,9 +53,7 @@ class Group extends MY_Controller {
             array_push($group_names, $group->name_group);
             array_push($group_ids, $group->id);
         }
-        for ($i=0; $i < sizeof($group_names); $i++) {
-            $outputs["groups"][$group_ids[$i]] = $group_names[$i];
-        }
+        $outputs['groups'] = array_combine($group_ids, $group_names);
 
         $this->display_view('group/add', $outputs);
     }
@@ -78,8 +75,6 @@ class Group extends MY_Controller {
             'fk_parent_group' => $this->input->post('parent_group')
         );
 
-        $req = html_escape($req);
-
         if($this->form_validation->run()){
             if($this->input->post('id') > 0){
                 $this->formation_module_group_model->update($this->input->post('id'), $req);
@@ -90,7 +85,7 @@ class Group extends MY_Controller {
         } else {
             $outputs["groups"][0] = $this->lang->line('none');
             $outputs["groups"] = array_merge($outputs["groups"], $this->formation_module_group_model->dropdown('name_group'));
-            $this->display_view('group/add', $outputs);
+            $this->form($this->input->post('id'));
         }
     }
 
@@ -106,11 +101,6 @@ class Group extends MY_Controller {
 
         //Verifies that the group does not have any child upon deletion
         $outputs['deletion_allowed'] = TRUE;
-        //Checks all modules for their parents
-        $modules = $this->module_subject_model->with('Modules')->get_many_by('fk_group='.$id);
-        if(sizeof($modules) > 0) {
-            $outputs['deletion_allowed'] = FALSE;
-        }
         //Checks all groups for their parents
         $groups = $this->formation_module_group_model->with('Modules')->get_many_by('fk_parent_group='.$id);
         if(sizeof($groups) > 0) {

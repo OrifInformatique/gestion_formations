@@ -48,11 +48,10 @@ class Auth extends MY_Controller {
         if ($this->form_validation->run() == true) {
             if($this->user_model->check_password($username, $password)) {
                 $user = $this->user_model->with('users_type')->get_by('user', $username);
-                $access_levels = $this->user_type_model->get_all();
 
                 $this->session->user_id = $user->id;
                 $this->session->username = $user->user;
-                $this->session->user_access = $access_levels[$user->fk_user_type]->access_level;
+                $this->session->user_access = $this->user_type_model->get($user->fk_user_type)->access_level;
                 $this->session->logged_in = true;
 
                 redirect('index.php');

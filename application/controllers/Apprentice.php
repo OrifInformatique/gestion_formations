@@ -11,8 +11,7 @@ class Apprentice extends MY_Controller {
     /* MY_Controller variables definition */
     protected $access_level = "*";
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('apprentice_model');
@@ -32,8 +31,6 @@ class Apprentice extends MY_Controller {
      * Shows the form to create / modify an apprentice
      * @param integer $id
      *      The apprentice to modify (0 for new)
-     * @param integer $error
-     *      Unused in form.php
      */
     public function form($id = 0) {
         $outputs = $this->get_parents();
@@ -47,8 +44,6 @@ class Apprentice extends MY_Controller {
 
     /**
      * Validates the entry for a new apprentice
-     * @param integer $error
-     *      Unused in the function and in form.php
      */
     public function form_validation(){
         $req = array(
@@ -63,15 +58,12 @@ class Apprentice extends MY_Controller {
         $current_date = strtotime(date("d-m-Y"));
         $input_date = strtotime($req["date_birth"]);
         $problem = ($current_date >= $input_date);
-        echo $problem;
 
         $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
         $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
-        $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), array('required', function($problem) {return $problem;}));
+        $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), array('required', 'callback_cb_check_if_past'));
         $this->form_validation->set_rules('teacher', $this->lang->line('apprentice_MSP'), 'required');
         $this->form_validation->set_rules('user', $this->lang->line('apprentice_user'), 'required');
-
-        $req = html_escape($req);
 
         if($this->form_validation->run()){
             if($this->input->post('id') > 0) {
@@ -81,8 +73,32 @@ class Apprentice extends MY_Controller {
             }
             redirect('apprentice');
         } else {
+            $outputs = $this->get_parents();
+
+            if($this->input->post('id') > 0) {
+                $outputs["apprentice"] = $this->apprentice_model->get($id);
+            }
             //redirect('apprentice/form/'.$this->input->post('id'));
+            $this->display_view("apprentice/form", $outputs);
         }
+    }
+
+    /**
+     * Checks if the date entered is in the past.
+     *
+     * Used as a callback in form_validation()
+     * because adding 4 lines is not really pretty.
+     *
+     * @param string $date_in
+     *      The date to check
+     * @return boolean
+     *      TRUE if the date is in the past
+     */
+    public function cb_check_if_past($date_in) {
+        $current_date = strtotime(date("d-m-Y"));
+        $input_date = strtotime($date_in);
+        $date_ok = ($current_date >= $input_date);
+        return $date_ok;
     }
 
     /**
@@ -124,21 +140,23 @@ class Apprentice extends MY_Controller {
         $teachers_names[0] = $this->lang->line('none');
         $msps_ids = $this->teacher_model->dropdown('id');
         $msps_ids[0] = 0;
-        $results["teachers"] = $this->link_arrays($msps_ids, $teachers_names);
+        $results["teachers"] = array_combine($msps_ids, $teachers_names);
 
         //Puts the user names and their corresponding ids together
         $users_names = $this->user_model->dropdown('User');
         $users_names[0] = $this->lang->line('none');
         $users_ids = $this->user_model->dropdown('id');
         $users_ids[0] = 0;
-        $results["users"] = $this->link_arrays($users_ids, $users_names);
+        $results["users"] = array_combine($users_ids, $users_names);
 
         return $results;
     }
 
     /**
-     * Puts 2 arrays as key => value
-     * Both need numbers (and the same ones) to work
+     * Puts 2 arrays as key => value<br>
+     * Both need similar numerical keys to work
+     * @deprecated
+     *      Use array_combine()
      * @param array $array_keys
      *      Keys of the future array
      * @param array $array_values

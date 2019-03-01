@@ -71,7 +71,7 @@ class Module extends MY_Controller {
             redirect('module');
         } else {
             $outputs["groups"] = $this->formation_module_group_model->dropdown('name_group');
-            $this->display_view('module/add', $outputs);
+            $this->form($this->input->post('id'));
         }
     }
 
@@ -83,10 +83,10 @@ class Module extends MY_Controller {
      *      0 to display confirmation, 1 to confirm, 0 to go back to the index
      */
     public function delete($id, $confirm = 0) {
-        $this->load->model('formation_module_model');
+        $this->load->model('module_group_model');
         $outputs['module'] = $this->module_subject_model->get($id);
         $outputs['deletion_allowed'] = TRUE;
-        $modules = $this->formation_module_model->with('Modules')->get_many_by('fk_module='.$id);
+        $modules = $this->module_group_model->get_many_by('fk_module='.$id);
         if(sizeof($modules) > 0) {
             $outputs['deletion_allowed'] = FALSE;
         }
