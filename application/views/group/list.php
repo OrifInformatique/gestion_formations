@@ -18,7 +18,7 @@
                 <div class="col-md-3"><a href="<?php echo base_url().'group/form/'.$group->id; ?>"><?php echo $group->name_group; ?></a></div>
                 <div class="col-md-2"><?php echo $group->weight . ' %'; ?></div>
                 <div class="col-md-2"><?php echo $group->eliminatory?$this->lang->line('yes'):$this->lang->line('no'); ?></div>
-                <div class="col-md-3"><?php echo getParentGroup($group->fk_parent_group, $groups); ?></div>
+                <div class="col-md-3"><?php echo getParentGroup($groups, $group->fk_parent_group); ?></div>
                 <!-- Click here to delete -->
                 <div class="col-md-1"><a href="<?php echo base_url().'group/delete/'.$group->id; ?>">[x]</a></div>
             </div>
@@ -30,14 +30,14 @@
 <?php
     /**
      * Returns the parent group
-     * @param integer $id
-     *      The id of the parent group
      * @param array $groups
      *      The entirety of groups
+     * @param integer $id
+     *      The id of the parent group
      * @return string
      *      The name of the parent group
      */
-    function getParentGroup($id = 0, $groups){
+    function getParentGroup($groups, $id = 0){
         if($id == 0){
             return "";
         } else {
@@ -45,7 +45,7 @@
                 if($group->fk_parent_group == $group->id || $group->id == 0){
                     return "";
                 }
-                if($group->id == $id){
+                if($group->id === $id){
                     return $group->name_group;
                 }
             }

@@ -33,7 +33,7 @@ class Auth extends MY_Controller {
     }
 
     /**
-     * Validate the login informaions and create session variables.
+     * Validate the login informations and create session variables.
      * If necessary, redirect to the login page.
      */
     public function login(){
@@ -75,7 +75,7 @@ class Auth extends MY_Controller {
     }
 
     /**
-     * Checks if the username is unique
+     * Checks if the username is unique.<br>
      * Unused because I forgot there was a is_unique filter
      * @param string $username
      *      Username to check

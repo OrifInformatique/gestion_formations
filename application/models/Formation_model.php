@@ -16,7 +16,7 @@ class formation_model extends MY_Model {
      * @param string $main
      *      Column that is looked at for the sorting
      * @param string $direction
-     *      Ascendent or descentent
+     *      Ascendent or descendent
      */
     public function get_ordered($main = 'id', $direction = 'asc'){
         $this->db->order_by($main, $direction);

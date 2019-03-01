@@ -24,10 +24,8 @@ class Formation extends MY_Controller {
 
     /**
      * Shows the index with all the groups
-     * @param integer $error
-     *      Unused in the function and in list.php
      */
-    public function index($error = 0){
+    public function index(){
         $outputs['formations'] = $this->formation_model->get_ordered();
         $this->display_view('formation/list', $outputs);
     }

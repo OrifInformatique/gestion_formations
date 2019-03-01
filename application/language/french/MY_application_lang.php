@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * French translations of applcation's texts
+ * French translations of application's texts
  *
  * @author      Didier Viret
  * @link        https://github.com/OrifInformatique/ci_pack_base
