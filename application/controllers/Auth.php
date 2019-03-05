@@ -47,7 +47,7 @@ class Auth extends MY_Controller {
 
         if ($this->form_validation->run() == true) {
             if($this->user_model->check_password($username, $password)) {
-                $user = $this->user_model->with('users_type')->get_by('user', $username);
+                $user = $this->user_model->get_by('user', $username);
 
                 $this->session->user_id = $user->id;
                 $this->session->username = $user->user;

@@ -102,7 +102,7 @@ class Group extends MY_Controller {
         //Verifies that the group does not have any child upon deletion
         $outputs['deletion_allowed'] = TRUE;
         //Checks all groups for their parents
-        $groups = $this->formation_module_group_model->with('Modules')->get_many_by('fk_parent_group='.$id);
+        $groups = $this->formation_module_group_model->get_many_by('fk_parent_group='.$id);
         if(sizeof($groups) > 0) {
             $outputs['deletion_allowed'] = FALSE;
         }

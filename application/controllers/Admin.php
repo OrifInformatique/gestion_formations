@@ -116,28 +116,29 @@ class Admin extends MY_Controller {
      */
     public function user_change_password_validation() {
         $user_id = $this->input->post('id');
+        $base_rules = 'trim|required|min_length['.PASSWORD_MIN_LENGTH.']';
 
         $req = array(
             'password' => password_hash($this->input->post('user_password_new'), PASSWORD_DEFAULT)
         );
 
         //Check user password
-        $username = $this->user_model->get(user_id)->user;
+        $username = $this->user_model->get($user_id)->user;
         $this->form_validation->set_rules('user_password_old', $this->lang->line('user_password_old'),
-            array('trim', 'required', 'min_length['.PASSWORD_MIN_LENGTH.']', 'callback_cb_check_old_password['.$username.']'));
+            $base_rules.'|callback_cb_check_old_password['.$username.']');
         //Check that the new password did get in
         $this->form_validation->set_rules('user_password_new', $this->lang->line('user_password_new'),
-            array('trim', 'required', 'min_length['.PASSWORD_MIN_LENGTH.']'));
+            $base_rules);
         //Check that the new password was repeated twice
         $new_password = $this->input->post('user_password_new');
         $this->form_validation->set_rules('user_password_again', $this->lang->line('user_password_again'),
-            array('trim', 'required', 'min_length['.PASSWORD_MIN_LENGTH.']','callback_cb_check_new_password['.$new_password.']'));
+            $base_rules.'|callback_cb_check_new_password['.$new_password.']');
 
         if($this->form_validation->run()) {
-            $this->user_model->update(user_id, $req);
+            $this->user_model->update($user_id, $req);
             redirect('admin/user_index');
         } else {
-            $this->user_change_password(user_id);
+            $this->user_change_password($user_id);
         }
     }
 
@@ -172,10 +173,7 @@ class Admin extends MY_Controller {
      *      TRUE if the passwords are the same
      */
     public function cb_check_new_password($new_password, $new_password_conf) {
-        $password_ok = TRUE;
-        if(strcmp($new_password, $new_password_conf) != 0)
-            $password_ok = FALSE;
-        return $password_ok;
+        return !(strcmp($new_password, $new_password_conf) != 0);
     }
 
     /**
@@ -191,10 +189,10 @@ class Admin extends MY_Controller {
         $outputs['user'] = $this->user_model->get($id);
 
         $outputs['deletion_allowed'] = TRUE;
-        $teachers = $this->teacher_model->with('Teachers')->get_many_by('fk_user='.$id);
+        $teachers = $this->teacher_model->get_many_by('fk_user='.$id);
         if(sizeof($teachers) > 0)
             $outputs['deletion_allowed'] = FALSE;
-        $apprentices = $this->apprentice_model->with('Apprentices')->get_many_by('fk_user='.$id);
+        $apprentices = $this->apprentice_model->get_many_by('fk_user='.$id);
         if(sizeof($apprentices) > 0)
             $outputs['deletion_allowed'] = FALSE;
 
@@ -269,7 +267,7 @@ class Admin extends MY_Controller {
         $outputs['user_type'] = $this->user_type_model->get($id);
 
         $outputs['deletion_allowed'] = TRUE;
-        $users = $this->user_model->with('Users')->get_many_by('fk_user_type='.$id);
+        $users = $this->user_model->get_many_by('fk_user_type='.$id);
         if(sizeof($users) > 0)
             $outputs['deletion_allowed'] = FALSE;
 
@@ -358,7 +356,7 @@ class Admin extends MY_Controller {
         $outputs['teacher'] = $this->teacher_model->get($id);
 
         $outputs['deletion_allowed'] = TRUE;
-        $apprentices = $this->apprentice_model->with('Apprentices')->get_many_by('fk_teacher='.$id);
+        $apprentices = $this->apprentice_model->get_many_by('fk_teacher='.$id);
         if(sizeof($apprentices) > 0)
             $outputs['deletion_allowed'] = FALSE;
 
