@@ -27,7 +27,7 @@ class Module extends MY_Controller {
         $outputs['groups_tree'] = $this->formation_module_group_model->get_tree();
         if(is_null($outputs['groups_tree']))
             $outputs['groups_tree'] = array();
-        $outputs['modules'] = $this->module_subject_model->get_ordered();
+        $outputs['modules'] = $this->module_subject_model->get_ordered("number");
         $this->display_view('module/list', $outputs);
     }
 
@@ -51,7 +51,7 @@ class Module extends MY_Controller {
      */
     public function form_validation(){
         $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
-        $this->form_validation->set_rules('number_module', $this->lang->line('number_module'), 'required');
+        $this->form_validation->set_rules('number_module', $this->lang->line('module_number'), 'required');
         $this->form_validation->set_rules('description_module', $this->lang->line('module_description'), 'trim|regex_match[/[A-Za-zÀ-ÿ0-9 \-\.,\?\!:;]+/]');
 
         $req = array(

@@ -14,7 +14,7 @@
             <div class="row">
                 <!-- Click here to modify -->
                 <div class="col-md-2"><a href="<?php echo base_url().'module/form/'.$module->id; ?>"><?php echo $module->title; ?></a></div>
-                <div class="col-md-2"><?php echo $module->number . ' %'; ?></div>
+                <div class="col-md-2"><?php echo $module->number; ?></div>
                 <div class="col-md-7"><?php echo $module->description; ?></div>
                 <!-- Click here to delete -->
                 <div class="col-md-1"><a href="<?php echo base_url().'module/delete/'.$module->id; ?>">[x]</a></div>

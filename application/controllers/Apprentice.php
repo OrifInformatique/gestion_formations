@@ -95,7 +95,7 @@ class Apprentice extends MY_Controller {
      *      TRUE if the date is in the past
      */
     public function cb_check_if_past($date_in) {
-        $date_ok = (strtotime(date("d-m-Y")) >= $strtotime($date_in));
+        $date_ok = (strtotime(date("d-m-Y")) >= strtotime($date_in));
         return $date_ok;
     }
 
