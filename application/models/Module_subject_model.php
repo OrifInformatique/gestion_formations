@@ -23,7 +23,7 @@ class module_subject_model extends MY_Model {
      * @param string $direction
      *      Ascendent or descentent
      */
-    public function get_ordered($main = 'id', $direction = 'asc'){
+    public function get_ordered($main = 'number', $direction = 'asc'){
         $this->db->order_by($main, $direction);
         return $this->module_subject_model->get_all();
     }
