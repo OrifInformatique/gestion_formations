@@ -24,7 +24,9 @@ class Module extends MY_Controller {
      */
     public function index(){
         $outputs['groups'] = $this->formation_module_group_model->get_ordered();
-        $outputs['modules'] = $this->module_subject_model->get_ordered("number");
+        $outputs['groups_tree'] = $this->formation_module_group_model->get_tree();
+        if(is_null($outputs['groups_tree']))
+            $outputs['groups_tree'] = array();
         $this->display_view('module/list', $outputs);
     }
 
