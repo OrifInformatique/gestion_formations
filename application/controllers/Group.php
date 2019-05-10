@@ -19,7 +19,7 @@ class Group extends MY_Controller {
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('formation_module_group_model');
-        $this->load->helper(['form', 'url']);
+        $this->load->helper(['form']);
     }
 
     /**
@@ -62,7 +62,7 @@ class Group extends MY_Controller {
      * Opens the form and deals with updating or creating the group
      */
     public function form_validation(){
-        $this->form_validation->set_rules('name_group', $this->lang->line('group_name'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
+        $this->form_validation->set_rules('name_group', $this->lang->line('group_name'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
         $this->form_validation->set_rules('weight', $this->lang->line('group_weight'), 'required');
         $this->form_validation->set_rules('position', $this->lang->line('group_position'), 'required');
         $this->form_validation->set_rules('parent_group', $this->lang->line('group_parent_group'), 'required');

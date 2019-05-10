@@ -47,9 +47,10 @@ class Module extends MY_Controller {
      * Validates the input from the form
      */
     public function form_validation(){
-        $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
-        $this->form_validation->set_rules('number_module', $this->lang->line('module_number'), 'required');
-        $this->form_validation->set_rules('description_module', $this->lang->line('module_description'), 'trim|regex_match[/[A-Za-zÀ-ÿ0-9 \-\.,\?\!:;]+/]');
+        // Checks that the inputs don't mess the SQL
+        $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
+        $this->form_validation->set_rules('number_module', $this->lang->line('module_number'), 'required|numeric');
+        $this->form_validation->set_rules('description_module', $this->lang->line('module_description'), 'trim|regex_match[/^[A-Za-zÀ-ÿ0-9 \-\.,\?\!:;]+$/]');
 
         $req = array(
             'number' => $this->input->post('number_module'),
@@ -57,17 +58,16 @@ class Module extends MY_Controller {
             'description' => $this->input->post('description_module')
         );
 
-        $req = html_escape($req);
-
         if($this->form_validation->run()){
             if($this->input->post('id') > 0){
                 $this->module_subject_model->update($this->input->post('id'), $req);
             } else {
                 $this->module_subject_model->insert($req);
             }
+            // Sends the user back to the index
             redirect('module');
         } else {
-            $outputs["groups"] = $this->formation_module_group_model->dropdown('name_group');
+            //$outputs["groups"] = $this->formation_module_group_model->dropdown('name_group');
             $this->form($this->input->post('id'));
         }
     }
@@ -83,16 +83,20 @@ class Module extends MY_Controller {
         $this->load->model('module_group_model');
         $outputs['module'] = $this->module_subject_model->get($id);
         $outputs['deletion_allowed'] = TRUE;
+        // Check that there is no module group linked to the module
         $modules = $this->module_group_model->get_many_by('fk_module='.$id);
         if(sizeof($modules) > 0) {
             $outputs['deletion_allowed'] = FALSE;
         }
         if($confirm == 1) {
+            // Deletes the module and sends the user to a success view
             $this->module_subject_model->delete($id);
             $this->display_view('module/success');
         } elseif ($confirm == 0) {
+            // Default view, displays the delete view
             $this->display_view('module/delete', $outputs);
         } else {
+            // Any other value sends back to the list of modules
             redirect('module');
         }
     }
