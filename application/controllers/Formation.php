@@ -107,7 +107,7 @@ class Formation extends MY_Controller {
             } else {
                 $this->formation_model->insert($req);
 
-                
+                $this->index();
             }
 
         } else {
