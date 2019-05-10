@@ -40,8 +40,8 @@ class Formation extends MY_Controller {
         if($id > 0){
             $outputs["formation"] = $this->formation_model->get($id);
             $outputs["groups"] = $this->formation_module_group_model->get_tree($id, true);
-            $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
         }
+        $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
 
         $this->display_view('formation/add', $outputs);
     }
