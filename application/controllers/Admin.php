@@ -71,26 +71,24 @@ class Admin extends MY_Controller {
 
         $req = array( 'user' => $this->input->post('user_username'),
             'fk_user_type' => $this->input->post('user_type') );
-        //If it's a new user, hash their password
-        if(!$update) $req['password'] = password_hash($this->input->post('user_password'), PASSWORD_DEFAULT);
 
         $this->form_validation->set_rules('user_username', $this->lang->line('user_username'),
             'trim|required|min_length['.USERNAME_MIN_LENGTH.']|is_unique[users.user]');
         $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
         //If it's a new user, create a password with it
         if(!$update) {
+            $new_password = $this->input->post('user_password_again');
             $this->form_validation->set_rules('user_password', $this->lang->line('user_password'),
-                array('trim', 'required', 'min_length['.PASSWORD_MIN_LENGTH.']',
-                    function() {
-                        return ($this->input->post('user_password') !== $this->input->post('user_password_again'));
-                    } ));
+                array('trim','required','min_length['.PASSWORD_MIN_LENGTH.']','callback_cb_check_new_password['.$new_password.']'));
+            $req['password'] = password_hash($this->input->post('user_password'), PASSWORD_DEFAULT);
         }
 
         if($this->form_validation->run()) {
-            if($user_id > 0)
+            if($user_id > 0) {
                 $this->user_model->update($user_id, $req);
-            else
+            } else {
                 $this->user_model->insert($req);
+            }
             redirect('admin/user_index');
         } else {
             $this->user_form($user_id);
