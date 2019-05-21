@@ -35,6 +35,7 @@ class Formation extends MY_Controller {
      *      If a group with the id exists, it will update it, otherwise it will create a new group
      */
     public function form($id = 0){
+        $this->load->model('module_subject_model');
         $outputs = array();
 
         if($id > 0){
@@ -51,7 +52,7 @@ class Formation extends MY_Controller {
      */
     public function form_validation(){
         // Checks that the inputs don't mess the program
-        $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
+        $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-\']+$/]');
         $this->form_validation->set_rules('duration_formation', $this->lang->line('formation_duration'), 'required|numeric');
 
         $req = array(

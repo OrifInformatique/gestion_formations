@@ -39,7 +39,6 @@
             echo form_hidden('id', $formation->id);
             unset($formation->id);
         }
-
         ?>
 
         <div class="row">
@@ -51,7 +50,7 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_input('name_formation', set_value('name_formation', $formation->name_formation), 'maxlength="65535" class="form-control" id="name_formation"');
+                            echo form_input('name_formation', set_value('name_formation', $formation->name_formation, FALSE), 'maxlength="65535" class="form-control" id="name_formation"');
                         else
                             echo form_input('name_formation', set_value('name_formation'), 'maxlength="65535" class="form-control" id="name_formation"');
                         ?>
