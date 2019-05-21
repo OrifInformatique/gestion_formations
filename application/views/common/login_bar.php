@@ -34,6 +34,9 @@
             <b class="nav-link"><?php echo $this->lang->line('nav_categories');?></b>
           </li>
           <li class="nav-item active">
+            <a class="nav-link" href="<?php echo base_url('Group');?>"><?php echo $this->lang->line('nav_group');?></a>
+          </li>
+          <li class="nav-item active">
             <a class="nav-link" href="<?php echo base_url('Module');?>"><?php echo $this->lang->line('nav_module');?></a>
           </li>
           <li class="nav-item active">

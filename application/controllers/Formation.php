@@ -17,7 +17,7 @@ class Formation extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model(['formation_model','formation_module_group_model', 'module_subject_model', 'module_group_model']);
+        $this->load->model(['formation_model','formation_module_group_model']);
         $this->load->helper(['form', 'url']);
     }
 
@@ -39,8 +39,6 @@ class Formation extends MY_Controller {
 
         if($id > 0){
             $outputs["formation"] = $this->formation_model->get($id);
-            $outputs["groups"] = $this->formation_module_group_model->get_tree($id, true);
-            $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
         }
 
         $this->display_view('formation/add', $outputs);
@@ -50,7 +48,8 @@ class Formation extends MY_Controller {
      * Opens the form and deals with updating or creating the group
      */
     public function form_validation(){
-        $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
+        // Checks that the inputs don't mess the program
+        $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
         $this->form_validation->set_rules('duration_formation', $this->lang->line('formation_duration'), 'required|numeric');
 
         $req = array(
@@ -61,55 +60,10 @@ class Formation extends MY_Controller {
         if($this->form_validation->run()){
             if($this->input->post('id') > 0){
                 $this->formation_model->update($this->input->post('id'), $req);
-                $id = $this->input->post('id');
-
-                $add_group = $this->input->post('add_group');
-                $add_module = $this->input->post('add_module');
-                $added_module = $this->input->post('added_module');
-                $modules = $this->input->post('modules');
-
-                /*if(!is_null($modules)){
-                    foreach ($modules as $key => $module) {
-                        $req = array(
-                            'fk_formation' => $id,
-                            'fk_module' => $module
-                        );
-                        if(is_null($this->formation_module_group_model->get($key))){
-                            $this->formation_module_group_model->insert($req);
-                        } else {
-                            $this->formation_module_group_model->update($key, $req);
-                        }
-                    }
-                }*/
-
-                if(isset($add_group)){
-                    $req = array(
-                        'fk_formation' => $id,
-                        'name_group' =>  $this->input->post('add_group_name')
-                    );
-                    $this->formation_module_group_model->insert($req);
-                } else if(isset($del_module)) {
-                    $this->formation_module_group_model->delete(array_keys($del_module)[0]);
-                } else if(isset($add_module)){
-                    $req = array(
-                        'fk_formation_modules_group' => array_keys($add_module)[0],
-                        'fk_module' =>  $added_module[array_keys($add_module)[0]]
-                    );
-                    $this->module_group_model->insert($req);
-                }
-
-                $outputs["formation"] = $this->formation_model->get($id);
-                $outputs["groups"] = $this->formation_module_group_model->get_tree($id, true);
-                $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
-
-                $this->display_view('formation/add', $outputs);
-
             } else {
                 $this->formation_model->insert($req);
-
-                
             }
-
+            redirect('formation');
         } else {
             $this->form($this->input->post('id'));
         }
@@ -138,5 +92,4 @@ class Formation extends MY_Controller {
         else
             redirect('formation');
     }
-
 }

@@ -72,10 +72,11 @@ class Admin extends MY_Controller {
         $req = array( 'user' => $this->input->post('user_username'),
             'fk_user_type' => $this->input->post('user_type') );
 
+        // Checks that the inputs don't mess the program
         $this->form_validation->set_rules('user_username', $this->lang->line('user_username'),
-            'trim|required|min_length['.USERNAME_MIN_LENGTH.']|is_unique[users.user]');
+            'trim|required|min_length['.USERNAME_MIN_LENGTH.']|is_unique[users.user]|regex_match[/^[A-Za-z0-9 \-]+$/]');
         $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
-        //If it's a new user, create a password with it
+        // If it's a new user, create a password with it
         if(!$update) {
             $new_password = $this->input->post('user_password_again');
             $this->form_validation->set_rules('user_password', $this->lang->line('user_password'),
@@ -235,7 +236,7 @@ class Admin extends MY_Controller {
      * Makes sure that the form was filled correctly.
      */
     public function user_type_form_validation() {
-        $this->form_validation->set_rules('user_type_type', $this->lang->line('user_type_type'), 'required|regex_match[/[A-Za-zÀ-ÿ ]+/]');
+        $this->form_validation->set_rules('user_type_type', $this->lang->line('user_type_type'), 'required|regex_match[/^[A-Za-zÀ-ÿ ]+$/]');
         $this->form_validation->set_rules('user_type_access_level', $this->lang->line('user_type_access_level'), 'required');
 
         $req = array(
@@ -321,8 +322,8 @@ class Admin extends MY_Controller {
      */
     public function teacher_form_validation() {
         $teacher_id = $this->input->post('id');
-        $this->form_validation->set_rules('teacher_firstname', $this->lang->line('teacher_firstname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
-        $this->form_validation->set_rules('teacher_name', $this->lang->line('teacher_name'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
+        $this->form_validation->set_rules('teacher_firstname', $this->lang->line('teacher_firstname'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
+        $this->form_validation->set_rules('teacher_name', $this->lang->line('teacher_name'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
         $this->form_validation->set_rules('teacher_user', $this->lang->line('teacher_username'), 'required');
 
         $req = array(
