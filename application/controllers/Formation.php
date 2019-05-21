@@ -48,6 +48,7 @@ class Formation extends MY_Controller {
      * Opens the form and deals with updating or creating the group
      */
     public function form_validation(){
+        // Checks that the inputs don't mess the program
         $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
         $this->form_validation->set_rules('duration_formation', $this->lang->line('formation_duration'), 'required|numeric');
 

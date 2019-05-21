@@ -49,9 +49,9 @@ class Module extends MY_Controller {
      * Validates the input from the form
      */
     public function form_validation(){
-        // Checks that the inputs don't mess the SQL
+        // Checks that the inputs don't mess the program
         $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
-        $this->form_validation->set_rules('number_module', $this->lang->line('module_number'), 'required|numeric');
+        $this->form_validation->set_rules('number_module', $this->lang->line('module_number'), 'required');
         $this->form_validation->set_rules('description_module', $this->lang->line('module_description'), 'trim|regex_match[/^[A-Za-zÀ-ÿ0-9 \-\.,\?\!:;]+$/]');
 
         $req = array(

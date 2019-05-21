@@ -71,19 +71,21 @@ class Admin extends MY_Controller {
 
         $req = array( 'user' => $this->input->post('user_username'),
             'fk_user_type' => $this->input->post('user_type') );
-        //If it's a new user, hash their password
+        // If it's a new user, hash their password
         if(!$update) $req['password'] = password_hash($this->input->post('user_password'), PASSWORD_DEFAULT);
 
+        // Checks that the inputs don't mess the program
         $this->form_validation->set_rules('user_username', $this->lang->line('user_username'),
-            'trim|required|min_length['.USERNAME_MIN_LENGTH.']|is_unique[users.user]');
+            'trim|required|min_length['.USERNAME_MIN_LENGTH.']|is_unique[users.user]|regex_match[/^[A-Za-z0-9 \-]+$/]');
         $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
-        //If it's a new user, create a password with it
+        // If it's a new user, create a password with it
         if(!$update) {
             $this->form_validation->set_rules('user_password', $this->lang->line('user_password'),
                 array('trim', 'required', 'min_length['.PASSWORD_MIN_LENGTH.']',
                     function() {
                         return ($this->input->post('user_password') !== $this->input->post('user_password_again'));
-                    } ));
+                    }
+                ));
         }
 
         if($this->form_validation->run()) {
