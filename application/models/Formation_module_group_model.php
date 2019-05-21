@@ -29,7 +29,7 @@ class formation_module_group_model extends MY_Model {
      * @return array
      *      All groups
      */
-    public function get_ordered($main = 'id', $direction = 'asc'){
+    public function get_ordered($main = 'position', $direction = 'asc'){
         $this->db->order_by($main, $direction);
         return $this->formation_module_group_model->get_all();
     }
@@ -41,29 +41,23 @@ class formation_module_group_model extends MY_Model {
      * @return array
      *      All groups sorted
      */
-    public function get_tree($parent_group = 0, $first_run = false){
+    public function get_tree($parent_group = 0){
+        
+        $this->db->order_by('position', 'asc');
+        $groups = $this->formation_module_group_model->get_many_by("fk_parent_group = ".$parent_group);
 
-        if($first_run){
-            $groups = $this->formation_module_group_model->get_many_by("fk_formation = ".$parent_group);
-        } else {
-            $groups = $this->formation_module_group_model->get_many_by("fk_parent_group = ".$parent_group);
-        }
-
-        $groups_tree = array();
         if (count($groups) > 0){
             foreach ($groups as $group) {
-                $groups_tree[$group->name_group] = array(0, $group->id, $this->formation_module_group_model->get_tree($group->id));
+                if($group->id == 0 || $group->id == $group->fk_parent_group)
+                    continue;
+                $child_groups = $this->formation_module_group_model->get_many_by("fk_parent_group = ".$group->id);
+                if(count($child_groups) > 0){
+                    $groups_tree[$group->name_group] = array($group->id, $this->formation_module_group_model->get_tree($group->id));
+                } else {
+                    $groups_tree[$group->name_group] = array($group->id, $group->name_group);
+                }
             }
         }
-
-        $modules = $this->module_group_model->get_many_by("fk_formation_modules_group=".$parent_group);
-        $modules_titles = array();
-        foreach ($modules as $module) {
-            $modules_titles[$module->id] = array(1, $module->fk_module, $this->module_subject_model->get($module->fk_module));
-        }
-        $groups_tree = array_merge($modules_titles, $groups_tree);
-        
-
         if(!isset($groups_tree) || is_null($groups_tree))
             $groups_tree = NULL;
 

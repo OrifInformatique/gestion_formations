@@ -59,8 +59,8 @@ class Apprentice extends MY_Controller {
         $input_date = strtotime($req["date_birth"]);
         $problem = ($current_date >= $input_date);
 
-        $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
-        $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/[A-Za-zÀ-ÿ0-9 \-]+/]');
+        $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
+        $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
         $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), array('required', 'callback_cb_check_if_past'));
         $this->form_validation->set_rules('teacher', $this->lang->line('apprentice_MSP'), 'required');
         $this->form_validation->set_rules('user', $this->lang->line('apprentice_user'), 'required');

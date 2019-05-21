@@ -37,18 +37,22 @@ class Auth extends MY_Controller {
      * If necessary, redirect to the login page.
      */
     public function login(){
+        // Checks that the inputs don't mess the program
         $this->form_validation->set_rules('username', strtolower($this->lang->line('field_username')),
-                                          'trim|required|min_length['.USERNAME_MIN_LENGTH.']');
+                                          'trim|required|min_length['.USERNAME_MIN_LENGTH.']|regex_match[/^[A-Za-z0-9 \-]+$/]');
         $this->form_validation->set_rules('password', strtolower($this->lang->line('field_password')),
                                           'trim|required|min_length['.PASSWORD_MIN_LENGTH.']');
 
+        // Load the username and password
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
         if ($this->form_validation->run() == true) {
+            // Check that the user and password are correct
             if($this->user_model->check_password($username, $password)) {
                 $user = $this->user_model->get_by('user', $username);
 
+                // Update session
                 $this->session->user_id = $user->id;
                 $this->session->username = $user->user;
                 $this->session->user_access = $this->user_type_model->get($user->fk_user_type)->access_level;
@@ -82,14 +86,7 @@ class Auth extends MY_Controller {
      *      TRUE if the username is unique
      */
     private function is_username_unique($username) {
-        $users = $this->user_model->get_all();
-        $is_unique = TRUE;
-        foreach ($users as $user) {
-            if(!$is_unique)
-                break;
-            if($user->User == $username)
-                $is_unique = FALSE;
-        }
-        return $is_unique;
+        $users = $this->user_model->where('user='.$usermame);
+        return (sizeof($users) == 0);
     }
 }
