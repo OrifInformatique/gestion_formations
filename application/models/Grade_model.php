@@ -1,13 +1,11 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class module_subject_model extends MY_Model {
-    /* SET MY_Model VARIABLES */
-    protected $_table = 'modules_subjects';
+class grade_model extends MY_Model {
     protected $protected_attributes = ['id'];
-    protected $has_many = ['Modules_Groups' => ['primary_key' => 'fk_module',
-                                                   'model' => 'module_group_model'],
-                           'Grades' => ['primary_key' => 'fk_module_subject',
-                                        'model' => 'grade_model']];
+    protected $belongs_to = ["Parent_Apprentice_Formation" => ["primary_key" => "fk_apprentice_formation",
+																"model" => "apprentice_formation_model"],
+                            "Parent_Module_Subject" => ["primary_key" => "fk_module_subject",
+                                                        "model" => "module_subject_model"]];
 
     /**
      * Constructor

@@ -11,6 +11,9 @@ class Module extends MY_Controller {
     /* MY_Controller variables definition */
     protected $access_level = "*";
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         parent::__construct();

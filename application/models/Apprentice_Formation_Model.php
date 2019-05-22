@@ -8,7 +8,7 @@ class apprentice_formation_model extends MY_Model {
                             "Parent_Formation" => ["primary_key" => "fk_formation",
                                                     "model" => "formation_model"]];
     protected $has_many = ["Child_Grade" => ["primary_key" => "fk_apprentice_formation",
-                                            "model" => "apprentice_formation_model"]];
+                                            "model" => "grade_model"]];
 
     public function __construct() {
         parent::__construct();
