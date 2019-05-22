@@ -36,10 +36,22 @@ class Group extends MY_Controller {
      *      If a group with the id exists, it will update it, otherwise it will create a new group
      */
     public function form($id = 0){
+        $this->load->model(['module_group_model','module_subject_model']);
         $outputs = array();
 
         if($id > 0){
             $outputs["group"] = $this->formation_module_group_model->get($id);
+        }
+        $outputs['modules'] = $this->module_subject_model->dropdown('title');
+        $outputs['m'] = [];
+        // Obtain linked modules
+        $links = $this->module_group_model->get_many_by('fk_formation_modules_group='.$id);
+        foreach($links as $link) {
+            array_push($outputs['m'], $link->fk_module);
+        }
+
+        if(empty($outputs['m'])) {
+            $outputs['m'] = '';
         }
 
         $groups = $this->formation_module_group_model->get_all();
@@ -76,11 +88,13 @@ class Group extends MY_Controller {
         );
 
         if($this->form_validation->run()){
-            if($this->input->post('id') > 0){
+            $id = $this->input->post('id');
+            if($id > 0){
                 $this->formation_module_group_model->update($this->input->post('id'), $req);
             } else {
-                $this->formation_module_group_model->insert($req);
+                $id = $this->formation_module_group_model->insert($req);
             }
+            $this->add_module_validation($id);
             redirect('group');
         } else {
             $outputs["groups"][0] = $this->lang->line('none');
@@ -90,43 +104,11 @@ class Group extends MY_Controller {
     }
 
     /**
-     * Opens the form to add a module to a group.
-     *
-     * @param integer $id
-     *      The id of the group to update.
-     */
-    public function add_module($id) {
-        $this->load->model(['module_subject_model','module_group_model']);
-
-        $outputs['group'] = $this->formation_module_group_model->get($id);
-        $outputs['modules'] = $this->module_subject_model->dropdown('title');
-        $outputs['m'] = [];
-
-        // Make sure that there is a group with that id
-        if(is_null($outputs['group']) || !isset($outputs['group'])) {
-            redirect('group');
-        }
-
-        // Obtain linked modules
-        $links = $this->module_group_model->get_many_by('fk_formation_modules_group='.$id);
-        foreach($links as $link) {
-            array_push($outputs['m'], $link->fk_module);
-        }
-
-        if(empty($outputs['m'])) {
-            $outputs['m'] = '';
-        }
-
-        $this->display_view('group/add_module', $outputs);
-    }
-
-    /**
      * Validates and updates modules_groups according to input.
      */
-    public function add_module_validation() {
+    public function add_module_validation($id) {
         $this->load->model('module_group_model');
 
-        $id = $this->input->post('id');
         $modules = $this->input->post('m');
 
         // Make sure that there is a group with that id

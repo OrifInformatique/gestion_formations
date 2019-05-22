@@ -135,5 +135,35 @@
             </div>
         </div>
 
+        <div class="row">
+            <?php echo form_dropdown('m[]', $modules, $m, 'multiple="multiple" id="group_modules-multiselect"'); ?>
+        </div>
+
     <?php echo form_close(); ?>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        let filterTC = "<?php echo $this->lang->line('duallistbox_text_clear'); ?>",
+        filterPH = "<?php echo $this->lang->line('duallistbox_place_holder'); ?>",
+        selectedLL = "<h5><?php echo $this->lang->line('duallistbox_modules_selected'); ?></h5>",
+        nonSelectedLL = "<h5><?php echo $this->lang->line('duallistbox_modules_not_selected'); ?></h5>",
+        infoT = "<?php echo $this->lang->line('duallistbox_info_text'); ?> {0}",
+        infoTE = "<?php echo $this->lang->line('duallistbox_info_text_empty'); ?>",
+        infoTF = filterPH + " {0} <?php echo $this->lang->line('out_of'); ?> {1}";
+
+        $('#group_modules-multiselect').bootstrapDualListbox({
+            filterTextClear: filterTC,
+            filterPlaceHolder: filterPH,
+            selectedListLabel: selectedLL,
+            nonSelectedListLabel: nonSelectedLL,
+            infoText: infoT,
+            infoTextEmpty: infoTE,
+            infoTextFiltered: infoTF
+        });
+    });
+</script>
+<style type="text/css">
+    select {
+        max-height: 200px;
+    }
+</style>

@@ -1,13 +1,13 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class apprentice_model extends MY_Model {
+class apprentice_formation_model extends MY_Model {
     protected $protected_attributes = ['id'];
-    protected $belongs_to = ["Parent_MSP" => ["primary_key" => "fk_teacher",
-                                            "model" => "teacher_model"],
-                            "Parent_User" => ["primary_key" => "fk_user",
-                                            "model" => "user_model"]];
-    protected $has_many = ["Child_Apprentices_Formation" => ["primary_key" => "fk_apprentice",
-                                                            "model" => "apprentice_formation_model"]];
+    protected $belongs_to = ["Parent_Apprentice" => ["primary_key" => "fk_apprentice",
+                                                    "model" => "apprentice_model"],
+                            "Parent_Formation" => ["primary_key" => "fk_formation",
+                                                    "model" => "formation_model"]];
+    protected $has_many = ["Child_Grade" => ["primary_key" => "fk_apprentice_formation",
+                                            "model" => "apprentice_formation_model"]];
 
     public function __construct() {
         parent::__construct();

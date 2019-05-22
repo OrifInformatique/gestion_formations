@@ -23,7 +23,6 @@
                 <div class="col-md-3"><?php echo getParentGroup($groups, $group->fk_parent_group, $no_group); ?></div>
                 <!-- Click here to delete -->
                 <div class="col-md-1">
-                    <a href="<?php echo base_url().'group/add_module/'.$group->id; ?>">[🖍]</a>
                     <a href="<?php echo base_url().'group/delete/'.$group->id; ?>">[x]</a>
                 </div>
             </div>

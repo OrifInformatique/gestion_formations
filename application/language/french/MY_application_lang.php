@@ -161,4 +161,4 @@ $lang['duallistbox_modules_not_selected']   = 'Modules non sélectionnés';
 $lang['redirect_warn_start']            = 'Vous allez être redirigé dans';
 $lang['redirect_warn_end']              = 'secondes';
 $lang['years']                          = 'ans';
-$lang['to']                             = 'à';
+$lang['out_of']                         = 'sur';
