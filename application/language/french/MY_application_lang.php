@@ -155,10 +155,10 @@ $lang['duallistbox_info_text_empty']    = 'Aucun objet disponible';
 $lang['duallistbox_move_all']           = 'Tout sélectionner';
 $lang['duallistbox_remove_all']         = 'Tout désélectionner';
 
-$lang['duallistbox_modules_selected']   = 'Modules sélectionnés';
-$lang['duallistbox_modules_not_selected']   = 'Modules non sélectionnés';
-$lang['duallistbox_apprentices_selected']   = 'Apprentis sélectionnés';
-$lang['duallistbox_apprentices_not_selected']   = 'Apprentis non sélectionnés';
+$lang['duallistbox_modules_selected']   = 'Modules du groupe';
+$lang['duallistbox_modules_not_selected']   = 'Autres modules';
+$lang['duallistbox_apprentices_selected']   = 'Apprentis de l\'apprentissage';
+$lang['duallistbox_apprentices_not_selected']   = 'Autres apprentis';
 
 // Other texts
 $lang['redirect_warn_start']            = 'Vous allez être redirigé dans';
