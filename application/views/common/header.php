@@ -23,11 +23,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Bootstrap  -->
     <link rel="stylesheet" href="<?php echo base_url("assets/css/bootstrap.min.css"); ?>" />
     <script type="text/javascript" src="<?php echo base_url("assets/js/jquery.js"); ?>"></script>
-    <script type="text/javascript" src="<?php echo base_url("assets/js/popper.js"); ?>"></script>
     <script type="text/javascript" src="<?php echo base_url("assets/js/bootstrap.min.js"); ?>"></script>
     <!-- Bootstrap Multiselect plugin -->
     <script type="text/javascript" src="<?php echo base_url("assets/js/bootstrap-multiselect.js"); ?>"></script>
     <link rel="stylesheet" href="<?php echo base_url("assets/css/bootstrap-multiselect.css"); ?>" />
+    <!-- Bootstrap Duallistbox plugin -->
+    <script type="text/javascript" src="<?php echo base_url("assets/js/jquery.bootstrap-duallistbox.js"); ?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url("assets/css/bootstrap-duallistbox.css"); ?>" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

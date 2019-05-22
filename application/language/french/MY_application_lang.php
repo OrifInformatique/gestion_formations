@@ -70,7 +70,7 @@ $lang['group_new']                      = 'Nouveau groupe';
 $lang['group_modify']                   = 'Modifier le groupe';
 $lang['group_delete']                   = 'Supprimer le groupe';
 $lang['group_delete_not']               = 'Le groupe ne peut pas être supprimé car un autre groupe y est associé.';
-$lang['group_add_module']               = 'Ajouter un module';
+$lang['group_add_module']               = 'Ajouter un module à ';
 $lang['module_list']                    = 'Liste des modules';
 $lang['module_new']                     = 'Nouveau module';
 $lang['module_new_not']                 = 'Impossible de créer un module car il n\'y a aucun groupe existant.';
@@ -148,7 +148,17 @@ $lang['user_type_missing']              = 'Aucun type d\'utilisateur trouvé ave
 $lang['teacher_missing']                = 'Aucun MSP trouvé avec les paramètres entrés';
 $lang['subject']                        = 'Matière';
 
+// Duallistbox
+$lang['duallistbox_text_clear']         = 'Tout montrer';
+$lang['duallistbox_place_holder']       = 'Filtrer';
+$lang['duallistbox_info_text']          = 'Montrant tout les';
+$lang['duallistbox_info_text_empty']    = 'Aucune option disponible';
+
+$lang['duallistbox_modules_selected']   = 'Modules sélectionnés';
+$lang['duallistbox_modules_not_selected']   = 'Modules non sélectionnés';
+
 // Other texts
 $lang['redirect_warn_start']            = 'Vous allez être redirigé dans';
 $lang['redirect_warn_end']              = 'secondes';
 $lang['years']                          = 'ans';
+$lang['to']                             = 'à';

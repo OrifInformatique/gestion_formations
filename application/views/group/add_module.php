@@ -8,11 +8,13 @@
  */
 ?>
 <div class="container">
-    <h1 class="title-section"><?php echo $this->lang->line('group_add_module'); ?></h1>
+    <div class="row">
+        <h1 class="title-section"><?php echo $this->lang->line('group_add_module').$group->name_group; ?></h1>
+    </div>
 
     <?php
-    $attributes = array("id" => "addModulesForm",
-                        "name" => "addModulesForm");
+    $attributes = array("id" => "addModulesUIForm",
+                        "name" => "addModulesUIForm");
     echo form_open('Group/add_module_validation', $attributes);
     echo form_hidden('id', $group->id);
     ?>
@@ -27,20 +29,29 @@
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                <?php echo form_label($this->lang->line('module_title'), 'group_modules-multiselect'); ?>
-            </div>
-            <div class="col-md-6">
-                <?php echo form_dropdown('m[]', $modules, $m, 'multiple="multiple" id="group_modules-multiselect"'); ?>
-            </div>
+            <?php echo form_dropdown('m[]', $modules, $m, 'multiple="multiple" id="group_modules-multiselect"'); ?>
         </div>
 
     <?php echo form_close(); ?>
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#group_modules-multiselect').multiselect({
-            buttonWidth: '100%',
+        let filterTC = "<?php echo $this->lang->line('duallistbox_text_clear'); ?>",
+        filterPH = "<?php echo $this->lang->line('duallistbox_place_holder'); ?>",
+        selectedLL = "<h5><?php echo $this->lang->line('duallistbox_modules_selected'); ?></h5>",
+        nonSelectedLL = "<h5><?php echo $this->lang->line('duallistbox_modules_not_selected'); ?></h5>",
+        infoT = "<?php echo $this->lang->line('duallistbox_info_text'); ?> {0}",
+        infoTE = "<?php echo $this->lang->line('duallistbox_info_text_empty'); ?>",
+        infoTF = filterPH + " {0} <?php echo $this->lang->line('to'); ?> {1}";
+
+        $('#group_modules-multiselect').bootstrapDualListbox({
+            filterTextClear: filterTC,
+            filterPlaceHolder: filterPH,
+            selectedListLabel: selectedLL,
+            nonSelectedListLabel: nonSelectedLL,
+            infoText: infoT,
+            infoTextEmpty: infoTE,
+            infoTextFiltered: infoTF
         });
     });
 </script>
