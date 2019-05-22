@@ -14,7 +14,9 @@
                 <div class="col-md-6"><a href="<?php echo base_url().'formation/form/'.$formation->id; ?>"><?php echo $formation->name_formation; ?></a></div>
                 <div class="col-md-4"><?php echo $formation->duration." ".$this->lang->line('years'); ?></div>
                 <!-- Click here to delete -->
-                <div class="col-md-2"><a href="<?php echo base_url().'formation/delete/'.$formation->id; ?>">[x]</a></div>
+                <div class="col-md-2">
+                    <a href="<?php echo base_url().'formation/delete/'.$formation->id; ?>">[x]</a>
+                </div>
             </div>
         <?php } } ?>
 </div>

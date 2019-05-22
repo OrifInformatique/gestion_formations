@@ -51,7 +51,7 @@ class Group extends MY_Controller {
         }
 
         if(empty($outputs['m'])) {
-            $outputs['m'] = '';
+            $outputs['m'] = [];
         }
 
         $groups = $this->formation_module_group_model->get_all();
@@ -105,21 +105,23 @@ class Group extends MY_Controller {
 
     /**
      * Validates and updates modules_groups according to input.
+     *
+     * @param integer $id
+     *      ID of the group that is being linked.
      */
     public function add_module_validation($id) {
         $this->load->model('module_group_model');
 
         $modules = $this->input->post('m');
+        // Make sure it's not empty
+        if(is_null($modules)) {
+            $modules = array();
+        }
 
         // Make sure that there is a group with that id
         $group = $this->formation_module_group_model->get($id);
         if(is_null($group) || !isset($group)) {
-            redirect('group');
-        }
-
-        // Make sure it's not empty
-        if(is_null($modules)) {
-            $modules = array();
+           return;
         }
 
         // Get all links to the current group
@@ -148,7 +150,7 @@ class Group extends MY_Controller {
 
         // Add or remove links
         foreach($to_add as $add) {
-            $req = array (
+            $req = array(
                 'fk_formation_modules_group' => $id,
                 'fk_module' => $add,
             );
@@ -157,9 +159,6 @@ class Group extends MY_Controller {
         foreach($to_remove as $remove) {
             $this->module_group_model->delete($remove);
         }
-
-        // Back to list
-        redirect('group');
     }
 
     /**

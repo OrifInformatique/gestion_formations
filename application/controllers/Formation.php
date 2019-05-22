@@ -35,7 +35,7 @@ class Formation extends MY_Controller {
      *      If a group with the id exists, it will update it, otherwise it will create a new group
      */
     public function form($id = 0){
-        $this->load->model('module_subject_model');
+        $this->load->model(['module_subject_model','apprentice_model','apprentice_formation_model']);
         $outputs = array();
 
         if($id > 0){
@@ -43,6 +43,15 @@ class Formation extends MY_Controller {
             $outputs["groups"] = $this->formation_module_group_model->get_tree($id, true);
         }
         $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
+        $outputs['apprentices'] = $this->apprentice_model->dropdown('firstname');
+        $outputs['a'] = [];
+
+        $links = $this->apprentice_formation_model->get_many_by('fk_formation='.$id);
+        foreach($links as $link) {
+            array_push($outputs['a'], $link->fk_apprentice);
+        }
+        if(empty($outputs['a']))
+            $outputs['a'] = [];
 
         $this->display_view('formation/add', $outputs);
     }
@@ -61,14 +70,68 @@ class Formation extends MY_Controller {
         );
 
         if($this->form_validation->run()){
-            if($this->input->post('id') > 0){
+            $id = $this->input->post('id');
+            if($id > 0){
                 $this->formation_model->update($this->input->post('id'), $req);
             } else {
-                $this->formation_model->insert($req);
+                $id = $this->formation_model->insert($req);
             }
+            $this->apprentice_add_validation($id);
             redirect('formation');
         } else {
             $this->form($this->input->post('id'));
+        }
+    }
+
+    /**
+     * Validates and updates apprentices_formations according to input.
+     *
+     * @param integer $id
+     *      ID of the formation that is being linked.
+     */
+    public function apprentice_add_validation($id) {
+        $this->load->model('apprentice_formation_model');
+
+        $apprentices = $this->input->post('a');
+        if(is_null($apprentices))
+            $apprentices = array();
+
+        $formation = $this->formation_model->get($id);
+        if(is_null($formation) || !isset($formation))
+            return;
+
+        $links = $this->apprentice_formation_model->get_many_by('fk_formation='.$id);
+        $linked_apprentices = array();
+        foreach($links as $link) {
+            $linked_apprentices[$link->id] = $link->fk_apprentice;
+        }
+
+        $to_remove = [];
+        $to_add = [];
+        foreach($apprentices as $apprentice) {
+            $i = array_search($apprentice, $linked_apprentices);
+            if($i === FALSE) {
+                array_push($to_add, $apprentice);
+            }
+        }
+        foreach($linked_apprentices as $linked_apprentice) {
+            $i = array_search($linked_apprentice, $apprentices);
+            if($i === FALSE) {
+                $j = array_search($linked_apprentice, $linked_apprentices);
+                array_push($to_remove, $j);
+            }
+        }
+
+        foreach($to_add as $add) {
+            $req = array(
+                'fk_formation' => $id,
+                'fk_apprentice' => $add,
+                'year' => date('Y')
+            );
+            $this->apprentice_formation_model->insert($req);
+        }
+        foreach($to_remove as $remove) {
+            $this->apprentice_formation_model->delete($remove);
         }
     }
 

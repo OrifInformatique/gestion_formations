@@ -147,9 +147,11 @@
         filterPH = "<?php echo $this->lang->line('duallistbox_place_holder'); ?>",
         selectedLL = "<h5><?php echo $this->lang->line('duallistbox_modules_selected'); ?></h5>",
         nonSelectedLL = "<h5><?php echo $this->lang->line('duallistbox_modules_not_selected'); ?></h5>",
-        infoT = "<?php echo $this->lang->line('duallistbox_info_text'); ?> {0}",
+        infoT = "{0} <?php echo $this->lang->line('duallistbox_info_text'); ?>",
         infoTE = "<?php echo $this->lang->line('duallistbox_info_text_empty'); ?>",
-        infoTF = filterPH + " {0} <?php echo $this->lang->line('out_of'); ?> {1}";
+        infoTF = filterPH + " {0} <?php echo $this->lang->line('out_of'); ?> {1}",
+        moveAL = "<?php echo $this->lang->line('duallistbox_move_all'); ?>",
+        removeAL = "<?php echo $this->lang->line('duallistbox_remove_all'); ?>";
 
         $('#group_modules-multiselect').bootstrapDualListbox({
             filterTextClear: filterTC,
@@ -158,7 +160,9 @@
             nonSelectedListLabel: nonSelectedLL,
             infoText: infoT,
             infoTextEmpty: infoTE,
-            infoTextFiltered: infoTF
+            infoTextFiltered: infoTF,
+            moveAllLabel: moveAL,
+            removeAllLabel: removeAL
         });
     });
 </script>

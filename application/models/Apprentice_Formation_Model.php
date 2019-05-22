@@ -1,6 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class apprentice_formation_model extends MY_Model {
+    protected $_table = 'apprentices_formations';
     protected $protected_attributes = ['id'];
     protected $belongs_to = ["Parent_Apprentice" => ["primary_key" => "fk_apprentice",
                                                     "model" => "apprentice_model"],
