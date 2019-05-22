@@ -22,7 +22,10 @@
                 <div class="col-md-2"><?php echo $group->eliminatory?$this->lang->line('yes'):$this->lang->line('no'); ?></div>
                 <div class="col-md-3"><?php echo getParentGroup($groups, $group->fk_parent_group, $no_group); ?></div>
                 <!-- Click here to delete -->
-                <div class="col-md-1"><a href="<?php echo base_url().'group/delete/'.$group->id; ?>">[x]</a></div>
+                <div class="col-md-1">
+                    <a href="<?php echo base_url().'group/add_module/'.$group->id; ?>">[🖍]</a>
+                    <a href="<?php echo base_url().'group/delete/'.$group->id; ?>">[x]</a>
+                </div>
             </div>
         <?php
             }

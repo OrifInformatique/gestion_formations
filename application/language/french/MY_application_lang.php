@@ -70,6 +70,7 @@ $lang['group_new']                      = 'Nouveau groupe';
 $lang['group_modify']                   = 'Modifier le groupe';
 $lang['group_delete']                   = 'Supprimer le groupe';
 $lang['group_delete_not']               = 'Le groupe ne peut pas être supprimé car un autre groupe y est associé.';
+$lang['group_add_module']               = 'Ajouter un module';
 $lang['module_list']                    = 'Liste des modules';
 $lang['module_new']                     = 'Nouveau module';
 $lang['module_new_not']                 = 'Impossible de créer un module car il n\'y a aucun groupe existant.';

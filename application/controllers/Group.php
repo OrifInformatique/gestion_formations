@@ -90,6 +90,97 @@ class Group extends MY_Controller {
     }
 
     /**
+     * Opens the form to add a module to a group.
+     *
+     * @param integer $id
+     *      The id of the group to update.
+     */
+    public function add_module($id) {
+        $this->load->model(['module_subject_model','module_group_model']);
+
+        $outputs['group'] = $this->formation_module_group_model->get($id);
+        $outputs['modules'] = $this->module_subject_model->dropdown('title');
+        $outputs['m'] = [];
+
+        // Make sure that there is a group with that id
+        if(is_null($outputs['group']) || !isset($outputs['group'])) {
+            redirect('group');
+        }
+
+        // Obtain linked modules
+        $links = $this->module_group_model->get_many_by('fk_formation_modules_group='.$id);
+        foreach($links as $link) {
+            array_push($outputs['m'], $link->fk_module);
+        }
+
+        if(empty($outputs['m'])) {
+            $outputs['m'] = '';
+        }
+
+        $this->display_view('group/add_module', $outputs);
+    }
+
+    /**
+     * Validates and updates modules_groups according to input.
+     */
+    public function add_module_validation() {
+        $this->load->model('module_group_model');
+
+        $id = $this->input->post('id');
+        $modules = $this->input->post('m');
+
+        // Make sure that there is a group with that id
+        $group = $this->formation_module_group_model->get($id);
+        if(is_null($group) || !isset($group)) {
+            redirect('group');
+        }
+
+        // Make sure it's not empty
+        if(is_null($modules)) {
+            $modules = array();
+        }
+
+        // Get all links to the current group
+        $links = $this->module_group_model->get_many_by('fk_formation_modules_group='.$id);
+        $linked_modules = array();
+        foreach($links as $link) {
+            $linked_modules[$link->id] = $link->fk_module;
+        }
+
+        // Check which links are to add or remove
+        $to_remove = [];
+        $to_add = [];
+        foreach($modules as $module) {
+            $i = array_search($module, $linked_modules);
+            if($i === FALSE) {
+                array_push($to_add, $module);
+            }
+        }
+        foreach($linked_modules as $linked_module) {
+            $i = array_search($linked_module, $modules);
+            if($i === FALSE) {
+                $j = array_search($linked_module, $linked_modules);
+                array_push($to_remove, $j);
+            }
+        }
+
+        // Add or remove links
+        foreach($to_add as $add) {
+            $req = array (
+                'fk_formation_modules_group' => $id,
+                'fk_module' => $add,
+            );
+            $this->module_group_model->insert($req);
+        }
+        foreach($to_remove as $remove) {
+            $this->module_group_model->delete($remove);
+        }
+
+        // Back to list
+        redirect('group');
+    }
+
+    /**
      * Deletes a group
      * @param integer $id
      *      The id to delete, the page will prevent deletion if a bad id is entered
@@ -124,10 +215,10 @@ class Group extends MY_Controller {
      *      The groups affected
      * @param integer $id
      *      The id of the parent group
-     * @param integer $max_depth
-     *      Maximum depth of recursion
      * @param integer $depth
      *      Current depth of recursion, to prevent infinite recursion
+     * @return array
+     *      The resulting array of groups, without the parent's family
      */
     private function recursive_remove($groups, $id, $depth = 5) {
         if($depth <= 0) {
