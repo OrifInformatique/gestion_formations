@@ -170,8 +170,9 @@ class Apprentice extends MY_Controller {
     public function edit_form($id) {
         $this->load->model(['formation_model','apprentice_formation_model']);
 
+        // Make sure it is a valid formation
         $link = $this->apprentice_formation_model->get($id);
-        if(is_null($link) || !isset($link)) {
+        if(is_null($link) || !isset($link) || $id == 0) {
             redirect('apprentice');
         }
 
@@ -188,7 +189,6 @@ class Apprentice extends MY_Controller {
     public function link_form_validation() {
         $this->load->model('apprentice_formation_model');
 
-        // Rules
         $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), 'required|numeric');
         $this->form_validation->set_rules('date', $this->lang->line('apprentice_formation'), 'numeric');
 
@@ -203,8 +203,14 @@ class Apprentice extends MY_Controller {
             $apprentice_id = $this->input->post('apprentice_id');
         }
 
+        // Special case, this formation should not be touched
+        if($this->input->post('formation') == 0) {
+            redirect('apprentice/apprentice_formations/'.$apprentice_id);
+        }
+
         if($this->form_validation->run()) {
             if(!$update) {
+                // Insert new data
                 $date = $this->input->post('date');
                 if(empty($date)) {
                     $date = date('Y');
@@ -216,6 +222,7 @@ class Apprentice extends MY_Controller {
                 );
                 $this->apprentice_formation_model->insert($ins);
             } else {
+                // Update with new data
                 $upd = array(
                     'fk_formation' => $this->input->post('formation'),
                     'fk_apprentice' => $apprentice_id,
@@ -243,22 +250,27 @@ class Apprentice extends MY_Controller {
     public function unlink_form($id, $command = 0) {
         $this->load->model(['apprentice_formation_model','grade_model']);
 
+        // Make sure that link is valid
         $link = $this->apprentice_formation_model->get($id);
-        if(is_null($link) || !isset($link)) {
+        if(is_null($link) || !isset($link) || $id == 0) {
+            // We can't get the apprentice id from an invalid link
             redirect('apprentice');
         }
-        $apprentice_id = $link->fk_apprentice;
 
         $outputs['deletion_allowed'] = ($this->grade_model->count_by('fk_apprentice_formation='.$id) <= 0);
         $outputs['link'] = $link;
 
         switch ($command) {
+            // Display confirmation
             case 0:
                 $this->display_view('apprentice/unlink', $outputs);
                 break;
+            // Confirmed, delete item
             case 1:
                 $this->apprentice_formation_model->delete($id);
+            // Back to the menu
             default:
+                $apprentice_id = $link->fk_apprentice;
                 redirect('apprentice/apprentice_formations/'.$apprentice_id);
         }
     }
