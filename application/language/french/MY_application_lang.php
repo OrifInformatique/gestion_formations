@@ -45,10 +45,12 @@ $lang['apprentice_firstname']           = 'Prénom';
 $lang['apprentice_lastname']            = 'Nom';
 $lang['apprentice_datebirth']           = 'Date de naissance';
 $lang['apprentice_formation']           = 'Formation';
+$lang['apprentice_formation_date']      = 'Depuis';
 $lang['apprentice_teacher']             = 'MSP';
 $lang['apprentice_user']                = 'Utilisateur';
 $lang['formation_name']                 = 'Nom';
 $lang['formation_duration']             = 'Durée';
+$lang['formation_end']                  = 'Fin en';
 $lang['user_create']                    = 'Nouvel utilisateur';
 $lang['user_username']                  = 'Nom d\'utilisateur';
 $lang['user_password']                  = 'Mot de passe';
@@ -80,6 +82,10 @@ $lang['apprentice_list']                = 'Liste des apprentis';
 $lang['apprentice_new']                 = 'Nouvel apprenti';
 $lang['apprentice_modify']              = 'Modifier l\'apprenti';
 $lang['apprentice_delete']              = 'Supprimer l\'apprenti';
+$lang['apprentice_formation_history']   = 'Liste des formations de l\'apprenti';
+$lang['apprentice_formation_link']      = 'Lier une formation à l\'apprenti';
+$lang['apprentice_formation_edit']      = 'Modifier une formation liée à l\'apprenti';
+$lang['apprentice_formation_delete']    = 'Délier une formation à l\'apprenti';
 $lang['formation_list']                 = 'Liste des formations';
 $lang['formation_new']                  = 'Nouvelle formation';
 $lang['formation_modify']               = 'Modifier la formation';
@@ -119,7 +125,6 @@ $lang['quit']                           = 'Fermer';
 $lang['save_quit']                      = 'Enregistrer et fermer';
 $lang['cancel']                         = 'Annuler';
 $lang['return']                         = 'Retour';
-$lang['formation_edit_module']          = 'Éditer les modules de la formation';
 
 // Messages
 $lang['group_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer le groupe';
@@ -134,8 +139,10 @@ $lang['user_delete_confirm']            = 'Etes-vous sûr de vouloir supprimer l
 $lang['user_deleted']                   = 'L\'utilisateur a été supprimé';
 $lang['user_type_delete_confirm']       = 'Etes-vous sûr de vouloir supprimer le type d\'utilisateur';
 $lang['user_type_deleted']              = 'Le type d\'utilisateur a été supprimé';
-$lang['teacher_delete_confirm']         = 'Etes-vous sûr de vouloir supprimé le MSP';
+$lang['teacher_delete_confirm']         = 'Etes-vous sûr de vouloir supprimer le MSP';
 $lang['teacher_deleted']                = 'Le MSP a été supprimé';
+$lang['link_delete_confirm']            = 'Etes-vous sûr de vouloir supprimer le lien';
+$lang['link_deleted']                   = 'Le lien a été supprimé';
 
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';
@@ -157,8 +164,6 @@ $lang['duallistbox_remove_all']         = 'Tout désélectionner';
 
 $lang['duallistbox_modules_selected']   = 'Modules du groupe';
 $lang['duallistbox_modules_not_selected']   = 'Autres modules';
-$lang['duallistbox_apprentices_selected']   = 'Apprentis de l\'apprentissage';
-$lang['duallistbox_apprentices_not_selected']   = 'Autres apprentis';
 
 // Other texts
 $lang['redirect_warn_start']            = 'Vous allez être redirigé dans';

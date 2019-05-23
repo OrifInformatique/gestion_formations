@@ -79,40 +79,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <?php echo form_dropdown('a[]', $apprentices, $a, 'multiple="multiple" id="formation_apprentices-multiselect"'); ?>
-        </div>
             
     <?php echo form_close(); ?>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        let filterTC = "<?php echo $this->lang->line('duallistbox_text_clear'); ?>",
-        filterPH = "<?php echo $this->lang->line('duallistbox_place_holder'); ?>",
-        selectedLL = "<h5><?php echo $this->lang->line('duallistbox_apprentices_selected'); ?></h5>",
-        nonSelectedLL = "<h5><?php echo $this->lang->line('duallistbox_apprentices_not_selected'); ?></h5>",
-        infoT = "{0} <?php echo $this->lang->line('duallistbox_info_text'); ?>",
-        infoTE = "<?php echo $this->lang->line('duallistbox_info_text_empty'); ?>",
-        infoTF = filterPH + " {0} <?php echo $this->lang->line('out_of'); ?> {1}",
-        moveAL = "<?php echo $this->lang->line('duallistbox_move_all'); ?>",
-        removeAL = "<?php echo $this->lang->line('duallistbox_remove_all'); ?>";
-
-        $('#formation_apprentices-multiselect').bootstrapDualListbox({
-            filterTextClear: filterTC,
-            filterPlaceHolder: filterPH,
-            selectedListLabel: selectedLL,
-            nonSelectedListLabel: nonSelectedLL,
-            infoText: infoT,
-            infoTextEmpty: infoTE,
-            infoTextFiltered: infoTF,
-            moveAllLabel: moveAL,
-            removeAllLabel: removeAL
-        });
-    });
-</script>
-<style type="text/css">
-    select {
-        max-height: 200px;
-    }
-</style>

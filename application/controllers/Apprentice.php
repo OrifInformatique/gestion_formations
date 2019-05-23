@@ -22,8 +22,14 @@ class Apprentice extends MY_Controller {
      * Shows the list of apprentices
      */
     public function index() {
+        $this->load->model('formation_model');
         $outputs = $this->get_parents();
-        $outputs["apprentices"] = $this->apprentice_model->get_ordered();
+        $outputs["apprentices"] = $this->apprentice_model->with("C_App_Form")->get_ordered();
+        $formations = $this->formation_model->get_all();
+        $outputs['formations'] = array();
+        foreach($formations as $formation) {
+            $outputs['formations'][$formation->id] = $formation;
+        }
         $this->display_view("apprentice/list", $outputs);
     }
 
@@ -95,8 +101,7 @@ class Apprentice extends MY_Controller {
      *      TRUE if the date is in the past
      */
     public function cb_check_if_past($date_in) {
-        $date_ok = (strtotime(date("d-m-Y")) >= strtotime($date_in));
-        return $date_ok;
+        return (strtotime(date("d-m-Y")) >= strtotime($date_in));
     }
 
     /**
@@ -115,6 +120,146 @@ class Apprentice extends MY_Controller {
             $this->display_view('apprentice/delete', $outputs);
         } else {
             redirect('group');
+        }
+    }
+
+    /**
+     * Displays the list of formations the apprentice has taken or is taking.
+     *
+     * @param integer $id
+     *      The id of the apprentice.
+     */
+    public function apprentice_formations($id) {
+        $this->load->model(['apprentice_formation_model','formation_model']);
+
+        // Get all formations in an array
+        $formations = $this->formation_model->get_all();
+        $outputs['formations'] = array();
+        foreach($formations as $formation) {
+            $outputs['formations'][$formation->id] = $formation;
+        }
+        // Get other things
+        $outputs['linked_formations'] = $this->apprentice_formation_model->get_many_by('fk_apprentice='.$id);
+        $outputs['formation_in_progress'] = $this->is_formation_in_progress($id);
+        $outputs['id'] = $id;
+
+        $this->display_view('apprentice/history', $outputs);
+    }
+
+    /**
+     * Adds a new formation to the apprentice.
+     *
+     * @param integer $id
+     *      The id of the apprentice to add a form to.
+     */
+    public function link_form($id) {
+        $this->load->model('formation_model');
+
+        $outputs['formations'] = $this->formation_model->dropdown('name_formation');
+        $outputs['id'] = $id;
+
+        $this->display_view('apprentice/link', $outputs);
+    }
+
+    /**
+     * Allows changing a linked formation.
+     *
+     * @param integer $id
+     *      The id of the link to edit.
+     */
+    public function edit_form($id) {
+        $this->load->model(['formation_model','apprentice_formation_model']);
+
+        $link = $this->apprentice_formation_model->get($id);
+        if(is_null($link) || !isset($link)) {
+            redirect('apprentice');
+        }
+
+        $outputs['link'] = $link;
+        $outputs['formations'] = $this->formation_model->dropdown('name_formation');
+        $outputs['id'] = $link->fk_apprentice;
+
+        $this->display_view('apprentice/link', $outputs);
+    }
+
+    /**
+     * Inserts the link in the database.
+     */
+    public function link_form_validation() {
+        $this->load->model('apprentice_formation_model');
+
+        // Rules
+        $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), 'required|numeric');
+        $this->form_validation->set_rules('date', $this->lang->line('apprentice_formation'), 'numeric');
+
+        // Check whether we are changing a link or making a new one
+        if($this->input->post('link_id') !== null) {
+            $link_id = $this->input->post('link_id');
+            $link = $this->apprentice_formation_model->get($link_id);
+            $apprentice_id = $link->fk_apprentice;
+            $update = TRUE;
+        } else {
+            $update = FALSE;
+            $apprentice_id = $this->input->post('apprentice_id');
+        }
+
+        if($this->form_validation->run()) {
+            if(!$update) {
+                $date = $this->input->post('date');
+                if(empty($date)) {
+                    $date = date('Y');
+                }
+                $ins = array(
+                    'fk_formation' => $this->input->post('formation'),
+                    'fk_apprentice' => $apprentice_id,
+                    'year' => $date
+                );
+                $this->apprentice_formation_model->insert($ins);
+            } else {
+                $upd = array(
+                    'fk_formation' => $this->input->post('formation'),
+                    'fk_apprentice' => $apprentice_id,
+                    'year' => $this->input->post('date'),
+                );
+                $this->apprentice_formation_model->update($link_id, $upd);
+            }
+            redirect('apprentice/apprentice_formations/'.$apprentice_id);
+        } else {
+            if($update)
+                redirect('apprentice/edit_form/'.$link_id);
+            else
+                redirect('apprentice/link_form/'.$apprentice_id);
+        }
+    }
+
+    /**
+     * Deletes a link between a formation and an apprentice.
+     *
+     * @param integer $id
+     *      The id of the link to delete
+     * @param integer $command
+     *      Whether to display or delete the link
+     */
+    public function unlink_form($id, $command = 0) {
+        $this->load->model(['apprentice_formation_model','grade_model']);
+
+        $link = $this->apprentice_formation_model->get($id);
+        if(is_null($link) || !isset($link)) {
+            redirect('apprentice');
+        }
+        $apprentice_id = $link->fk_apprentice;
+
+        $outputs['deletion_allowed'] = ($this->grade_model->count_by('fk_apprentice_formation='.$id) <= 0);
+        $outputs['link'] = $link;
+
+        switch ($command) {
+            case 0:
+                $this->display_view('apprentice/unlink', $outputs);
+                break;
+            case 1:
+                $this->apprentice_formation_model->delete($id);
+            default:
+                redirect('apprentice/apprentice_formations/'.$apprentice_id);
         }
     }
 
@@ -151,28 +296,26 @@ class Apprentice extends MY_Controller {
     }
 
     /**
-     * Puts 2 arrays as key => value<br>
-     * Both need similar numerical keys to work
-     * @deprecated
-     *      Use array_combine()
-     * @param array $array_keys
-     *      Keys of the future array
-     * @param array $array_values
-     *      Values of the future array
-     * @return array
-     *      An array with the 2 input as $array_keys => $array_values
+     * Calculates whether or not the apprentice has a formation in progress
+     *
+     * @param integer $id
+     *      ID of the apprentice
+     * @return boolean
+     *      TRUE if the apprentice has a formation in progress
      */
-    private function link_arrays($array_keys, $array_values) {
-        $results[0] = $this->lang->line('none');
-        if(sizeof($array_keys) == 0 || sizeof($array_values) == 0 || sizeof($array_keys) != sizeof($array_values)) {
-            //In case either array is empty or they are not from the same place
-            return NULL;
+    private function is_formation_in_progress($id) {
+        $apprentice = $this->apprentice_model->with('C_App_Form')->get($id);
+        $forms = $this->formation_model->get_all();
+        $formations = array();
+        foreach($forms as $form) {
+            $formations[$form->id] = $form;
         }
-        for($i = 0; $i < max($array_keys)+1; $i++) {
-            if(isset($array_values[$i]) && isset($array_keys[$i])) {
-                $results[$array_keys[$i]] = $array_values[$i];
-            }
+
+        foreach($apprentice->C_App_Form as $app_form) {
+            $f = $formations[$app_form->fk_formation];
+            if ($app_form->year + $f->duration >= date('Y') && $app_form->year <= date('Y'))
+                return TRUE;
         }
-        return $results;
+        return FALSE;
     }
 }
