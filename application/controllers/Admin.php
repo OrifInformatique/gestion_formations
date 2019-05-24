@@ -187,13 +187,12 @@ class Admin extends MY_Controller {
 
         $outputs['user'] = $this->user_model->get($id);
 
-        $outputs['deletion_allowed'] = TRUE;
-        $teachers = $this->teacher_model->get_many_by('fk_user='.$id);
-        if(sizeof($teachers) > 0)
-            $outputs['deletion_allowed'] = FALSE;
-        $apprentices = $this->apprentice_model->get_many_by('fk_user='.$id);
-        if(sizeof($apprentices) > 0)
-            $outputs['deletion_allowed'] = FALSE;
+        $teachers = $this->teacher_model->count_by('fk_user='.$id);
+        $apprentices = $this->apprentice_model->count_by('fk_user='.$id);
+        $outputs['deletion_allowed'] = ($teachers + $apprentices <= 0);
+        echo $teachers + $apprentices;
+        /*if(sizeof($apprentices) > 0)
+            $outputs['deletion_allowed'] = FALSE;*/
 
         if($confirm == 1) {
             $this->user_model->delete($id);

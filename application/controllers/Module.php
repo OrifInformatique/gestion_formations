@@ -86,11 +86,15 @@ class Module extends MY_Controller {
      *      0 to display confirmation, 1 to confirm, 0 to go back to the index
      */
     public function delete($id, $confirm = 0) {
-        $this->load->model('module_group_model');
+        $this->load->model(['module_group_model','grade_model']);
         $outputs['module'] = $this->module_subject_model->get($id);
         $outputs['deletion_allowed'] = TRUE;
         // Check that there is no module group linked to the module
         $modules = $this->module_group_model->get_many_by('fk_module='.$id);
+        if(sizeof($modules) > 0) {
+            $outputs['deletion_allowed'] = FALSE;
+        }
+        $modules = $this->grade_model->get_many_by('fk_module_subject='.$id);
         if(sizeof($modules) > 0) {
             $outputs['deletion_allowed'] = FALSE;
         }

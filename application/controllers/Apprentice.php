@@ -33,6 +33,7 @@ class Apprentice extends MY_Controller {
         foreach($formations as $formation) {
             $outputs['formations'][$formation->id] = $formation;
         }
+        $outputs['users'] = $this->user_model->dropdown('user');
         $this->display_view("apprentice/list", $outputs);
     }
 
@@ -47,6 +48,7 @@ class Apprentice extends MY_Controller {
         if($id > 0) {
             $outputs["apprentice"] = $this->apprentice_model->get($id);
         }
+        $outputs['users'] = $this->user_model->dropdown('user');
 
         $this->display_view("apprentice/form", $outputs);
     }
@@ -115,7 +117,11 @@ class Apprentice extends MY_Controller {
      *      1 to delete, 0 to ask the user, other to go back to index
      */
     public function delete($id, $confirm = 0) {
+        $this->load->model('apprentice_formation_model');
+
         $outputs['apprentice'] = $this->apprentice_model->get($id);
+        $outputs['deletion_allowed'] = ($this->apprentice_formation_model->count_by('fk_apprentice='.$id) <= 0);
+        
         if($confirm == 1) {
             $this->apprentice_model->delete($id);
             $this->display_view('apprentice/success');
@@ -298,14 +304,10 @@ class Apprentice extends MY_Controller {
         $teachers_names[0] = $this->lang->line('none');
         $msps_ids = $this->teacher_model->dropdown('id');
         $msps_ids[0] = 0;
-        $results["teachers"] = array_combine($msps_ids, $teachers_names);
-
-        //Puts the user names and their corresponding ids together
-        $users_names = $this->user_model->dropdown('User');
-        $users_names[0] = $this->lang->line('none');
-        $users_ids = $this->user_model->dropdown('id');
-        $users_ids[0] = 0;
-        $results["users"] = array_combine($users_ids, $users_names);
+        $results["teachers"] = array();
+        foreach($msps_ids as $msp_id) {
+            $results['teachers'][$msp_id] = $teachers_names[$msp_id];
+        }
 
         return $results;
     }

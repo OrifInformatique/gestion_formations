@@ -53,7 +53,7 @@ class Formation extends MY_Controller {
     public function form_validation(){
         // Checks that the inputs don't mess the program
         $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-\']+$/]');
-        $this->form_validation->set_rules('duration_formation', $this->lang->line('formation_duration'), 'required|numeric');
+        $this->form_validation->set_rules('duration_formation', $this->lang->line('formation_duration'), 'required|integer');
 
         $req = array(
             'name_formation' => $this->input->post('name_formation'),
@@ -67,7 +67,6 @@ class Formation extends MY_Controller {
             } else {
                 $id = $this->formation_model->insert($req);
             }
-            $this->apprentice_add_validation($id);
             redirect('formation');
         } else {
             $this->form($this->input->post('id'));
@@ -82,9 +81,14 @@ class Formation extends MY_Controller {
      *      If 0, it will lead to the deletion page, if 1 it will lead to the success page, else it will lead back to the index
      */
     public function delete($id, $confirm = 0) {
+        $this->load->model('apprentice_formation_model');
         $outputs['formation'] = $this->formation_model->get($id);
         $outputs['deletion_allowed'] = TRUE;
         $modules = $this->formation_module_group_model->get_many_by('fk_formation='.$id);
+        if(sizeof($modules) > 0) {
+            $outputs['deletion_allowed'] = FALSE;
+        }
+        $modules = $this->apprentice_formation_model->get_many_by('fk_formation='.$id);
         if(sizeof($modules) > 0) {
             $outputs['deletion_allowed'] = FALSE;
         }

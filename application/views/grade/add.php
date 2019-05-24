@@ -39,6 +39,12 @@ $update = isset($grade);
             </div>
         </div>
 
+        <!-- ERROR MESSAGES -->
+        <?php
+        if (!empty(validation_errors())) {
+            echo '<div class="alert alert-danger">'.validation_errors().'</div>';}
+        ?>
+
         <div class="form-group">
             <div class="row">
                 <div class="col-md-1">
