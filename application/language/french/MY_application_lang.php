@@ -61,6 +61,14 @@ $lang['user_type_access']               = 'Niveau d\'accès';
 $lang['teacher_name']                   = 'Nom';
 $lang['teacher_firstname']              = 'Prénom';
 $lang['teacher_username']               = 'Nom d\'utilisateur';
+$lang['grade_module']                   = 'Modules';
+$lang['grade_median']                   = 'Moyenne';
+$lang['grade_grades']                   = 'Notes';
+$lang['grade_grade']                    = 'Note';
+$lang['grade_date_test']                = 'Date de l\'examen';
+$lang['grade_date_inscription']         = 'Date d\'inscription de la note';
+$lang['grade_weight']                   = 'Poids de la note';
+$lang['grade_semester']                 = 'Semestre';
 
 // Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
@@ -109,6 +117,10 @@ $lang['teacher_new']                    = 'Nouveau MSP';
 $lang['teacher_modify']                 = 'Modifier le MSP';
 $lang['teacher_delete']                 = 'Supprimer le MSP';
 $lang['teacher_delete_not']             = 'Le MSP ne peut pas être supprimé car un apprenti y est associé';
+$lang['grade_list']                     = 'Liste des notes';
+$lang['grade_list_delete']              = 'Supprimer une note du module';
+$lang['grade_new']                      = 'Nouvelle note';
+$lang['grade_delete']                   = 'Supprimer la note';
 
 // Buttons
 $lang['btn_login']                      = 'Se connecter';
@@ -143,6 +155,8 @@ $lang['teacher_delete_confirm']         = 'Etes-vous sûr de vouloir supprimer l
 $lang['teacher_deleted']                = 'Le MSP a été supprimé';
 $lang['link_delete_confirm']            = 'Etes-vous sûr de vouloir supprimer le lien';
 $lang['link_deleted']                   = 'Le lien a été supprimé';
+$lang['grade_delete_confirm']           = 'Etes-vous sûr de vouloir supprimer la note de';
+$lang['grade_deleted']                  = 'La note a été supprimée';
 
 // Errors
 $lang['group_missing']                  = 'Aucun groupe trouvé avec les paramètres entrés';

@@ -24,6 +24,7 @@
                 <?php echo $form->duration + $linked_formation->year; ?>
             </div>
             <div class="col-md-1">
+                <a href="<?php echo base_url().'grade/list/'.$linked_formation->id; ?>">[🖍]</a>
                 <a href="<?php echo base_url().'apprentice/unlink_form/'.$linked_formation->id; ?>">[x]</a>
             </div>
         </div>

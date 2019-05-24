@@ -7,7 +7,7 @@ class apprentice_model extends MY_Model {
                             "Parent_User" => ["primary_key" => "fk_user",
                                             "model" => "user_model"]];
     protected $has_many = ["C_App_Form" => ["primary_key" => "fk_apprentice",
-                                                            "model" => "apprentice_formation_model"]];
+                                            "model" => "apprentice_formation_model"]];
 
     public function __construct() {
         parent::__construct();

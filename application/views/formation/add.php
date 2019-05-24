@@ -14,13 +14,13 @@
     $attributes = array("id" => "addFormationForm",
                         "name" => "addFormationForm");
     echo form_open('Formation/form_validation', $attributes);
-    ?>        
+    ?>
         <!-- Display buttons -->
         <div class="row">
             <div class="form-group">
                 <a name="cancel" class="btn btn-danger" href="<?=base_url('/formation')?>"><?=$this->lang->line('cancel')?></a>
                 <?php
-                    echo form_submit('save', $this->lang->line('save'), 'class="btn btn-success"'); 
+                    echo form_submit('save', $this->lang->line('save'), 'class="btn btn-success"');
                     //echo form_reset('reset', $this->lang->line('btn_reset'), 'class="btn btn-danger"');
                 ?>
             </div>
@@ -79,6 +79,6 @@
                 </div>
             </div>
         </div>
-            
+
     <?php echo form_close(); ?>
 </div>
