@@ -3,11 +3,12 @@
     <a class="btn btn-primary" href="<?php echo base_url('apprentice')?>"><?php echo $this->lang->line('return'); ?></a>
     <?php if (!$formation_in_progress) { ?>
         <a class="btn btn-success" href="<?php echo base_url('apprentice/link_form/'.$id); ?>">
-            <?php echo $this->lang->line('formation_new'); ?>
+            <?php echo $this->lang->line('apprentice_link'); ?>
         </a>
     <?php } else { ?>
-        <a class="btn btn-outline-secondary" style="cursor: not-allowed;"><?php echo $this->lang->line('formation_new'); ?></a>
+        <a class="btn btn-outline-secondary" style="cursor: not-allowed;"><?php echo $this->lang->line('apprentice_link'); ?></a>
     <?php } ?>
+    <a class="btn btn-success" href="<?=base_url('formation/form')?>"><?=$this->lang->line('formation_new')?></a>
     <div class="row">
         <div class="col-md-3"><b><?php echo $this->lang->line('formation_name'); ?></b></div>
         <div class="col-md-3"><b><?php echo $this->lang->line('formation_end'); ?></b></div>

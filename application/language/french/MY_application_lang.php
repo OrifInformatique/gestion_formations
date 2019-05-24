@@ -95,6 +95,7 @@ $lang['apprentice_delete']              = 'Supprimer l\'apprenti';
 $lang['apprentice_delete_not']          = 'L\'apprenti ne peut pas être supprimé car une formation y est associée.';
 $lang['apprentice_formation_history']   = 'Liste des formations de l\'apprenti';
 $lang['apprentice_formation_link']      = 'Lier une formation à l\'apprenti';
+$lang['apprentice_link']                = 'Lier un formation';
 $lang['apprentice_formation_edit']      = 'Modifier une formation liée à l\'apprenti';
 $lang['apprentice_formation_delete']    = 'Délier une formation à l\'apprenti';
 $lang['formation_list']                 = 'Liste des formations';
