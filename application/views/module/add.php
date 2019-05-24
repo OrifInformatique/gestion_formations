@@ -50,9 +50,9 @@
                     <div class="col-md-8">
                         <?php
                         if($update)
-                            echo form_input('title_module', set_value('title_module', $module->title), 'maxlength="65535" class="form-control" id="title_module"');
+                            echo form_input('title_module', set_value('title_module', $module->title, FALSE), 'maxlength="65535" class="form-control" id="title_module"');
                         else
-                            echo form_input('title_module', set_value('title_module'), 'maxlength="65535" class="form-control" id="title_module"');
+                            echo form_input('title_module', set_value('title_module', '', FALSE), 'maxlength="65535" class="form-control" id="title_module"');
                         ?>
                     </div>
                 </div>
@@ -116,4 +116,8 @@
 
     <?php echo form_close(); ?>
 </div>
-<script type="text/javascript" src="<?php echo base_url('assets/js/module_add.js'); ?>"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#title_module')[0].focus();
+    });
+</script>

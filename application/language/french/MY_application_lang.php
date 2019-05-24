@@ -69,6 +69,9 @@ $lang['grade_date_test']                = 'Date de l\'examen';
 $lang['grade_date_inscription']         = 'Date d\'inscription de la note';
 $lang['grade_weight']                   = 'Poids de la note';
 $lang['grade_semester']                 = 'Semestre';
+$lang['grade_median_end']               = 'Moyenne finale';
+$lang['grade_no_grade_show']            = 'Montrer les modules sans note';
+$lang['grade_no_grade_hide']            = 'Cacher les modules sans note';
 
 // Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';

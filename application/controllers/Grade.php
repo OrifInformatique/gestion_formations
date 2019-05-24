@@ -39,16 +39,29 @@ class Grade extends MY_Controller {
         $outputs['averages'] = array();
         $outputs['medians'] = array();
         foreach($modules as $module) {
-            $grades = $this->grade_model->get_many_by('fk_module_subject='.$module->id);
+            $grades = $this->grade_model->order_by('semester')->get_many_by('fk_module_subject='.$module->id);
             $outputs['grades'][$module->id] = $grades;
             $outputs['modules'][$module->id] = $module;
+            for($i = 1; $i <= 8; $i++) {
+                $total = 0;
+                $count = 0;
+                $grades = $this->grade_model->get_many_by('fk_module_subject='.$module->id.' AND semester='.$i);
+                foreach($grades as $grade) {
+                    $total += $grade->grade * $grade->weight;
+                    $count += $grade->weight;
+                }
+                $outputs['medians'][$module->id][$i] = ($total == 0 ? '' : round($total/$count,1));
+            }
             $total = 0;
             $count = 0;
-            foreach($grades as $grade) {
-                $total += $grade->grade * $grade->weight;
-                $count += $grade->weight;
+            foreach($outputs['medians'][$module->id] as $median) {
+                if(!empty($median)) {
+                    $total += $median;
+                    $count++;
+                }
             }
-            $outputs['medians'][$module->id] = ($total == 0 ? '': $total/$count);
+            $outputs['medians'][$module->id][0] = ($total == 0 ? '' : round($total/$count,1));
+            $outputs['grade_removal_allowed'][$module->id] = ($total > 0);
         }
 
         $this->display_view('grade/list', $outputs);
@@ -214,6 +227,53 @@ class Grade extends MY_Controller {
             default:
                 redirect('grade/remove_from_module/'.$app_for->id.'/'.$module->id);
         }
+    }
+
+    /**
+     * @todo
+     * Displays the calculations for the median
+     *
+     * @param integer $app_for_id
+     *      The apprentice formation link id
+     * @param integer $mod_id
+     *      The module/subject id
+     */
+    public function get_median($app_for_id, $mod_id) {
+        $app_for = $this->apprentice_formation_model->get($app_for_id);
+        if(is_null($app_for)) {
+            redirect('apprentice');
+        }
+        $module = $this->module_subject_model->get($mod_id);
+        if(is_null($app_for)) {
+            redirect('grade/list/'.$app_for_id);
+        }
+        $outputs['apprentice_formation'] = $app_for;
+        $outputs['module'] = $module;
+
+        $grades = $this->grade_model->order_by('semester')->get_many_by('fk_module_subject='.$module->id);
+        $outputs['grades'] = array();
+        for($i = 1; $i <= 8; $i++) {
+            $total = 0;
+            $count = 0;
+            $grades = $this->grade_model->get_many_by('fk_module_subject='.$module->id.' AND semester='.$i);
+            foreach($grades as $grade) {
+                $total += $grade->grade * $grade->weight;
+                $count += $grade->weight;
+            }
+            $outputs['grades'][$i] = $grades;
+            $outputs['medians'][$i] = ($total == 0 ? '' : round($total/$count,1));
+        }
+        $total = 0;
+        $count = 0;
+        foreach($outputs['medians'] as $median) {
+            if(!empty($median)) {
+                $total += $median;
+                $count++;
+            }
+        }
+        $outputs['medians'][0] = ($total == 0 ? '' : round($total/$count,1));
+
+        $this->display_view('grade/median', $outputs);
     }
 
     /**
