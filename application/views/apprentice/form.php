@@ -136,3 +136,8 @@ $attributes = array("id" => "apprenticeForm",
 
     <?php echo form_close(); ?>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#firstname')[0].focus();
+    });
+</script>

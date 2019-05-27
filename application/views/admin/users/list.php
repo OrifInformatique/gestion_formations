@@ -6,23 +6,40 @@
     </div>
     <h1><?php echo $this->lang->line('user_list'); ?></h1>
     <a class="btn btn-success" href="<?=base_url('admin/user_form')?>"><?php echo $this->lang->line('user_new'); ?></a>
-    <div class="row">
-        <div class="col-md-8"><strong><?php echo $this->lang->line('user_username'); ?></strong></div>
-        <div class="col-md-2"><strong><?php echo $this->lang->line('user_type'); ?></strong></div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1"></div>
-    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th><?php echo $this->lang->line('user_username'); ?></th>
+                <th><?php echo $this->lang->line('user_type'); ?></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if(isset($users) && isset($user_types)) {
+            foreach($users as $user) {
+                if($user->id == 0) continue; ?>
+                <tr>
+                    <td><a href="<?php echo base_url().'admin/user_form/'.$user->id; ?>"><?php echo $user->user; ?></a></td>
+                    <td><?php echo get_user_type($user->fk_user_type, $user_types, $this->lang->line('none')); ?></td>
+                    <td><a href="<?php echo base_url().'admin/user_change_password/'.$user->id; ?>"
+                        title="<?php echo $this->lang->line('user_change_password'); ?>">[🖍]</a></td>
+                    <td><a href="<?php echo base_url().'admin/user_delete/'.$user->id; ?>">[x]</a></td>
+                </tr>
+            <?php } } ?>
+        </tbody>
+    </table>
     <?php if(isset($users) && isset($user_types)) {
         foreach($users as $user) {
             if($user->id == 0) continue; ?>
         <div class="row">
             <!-- Click here to modify -->
-            <div class="col-md-8"><a href="<?php echo base_url().'admin/user_form/'.$user->id; ?>"><?php echo $user->user; ?></a></div>
-            <div class="col-md-2"><?php echo get_user_type($user->fk_user_type, $user_types, $this->lang->line('none')); ?></div>
-            <div class="col-md-1"><a href="<?php echo base_url().'admin/user_change_password/'.$user->id; ?>"
-                title="<?php echo $this->lang->line('user_change_password'); ?>">[🖍]</a></div>
+            <div class="col-md-8"></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-1"></div>
             <!-- Click here to delete -->
-            <div class="col-md-1"><a href="<?php echo base_url().'admin/user_delete/'.$user->id; ?>">[x]</a></div>
+            <div class="col-md-1"></div>
         </div>
     <?php } }
     /**

@@ -230,7 +230,6 @@ class Grade extends MY_Controller {
     }
 
     /**
-     * @todo
      * Displays the calculations for the median
      *
      * @param integer $app_for_id
@@ -239,6 +238,7 @@ class Grade extends MY_Controller {
      *      The module/subject id
      */
     public function get_median($app_for_id, $mod_id) {
+        // Make sure that everything is valid
         $app_for = $this->apprentice_formation_model->get($app_for_id);
         if(is_null($app_for)) {
             redirect('apprentice');
@@ -250,6 +250,7 @@ class Grade extends MY_Controller {
         $outputs['apprentice_formation'] = $app_for;
         $outputs['module'] = $module;
 
+        // Prepare the grades
         $grades = $this->grade_model->order_by('semester')->get_many_by('fk_module_subject='.$module->id);
         $outputs['grades'] = array();
         for($i = 1; $i <= 8; $i++) {

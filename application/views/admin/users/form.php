@@ -118,3 +118,8 @@
         </div>
     <?php echo form_close(); ?>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#user_username')[0].focus();
+    });
+</script>

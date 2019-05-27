@@ -143,6 +143,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#name_group')[0].focus();
         let filterTC = "<?php echo $this->lang->line('duallistbox_text_clear'); ?>",
         filterPH = "<?php echo $this->lang->line('duallistbox_place_holder'); ?>",
         selectedLL = "<h5><?php echo $this->lang->line('duallistbox_modules_selected'); ?></h5>",

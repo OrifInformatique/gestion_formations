@@ -9,25 +9,31 @@
         <a class="btn btn-outline-secondary" style="cursor: not-allowed;"><?php echo $this->lang->line('apprentice_link'); ?></a>
     <?php } ?>
     <a class="btn btn-success" href="<?=base_url('formation/form')?>"><?=$this->lang->line('formation_new')?></a>
-    <div class="row">
-        <div class="col-md-3"><b><?php echo $this->lang->line('formation_name'); ?></b></div>
-        <div class="col-md-3"><b><?php echo $this->lang->line('formation_end'); ?></b></div>
-    </div>
-    <?php foreach($linked_formations as $linked_formation) {
-        $form = $formations[$linked_formation->fk_formation]; ?>
-        <div class="row">
-            <div class="col-md-3">
-                <a href="<?php echo base_url().'apprentice/edit_form/'.$linked_formation->id; ?>">
-                    <?php echo $form->name_formation; ?>
-                </a>
-            </div>
-            <div class="col-md-3">
-                <?php echo $form->duration + $linked_formation->year; ?>
-            </div>
-            <div class="col-md-1">
-                <a href="<?php echo base_url().'grade/list/'.$linked_formation->id; ?>">[🖍]</a>
-                <a href="<?php echo base_url().'apprentice/unlink_form/'.$linked_formation->id; ?>">[x]</a>
-            </div>
-        </div>
-    <?php } ?>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th><?php echo $this->lang->line('formation_name'); ?></th>
+                <th><?php echo $this->lang->line('formation_end'); ?></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($linked_formations as $linked_formation) {
+                $formation = $formations[$linked_formation->fk_formation]; ?>
+                <tr>
+                    <td>
+                        <a href="<?php echo base_url().'apprentice/edit_form/'.$linked_formation->id; ?>">
+                            <?php echo $formation->name_formation; ?>
+                        </a>
+                    </td>
+                    <td><?php echo $formation->duration + $linked_formation->year; ?></td>
+                    <td>
+                        <a href="<?php echo base_url().'grade/list/'.$linked_formation->id; ?>">[🖍]</a>
+                        <a href="<?php echo base_url().'apprentice/unlink_form/'.$linked_formation->id; ?>">[x]</a>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
 </div>

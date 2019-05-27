@@ -55,3 +55,8 @@
         <?php echo form_close(); ?>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#username')[0].focus();
+    });
+</script>

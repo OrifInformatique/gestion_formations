@@ -108,3 +108,8 @@ $update = isset($grade);
 
     <?php echo form_close(); ?>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#grade_grade')[0].focus();
+    });
+</script>

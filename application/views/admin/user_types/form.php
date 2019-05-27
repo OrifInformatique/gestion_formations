@@ -87,3 +87,8 @@
 
     <?php echo form_close(); ?>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#user_type_type')[0].focus();
+    });
+</script>

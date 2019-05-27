@@ -72,3 +72,8 @@
         </div>
     <?php echo form_close(); ?>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#formation')[0].focus();
+    });
+</script>

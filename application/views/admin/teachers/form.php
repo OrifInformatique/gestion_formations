@@ -107,3 +107,8 @@
     echo form_close();
     ?>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#teacher_firstname')[0].focus();
+    });
+</script>

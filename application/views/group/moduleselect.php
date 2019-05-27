@@ -36,3 +36,8 @@
         </div>
     <?php echo form_close(); ?>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#fk_module')[0].focus();
+    });
+</script>
