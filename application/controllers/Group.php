@@ -26,7 +26,9 @@ class Group extends MY_Controller {
      * Shows the index with all the groups
      */
     public function index(){
+        $this->load->model('formation_model');
         $outputs['groups'] = $this->formation_module_group_model->get_ordered();
+        $outputs['formations'] = $this->formation_model->dropdown('name_formation');
         $this->display_view('group/list', $outputs);
     }
 
@@ -36,7 +38,7 @@ class Group extends MY_Controller {
      *      If a group with the id exists, it will update it, otherwise it will create a new group
      */
     public function form($id = 0){
-        $this->load->model(['module_group_model','module_subject_model']);
+        $this->load->model(['module_group_model','module_subject_model','formation_model']);
         $outputs = array();
 
         if($id > 0){
@@ -53,6 +55,8 @@ class Group extends MY_Controller {
         if(empty($outputs['m'])) {
             $outputs['m'] = [];
         }
+
+        $outputs['formations'] = $this->formation_model->dropdown('name_formation');
 
         $groups = $this->formation_module_group_model->get_all();
         if($id != 0) {
@@ -78,13 +82,15 @@ class Group extends MY_Controller {
         $this->form_validation->set_rules('weight', $this->lang->line('group_weight'), 'required');
         $this->form_validation->set_rules('position', $this->lang->line('group_position'), 'required');
         $this->form_validation->set_rules('parent_group', $this->lang->line('group_parent_group'), 'required');
+        $this->form_validation->set_rules('group_formation', $this->lang->line('group_formation'),'required');
 
         $req = array(
             'name_group' => $this->input->post('name_group'),
             'weight' => $this->input->post('weight'),
             'eliminatory' => null !== $this->input->post('eliminatory'),
             'position' => $this->input->post('position'),
-            'fk_parent_group' => $this->input->post('parent_group')
+            'fk_parent_group' => $this->input->post('parent_group'),
+            'fk_formation' => $this->input->post('group_formation')
         );
 
         if($this->form_validation->run()){

@@ -136,6 +136,24 @@
         </div>
 
         <div class="row">
+            <div class="form-group col-md-12">
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <?php echo form_label($this->lang->line('group_formation')); ?>
+                    </div>
+                    <div class="col-md-8">
+                        <?php
+                        if($update)
+                            echo form_dropdown('group_formation', $formations, set_value('group_formation', $group->fk_formation), 'class="form-control" id="group_formation"');
+                        else
+                            echo form_dropdown('group_formation', $formations, set_value('group_formation'), 'class="form-control" id="group_formation"');
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
             <?php echo form_dropdown('m[]', $modules, $m, 'multiple="multiple" id="group_modules-multiselect"'); ?>
         </div>
 

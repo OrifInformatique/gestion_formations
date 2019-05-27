@@ -36,6 +36,7 @@ $lang['group_weight']                   = 'Poids';
 $lang['group_eliminatory']              = 'Eliminatoire';
 $lang['group_position']                 = 'Position';
 $lang['group_parent_group']             = 'Groupe Parent';
+$lang['group_formation']                = 'Formation';
 $lang['module_number']                  = 'Numéro de module';
 $lang['module_title']                   = 'Titre';
 $lang['module_group']                   = 'Groupe';
