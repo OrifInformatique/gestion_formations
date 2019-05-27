@@ -17,7 +17,7 @@
             <?php foreach($modules as $module) {
                 if(empty($medians[$module->id][0])) continue; ?>
                 <tr>
-                    <td><i><?php echo $module->title; ?></i></td>
+                    <td style="min-width: 500px;"><i><?php echo $module->title; ?></i></td>
                     <td><b>
                         <a href="<?php echo base_url('grade/get_median/'.$apprentice_formation->id.'/'.$module->id); ?>"
                         class="<?php if(!empty($medians[$module->id][0])) {
@@ -47,10 +47,10 @@
                         <?php } ?>
                     </td>
                     <td>
-                        <a href="<?php echo base_url('grade/add_to_module/'.$apprentice_formation->id.'/'.$module->id); ?>">
-                        [+]</a>
-                        <a href="<?php echo base_url('grade/remove_from_module/'.$apprentice_formation->id.'/'.$module->id); ?>">
-                            [<span style="padding: 0 2px;">-</span>]
+                        <a href="<?php echo base_url('grade/add_to_module/'.$apprentice_formation->id.'/'.$module->id); ?>"
+                            class="btn btn-success">+</a>
+                        <a href="<?php echo base_url('grade/remove_from_module/'.$apprentice_formation->id.'/'.$module->id); ?>" class="btn btn-danger">
+                            <span style="padding: 0 2px;">-</span>
                         </a>
                     </td>
                 </tr>
@@ -64,8 +64,8 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <a href="<?php echo base_url('grade/add_to_module/'.$apprentice_formation->id.'/'.$module->id); ?>">
-                        [+]</a>
+                        <a href="<?php echo base_url('grade/add_to_module/'.$apprentice_formation->id.'/'.$module->id); ?>"
+                            class="btn btn-success">+</a>
                     </td>
                 </tr>
             <?php } ?>

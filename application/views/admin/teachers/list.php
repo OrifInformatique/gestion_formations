@@ -22,7 +22,7 @@
                 <tr>
                     <td><a href="<?php echo base_url().'admin/teacher_form/'.$teacher->id; ?>"><?php echo $teacher->firstname." ".$teacher->last_name; ?></a></td>
                     <td><?php echo get_user_name($teacher->fk_user, $users, $this->lang->line('none')); ?></td>
-                    <td><a href="<?php echo base_url().'admin/teacher_delete/'.$teacher->id; ?>">[x]</a></td>
+                    <td><a href="<?php echo base_url().'admin/teacher_delete/'.$teacher->id; ?>" class="btn btn-danger">x</a></td>
                 </tr>
             <?php } } ?>
         </tbody>
@@ -37,7 +37,7 @@
      * @param string $ifempty
      *      The text returned if the $id is 0
      */
-    function get_user_name($id, $users, $ifempty) {
+    function get_user_name($id, $users, $ifempty = '') {
         if($id == 0)
             return $ifempty;
         else {

@@ -222,8 +222,8 @@ class Grade extends MY_Controller {
                 break;
             case 1:
                 $this->grade_model->delete($id);
-                $this->display_view('grade/success', $outputs);
-                break;
+                //$this->display_view('grade/success', $outputs);
+                //break;
             default:
                 redirect('grade/remove_from_module/'.$app_for->id.'/'.$module->id);
         }

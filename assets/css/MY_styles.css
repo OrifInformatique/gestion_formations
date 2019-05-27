@@ -1,18 +1,23 @@
 /* ADD CUSTOM STYLES HERE */
 .rotate90 {
-    text-align:center;
-    white-space:nowrap;
-    transform-origin:50% 50%;
+    text-align: center;
+    white-space: nowrap;
+    transform-origin: 50% 50%;
     transform: rotate(-90deg);
 }
 .rotate90:before {
-    content:'';
-    padding-top:110%;/* takes width as reference, + 10% for faking some extra padding */
-    display:inline-block;
-    vertical-align:middle;
+    content: '';
+    padding-top: 110%;/* takes width as reference, + 10% for faking some extra padding */
+    display: inline-block;
+    vertical-align: middle;
 }
 .multiselect-container {
     width: 100%;
+}
+/* Turns btn into a smaller button */
+.btn-sm {
+  padding: 0.1rem 0.6rem;
+  margin-top: 5%;
 }
 
 
@@ -25,7 +30,6 @@ fieldset.bob {
     padding-right: 0.75em;
     border: 2px groove black;
 }
-
 legend.bob {
     padding:0 10px;
     width:inherit;

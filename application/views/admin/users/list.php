@@ -25,7 +25,7 @@
                     <td><?php echo get_user_type($user->fk_user_type, $user_types, $this->lang->line('none')); ?></td>
                     <td><a href="<?php echo base_url().'admin/user_change_password/'.$user->id; ?>"
                         title="<?php echo $this->lang->line('user_change_password'); ?>">[🖍]</a></td>
-                    <td><a href="<?php echo base_url().'admin/user_delete/'.$user->id; ?>">[x]</a></td>
+                    <td><a href="<?php echo base_url().'admin/user_delete/'.$user->id; ?>" class="btn btn-danger">x</a></td>
                 </tr>
             <?php } } ?>
         </tbody>

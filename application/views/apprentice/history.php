@@ -16,6 +16,7 @@
                 <th><?php echo $this->lang->line('formation_name'); ?></th>
                 <th><?php echo $this->lang->line('formation_end'); ?></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -29,8 +30,12 @@
                     </td>
                     <td><?php echo $formation->duration + $linked_formation->year; ?></td>
                     <td>
-                        <a href="<?php echo base_url().'grade/list/'.$linked_formation->id; ?>">[🖍]</a>
-                        <a href="<?php echo base_url().'apprentice/unlink_form/'.$linked_formation->id; ?>">[x]</a>
+                        <a href="<?php echo base_url().'grade/list/'.$linked_formation->id; ?>" class="btn btn-primary">
+                            <?php echo $this->lang->line('apprentice_formation_grades'); ?>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="<?php echo base_url().'apprentice/unlink_form/'.$linked_formation->id; ?>" class="btn btn-danger">x</a>
                     </td>
                 </tr>
             <?php } ?>

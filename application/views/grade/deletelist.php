@@ -25,7 +25,7 @@
                         </span>
                     </td>
                     <td><?php echo $grade->semester; ?></td>
-                    <td><a href="<?php echo base_url('grade/delete_grade/'.$grade->id); ?>">[x]</a></td>
+                    <td><a href="<?php echo base_url('grade/delete_grade/'.$grade->id); ?>" class="btn btn-danger">x</a></td>
                 </tr>
             <?php } ?>
         </tbody>

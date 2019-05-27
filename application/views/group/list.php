@@ -24,8 +24,7 @@
                     <td><?php echo $group->eliminatory?$this->lang->line('yes'):$this->lang->line('no'); ?></td>
                     <td><?php echo getParentGroup($groups, $group->fk_parent_group, $no_group); ?></td>
                     <td>
-                        <a href="<?php echo base_url().'group/module_list/'.$group->id; ?>">[🖍]</a>
-                        <a href="<?php echo base_url().'group/delete/'.$group->id; ?>">[x]</a>
+                        <a href="<?php echo base_url().'group/delete/'.$group->id; ?>" class="btn btn-danger">x</a>
                     </td>
                 </tr>
             <?php } } ?>

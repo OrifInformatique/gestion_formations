@@ -27,7 +27,7 @@
                         </a>
                     </td>
                     <td><?php echo $users[$apprentice->fk_user]; ?></td>
-                    <td><a href="<?php echo base_url().'apprentice/delete/'.$apprentice->id; ?>">[x]</a></td>
+                    <td><a href="<?php echo base_url().'apprentice/delete/'.$apprentice->id; ?>" class="btn btn-danger">x</a></td>
                 </tr>
             <?php } } ?>
         </tbody>

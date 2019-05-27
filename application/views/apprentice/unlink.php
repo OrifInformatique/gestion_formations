@@ -13,8 +13,9 @@
             </a>
         </div>
     <?php } else { ?>
-    <div class="row">
-        <a href="<?php echo base_url('apprentice/apprentice_formations/'.$link->fk_apprentice); ?>"></a>
-    </div>
+    <div class="alert alert-warning row"><?php echo $this->lang->line('apprentice_formation_delete_not') ?></div>
+    <a href="<?php echo base_url('apprentice/apprentice_formations/'.$link->fk_apprentice); ?>" class="btn btn-primary">
+        <?php echo $this->lang->line('return'); ?>
+    </a>
     <?php } ?>
 </div>

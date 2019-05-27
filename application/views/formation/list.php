@@ -16,7 +16,7 @@
                 <tr>
                     <td><a href="<?php echo base_url().'formation/form/'.$formation->id; ?>"><?php echo $formation->name_formation; ?></a></td>
                     <td><?php echo $formation->duration." ".$this->lang->line('years'); ?></td>
-                    <td><a href="<?php echo base_url().'formation/delete/'.$formation->id; ?>">[x]</a></td>
+                    <td><a href="<?php echo base_url().'formation/delete/'.$formation->id; ?>" class="btn btn-danger">x</a></td>
                 </tr>
             <?php } } ?>
         </tbody>

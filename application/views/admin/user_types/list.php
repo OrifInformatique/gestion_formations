@@ -22,7 +22,7 @@
                 <tr>
                     <td><a href="<?php echo base_url().'admin/user_type_form/'.$user_type->id; ?>"><?php echo $user_type->type; ?></a></td>
                     <td><?php echo get_access_level_name($user_type->access_level, $access_levels); ?></td>
-                    <td><a href="<?php echo base_url().'admin/user_type_delete/'.$user_type->id; ?>">[x]</a></td>
+                    <td><a href="<?php echo base_url().'admin/user_type_delete/'.$user_type->id; ?>" class="btn btn-danger">x</a></td>
                 </tr>
             <?php } } ?>
         </tbody>
