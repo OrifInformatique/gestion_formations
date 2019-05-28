@@ -281,7 +281,6 @@ class Grade extends MY_Controller {
     }
 
     /**
-     * @todo
      * Obtains all the data you may need.
      *
      * @param integer $app_for_id
@@ -297,6 +296,8 @@ class Grade extends MY_Controller {
         }
 
         $results = array();
+        $results['medians'] = array();
+        $results['groups'] = array();
         $modules_groups_g = array();
         $groups = $this->formation_module_group_model->get_many_by('fk_formation='.$app_for->fk_formation);
 

@@ -25,7 +25,7 @@ class Admin extends MY_Controller {
      * It's just a list of links to the other indexes.
      */
     public function index() {
-        $this->display_view('admin/list');
+        $this->display_view(['admin/common/nav','admin/list']);
     }
 
     /************************
@@ -37,7 +37,7 @@ class Admin extends MY_Controller {
     public function user_index() {
         $outputs['users'] = $this->user_model->get_all();
         $outputs['user_types'] = $this->user_type_model->get_all();
-        $this->display_view('admin/users/list', $outputs);
+        $this->display_view(['admin/common/nav','admin/users/list'], $outputs);
     }
 
     /**
@@ -59,7 +59,7 @@ class Admin extends MY_Controller {
         }
         $outputs['user_types'][0] = $this->lang->line('none');
 
-        $this->display_view('admin/users/form', $outputs);
+        $this->display_view(['admin/common/nav','admin/users/form'], $outputs);
     }
 
     /**
@@ -108,7 +108,7 @@ class Admin extends MY_Controller {
     public function user_change_password($id) {
         $outputs['user'] = $this->user_model->get($id);
         
-        $this->display_view('admin/users/cp', $outputs);
+        $this->display_view(['admin/common/nav','admin/users/cp'], $outputs);
     }
 
     /**
@@ -200,11 +200,11 @@ class Admin extends MY_Controller {
 
         if($confirm == 1) {
             $this->user_model->delete($id);
-            $this->display_view('admin/users/success');
+            $this->display_view(['admin/common/nav','admin/users/success']);
         } elseif ($confirm == 0) {
-            $this->display_view('admin/users/delete', $outputs);
+            $this->display_view(['admin/common/nav','admin/users/delete'], $outputs);
         } else {
-            redirect('admin/user_index');
+            redirect(['admin/common/nav','admin/user_index']);
         }
     }
 
@@ -217,7 +217,7 @@ class Admin extends MY_Controller {
     public function user_type_index() {
         $outputs['access_levels'] = array_flip(ACCESS_LVLS);
         $outputs['user_types'] = $this->user_type_model->get_all();
-        $this->display_view('admin/user_types/list', $outputs);
+        $this->display_view(['admin/common/nav','admin/user_types/list'], $outputs);
     }
 
     /**
@@ -232,7 +232,7 @@ class Admin extends MY_Controller {
             $outputs['user_type'] = $this->user_type_model->get($id);
         }
 
-        $this->display_view('admin/user_types/form', $outputs);
+        $this->display_view(['admin/common/nav','admin/user_types/form'], $outputs);
     }
 
     /**
@@ -275,9 +275,9 @@ class Admin extends MY_Controller {
 
         if($confirm == 1) {
             $this->user_type_model->delete($id);
-            $this->display_view('admin/user_types/success');
+            $this->display_view(['admin/common/nav','admin/user_types/success']);
         } elseif ($confirm == 0) {
-            $this->display_view('admin/user_types/delete', $outputs);
+            $this->display_view(['admin/common/nav','admin/user_types/delete'], $outputs);
         } else {
             redirect('admin/user_type_index');
         }
@@ -292,7 +292,7 @@ class Admin extends MY_Controller {
     public function teacher_index() {
         $outputs['teachers'] = $this->teacher_model->get_all();
         $outputs['users'] = $this->user_model->get_all();
-        $this->display_view('admin/teachers/list', $outputs);
+        $this->display_view(['admin/common/nav','admin/teachers/list'], $outputs);
     }
 
     /**
@@ -317,7 +317,7 @@ class Admin extends MY_Controller {
             $outputs['teacher'] = $this->teacher_model->get($id);
         }
 
-        $this->display_view('admin/teachers/form', $outputs);
+        $this->display_view(['admin/common/nav','admin/teachers/form'], $outputs);
     }
 
     /**
@@ -364,9 +364,9 @@ class Admin extends MY_Controller {
 
         if($confirm == 1) {
             $this->teacher_model->delete($id);
-            $this->display_view('admin/teachers/success');
+            $this->display_view(['admin/common/nav','admin/teachers/success']);
         } elseif($confirm == 0) {
-            $this->display_view('admin/teachers/delete', $outputs);
+            $this->display_view(['admin/common/nav','admin/teachers/delete'], $outputs);
         } else {
             redirect('admin/teacher_index');
         }
