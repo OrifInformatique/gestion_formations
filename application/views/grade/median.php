@@ -11,7 +11,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php for($i = 1; $i <= 8; $i++) { ?>
+            <?php for($i = 1; $i <= $semesters; $i++) { ?>
                 <tr>
                     <td><b><?php echo $this->lang->line('grade_semester').' '.$i; ?></b></td>
                     <td>

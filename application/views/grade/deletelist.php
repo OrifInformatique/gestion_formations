@@ -13,7 +13,8 @@
             <?php foreach($grades as $grade) { ?>
                 <tr>
                     <td>
-                        <span class="<?php
+                        <a href="<?php echo base_url('grade/edit_grade/'.$grade->id); ?>"
+                        class="<?php
                         if($grade->grade < 4)
                             echo 'grade_bad';
                         elseif ($grade->grade >= 5)
@@ -22,7 +23,7 @@
                             echo 'grade_neutral';
                         ?>">
                             <?php echo $grade->grade; ?>
-                        </span>
+                        </a>
                     </td>
                     <td><?php echo $grade->semester; ?></td>
                     <td><a href="<?php echo base_url('grade/delete_grade/'.$grade->id); ?>" class="btn btn-danger">x</a></td>
