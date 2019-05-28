@@ -25,7 +25,8 @@ class Admin extends MY_Controller {
      * It's just a list of links to the other indexes.
      */
     public function index() {
-        $this->display_view(['admin/common/nav','admin/list']);
+        $outputs['selected'] = 0;
+        $this->display_view(['admin/common/nav','admin/list'], $outputs);
     }
 
     /************************
@@ -35,6 +36,7 @@ class Admin extends MY_Controller {
      * Shows the list of users.
      */
     public function user_index() {
+        $outputs['selected'] = 1;
         $outputs['users'] = $this->user_model->get_all();
         $outputs['user_types'] = $this->user_type_model->get_all();
         $this->display_view(['admin/common/nav','admin/users/list'], $outputs);
@@ -50,6 +52,7 @@ class Admin extends MY_Controller {
             $outputs['user'] = $this->user_model->get($id);
         }
 
+        $outputs['selected'] = 1;
         $user_types = $this->user_type_model->get_all();
         $outputs['user_types'] = array();
         if(is_array($user_types)) {
@@ -106,6 +109,7 @@ class Admin extends MY_Controller {
      *      ID of the user's password to change
      */
     public function user_change_password($id) {
+        $outputs['selected'] = 1;
         $outputs['user'] = $this->user_model->get($id);
         
         $this->display_view(['admin/common/nav','admin/users/cp'], $outputs);
@@ -187,6 +191,7 @@ class Admin extends MY_Controller {
      *      0 leads to the confirmation prompt, 1 deletes the user.
      */
     public function user_delete($id, $confirm = 0) {
+        $outputs['selected'] = 1;
         $this->load->model(['apprentice_model']);
 
         $outputs['user'] = $this->user_model->get($id);
@@ -200,7 +205,7 @@ class Admin extends MY_Controller {
 
         if($confirm == 1) {
             $this->user_model->delete($id);
-            $this->display_view(['admin/common/nav','admin/users/success']);
+            $this->display_view(['admin/common/nav','admin/users/success'], $outputs);
         } elseif ($confirm == 0) {
             $this->display_view(['admin/common/nav','admin/users/delete'], $outputs);
         } else {
@@ -215,6 +220,7 @@ class Admin extends MY_Controller {
      * Shows the list of user types.
      */
     public function user_type_index() {
+        $outputs['selected'] = 2;
         $outputs['access_levels'] = array_flip(ACCESS_LVLS);
         $outputs['user_types'] = $this->user_type_model->get_all();
         $this->display_view(['admin/common/nav','admin/user_types/list'], $outputs);
@@ -226,6 +232,7 @@ class Admin extends MY_Controller {
      *      ID of the user to modify. Leave at 0 to create a new user type
      */
     public function user_type_form($id = 0) {
+        $outputs['selected'] = 2;
         $outputs['access_levels'] = array_flip(ACCESS_LVLS);
 
         if($id > 0) {
@@ -266,6 +273,7 @@ class Admin extends MY_Controller {
      *      0 leads to the confirmation prompt, 1 deletes the user.
      */
     public function user_type_delete($id, $confirm = 0) {
+        $outputs['selected'] = 2;
         $outputs['user_type'] = $this->user_type_model->get($id);
 
         $outputs['deletion_allowed'] = TRUE;
@@ -290,6 +298,7 @@ class Admin extends MY_Controller {
      * Shows the list of teachers
      */
     public function teacher_index() {
+        $outputs['selected'] = 3;
         $outputs['teachers'] = $this->teacher_model->get_all();
         $outputs['users'] = $this->user_model->get_all();
         $this->display_view(['admin/common/nav','admin/teachers/list'], $outputs);
@@ -301,6 +310,7 @@ class Admin extends MY_Controller {
      *      ID of the teacher to modify
      */
     public function teacher_form($id = 0) {
+        $outputs['selected'] = 3;
         //Puts the user names and their corresponding ids together
         $outputs['users'] = array();
         $users_names = $this->user_model->dropdown('User');
@@ -354,6 +364,7 @@ class Admin extends MY_Controller {
      *      0 leads to the confirmation prompt, 1 deletes the teacher
      */
     public function teacher_delete($id, $confirm = 0) {
+        $outputs['selected'] = 3;
         $this->load->model(['apprentice_model']);
         $outputs['teacher'] = $this->teacher_model->get($id);
 

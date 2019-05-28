@@ -296,10 +296,12 @@ class Grade extends MY_Controller {
         }
 
         $results = array();
+        $results['group_medians'] = array();
         $results['medians'] = array();
         $results['groups'] = array();
         $modules_groups_g = array();
-        $groups = $this->formation_module_group_model->get_many_by('fk_formation='.$app_for->fk_formation);
+        $medians_g = array();
+        $groups = $this->formation_module_group_model->order_by('name_group')->get_many_by('fk_formation='.$app_for->fk_formation);
 
         foreach($groups as $group) {
             // Prepare all the groups for the result
@@ -329,28 +331,43 @@ class Grade extends MY_Controller {
                         $total += $grade->grade * $grade->weight;
                         $count += $grade->weight;
                     }
-                    if($total == 0) $medians[$i] = 0;
-                    else $medians[$i] = ($total/$count);
+                    $medians[$i] = ($count > 0 ? $total/$count : 0);
                 }
-                $total_m = 0;
-                $count_m = 0;
+                $total = 0;
+                $count = 0;
                 foreach($medians as $median) {
                     if($median == 0) continue;
-                    $total_m += $median;
-                    $count_m ++;
+                    $total += $median;
+                    $count ++;
                 }
-                $results['medians'][$module->id] = ($count_m > 0 ? round($total_m / $count_m, 1) : '');
+                if($count > 0) {
+                    $median = round($total / $count, 1);
+                    $results['medians'][$module->id] = $median;
+                    $medians_g[$module_group->fk_formation_modules_group][$module->id] = $median;
+                } else {
+                    $results['medians'][$module->id] = '';
+                }
             }
         }
-
-        $total_f = 0;
-        $count_f = 0;
-        foreach($results['medians'] as $median) {
-            if(empty($median) || $median === '') continue;
-            $total_f += $median;
-            $count_f++;
+        foreach($medians_g as $medians) {
+            $index = array_search($medians, $medians_g);
+            $total = 0;
+            $count = 0;
+            foreach($medians as $median) {
+                if(empty($median)) continue;
+                $total += $median;
+                $count++;
+            }
+            $results['group_medians'][$index] = ($count > 0 ? round($total / $count, 1) : '');
         }
-        $results['median_medians'] = ($count_f > 0 ? round($total_f / $count_f, 1) : '');
+        $total = 0;
+        $count = 0;
+        foreach($results['group_medians'] as $median) {
+            if(empty($median)) continue;
+            $total += $median;
+            $count++;
+        }
+        $results['final_median'] = ($count > 0 ? round($total / $count, 1) : '');
 
         $results['apprentice_formation'] = $app_for;
 

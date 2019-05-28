@@ -161,32 +161,28 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
+        /* https://www.virtuosoft.eu/code/bootstrap-duallistbox/ */
         $('#name_group')[0].focus();
-        let filterTC = "<?php echo $this->lang->line('duallistbox_text_clear'); ?>",
-        filterPH = "<?php echo $this->lang->line('duallistbox_place_holder'); ?>",
-        selectedLL = "<h5><?php echo $this->lang->line('duallistbox_modules_selected'); ?></h5>",
-        nonSelectedLL = "<h5><?php echo $this->lang->line('duallistbox_modules_not_selected'); ?></h5>",
-        infoT = "{0} <?php echo $this->lang->line('duallistbox_info_text'); ?>",
-        infoTE = "<?php echo $this->lang->line('duallistbox_info_text_empty'); ?>",
-        infoTF = filterPH + " {0} <?php echo $this->lang->line('out_of'); ?> {1}",
-        moveAL = "<?php echo $this->lang->line('duallistbox_move_all'); ?>",
-        removeAL = "<?php echo $this->lang->line('duallistbox_remove_all'); ?>";
+        let obj = {
+            filterTextClear: "<?php echo $this->lang->line('duallistbox_text_clear'); ?>",
+            filterPlaceHolder: "<?php echo $this->lang->line('duallistbox_place_holder'); ?>",
+            selectedListLabel: "<h5><?php echo $this->lang->line('duallistbox_modules_selected'); ?></h5>",
+            nonSelectedListLabel: "<h5><?php echo $this->lang->line('duallistbox_modules_not_selected'); ?></h5>",
+            infoText: "{0} <?php echo $this->lang->line('duallistbox_info_text'); ?>",
+            infoTextEmpty: "<?php echo $this->lang->line('duallistbox_info_text_empty'); ?>",
+            infoTextFiltered: "<?php echo $this->lang->line('duallistbox_info_text_filtered'); ?>",
+            moveAllLabel: "<?php echo $this->lang->line('duallistbox_move_all'); ?>",
+            removeAllLabel: "<?php echo $this->lang->line('duallistbox_remove_all'); ?>"
+        };
 
-        $('#group_modules-multiselect').bootstrapDualListbox({
-            filterTextClear: filterTC,
-            filterPlaceHolder: filterPH,
-            selectedListLabel: selectedLL,
-            nonSelectedListLabel: nonSelectedLL,
-            infoText: infoT,
-            infoTextEmpty: infoTE,
-            infoTextFiltered: infoTF,
-            moveAllLabel: moveAL,
-            removeAllLabel: removeAL
-        });
+        $('#group_modules-multiselect').bootstrapDualListbox(obj);
     });
 </script>
 <style type="text/css">
     select {
-        max-height: 200px;
+        height: 200px;
+    }
+    .clear1, .clear2 {
+        margin-top: 0;
     }
 </style>

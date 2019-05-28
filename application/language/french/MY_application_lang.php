@@ -182,6 +182,7 @@ $lang['subject']                        = 'Matière';
 // Duallistbox
 $lang['duallistbox_text_clear']         = 'Tout montrer';
 $lang['duallistbox_place_holder']       = 'Filtrer';
+$lang['duallistbox_info_text_filtered'] = 'Montrant {0} sur {1}';
 $lang['duallistbox_info_text']          = 'objet(s) disponible(s)';
 $lang['duallistbox_info_text_empty']    = 'Aucun objet disponible';
 $lang['duallistbox_move_all']           = 'Tout sélectionner';

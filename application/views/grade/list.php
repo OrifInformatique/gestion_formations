@@ -19,7 +19,7 @@
                 $first = TRUE;
                 foreach($modules[$group->id] as $module) { ?>
                 <tr>
-                    <th><?php if($first) echo $group->name_group; ?></th>
+                    <th><?php if ($first) echo $group->name_group; ?></th>
                     <td><i><?php echo $module->title; ?></i></td>
                     <td>
                         <b><a href="<?php echo base_url('grade/get_median/'.$apprentice_formation->id.'/'.$module->id); ?>"
@@ -59,25 +59,46 @@
                         <?php } ?>
                     </td>
                 </tr>
-            <?php $first = FALSE;
-            } } ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td><b><?php echo $this->lang->line('grade_median_end'); ?></b></td>
-                <td></td>
-                <td>
-                    <b class="<?php
-                    if(!empty($median_medians) && $median_medians !== '') {
-                        if($median_medians < 4)
+                <?php $first = FALSE; } ?>
+                <tr style="border-bottom:double rgb(182, 186, 190) 1px;">
+                    <td></td>
+                    <th><?php echo $this->lang->line('grade_median'); ?></th>
+                    <td>
+                        <?php if(!empty($group_medians[$group->id])) { ?>
+                        <b class="<?php
+                        if($group_medians[$group->id] < 4)
                             echo 'grade_bad';
-                        elseif($median_medians >= 5)
+                        elseif($group_medians[$group->id] >= 5)
                             echo 'grade_good';
                         else
                             echo 'grade_neutral';
-                    } ?>">
-                        <?php echo $median_medians; ?>
-                    </b>
+                        ?>">
+                        <?php echo $group_medians[$group->id]; ?>
+                        </b>
+                        <?php } ?>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            <?php } ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <th><?php echo $this->lang->line('grade_median_end'); ?></th>
+                <td>
+                    <?php if(!empty($final_median)) { ?>
+                        <b class="<?php
+                        if($final_median < 4)
+                            echo 'grade_bad';
+                        elseif($final_median >= 5)
+                            echo 'grade_good';
+                        else
+                            echo 'grade_neutral';
+                        ?>">
+                            <?php echo $final_median; ?>
+                        </b>
+                    <?php } ?>
                 </td>
                 <td></td>
                 <td></td>
