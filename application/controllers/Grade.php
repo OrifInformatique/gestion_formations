@@ -295,14 +295,17 @@ class Grade extends MY_Controller {
             redirect('apprentice');
         }
 
+        // Prepare the different variables that may be modified / empty at return
         $results = array();
         $results['group_medians'] = array();
         $results['medians'] = array();
         $results['groups'] = array();
         $modules_groups_g = array();
         $medians_g = array();
+        // Get all linked groups
         $groups = $this->formation_module_group_model->order_by('name_group')->get_many_by('fk_formation='.$app_for->fk_formation);
 
+        // Get each group's linked modules
         foreach($groups as $group) {
             // Prepare all the groups for the result
             $results['groups'][$group->id] = $group;
@@ -318,6 +321,7 @@ class Grade extends MY_Controller {
                 $grades = $this->grade_model->get_many_by('fk_module_subject='.$module->id);
                 // Put it in the 'grades' result and sort by module
                 // It's easier for displaying, as a module can be twice in the same formation
+                // It shouldn't be, but it can still be
                 $results['grades'][$module->id] = $grades;
 
                 // Calculate medians and save them with the module
@@ -333,6 +337,7 @@ class Grade extends MY_Controller {
                     }
                     $medians[$i] = ($count > 0 ? $total/$count : 0);
                 }
+                // Calculate final module median
                 $total = 0;
                 $count = 0;
                 foreach($medians as $median) {
@@ -348,7 +353,12 @@ class Grade extends MY_Controller {
                     $results['medians'][$module->id] = '';
                 }
             }
+            // Sort modules by number, to make the list more pleasing to the eye
+            usort($results['modules'][$module_group->fk_formation_modules_group], function($a, $b) {
+                return $a->number <=> $b->number;
+            });
         }
+        // Calculate group medians
         foreach($medians_g as $medians) {
             $index = array_search($medians, $medians_g);
             $total = 0;
@@ -360,12 +370,15 @@ class Grade extends MY_Controller {
             }
             $results['group_medians'][$index] = ($count > 0 ? round($total / $count, 1) : '');
         }
+        // Calculate final median
         $total = 0;
         $count = 0;
         foreach($results['group_medians'] as $median) {
             if(empty($median)) continue;
-            $total += $median;
-            $count++;
+            $group_id = array_search($median, $results['group_medians']);
+            $group = $this->formation_module_group_model->get($group_id);
+            $total += $median * $group->weight;
+            $count += $group->weight;
         }
         $results['final_median'] = ($count > 0 ? round($total / $count, 1) : '');
 
