@@ -133,7 +133,11 @@ class Grade extends MY_Controller {
             }
             redirect('grade/list/'.$app_for_id);
         } else {
-            redirect($redirect);
+            if($update) {
+                $this->edit_grade($grade_id);
+            } else {
+                $this->add_to_module($app_for_id, $mod_id);
+            }
         }
     }
 
@@ -153,7 +157,8 @@ class Grade extends MY_Controller {
         }
         $outputs['apprentice_formation'] = $app_for;
         $outputs['module'] = $module;
-        $outputs['grades'] = $this->grade_model->get_many_by('fk_module_subject='.$mod_id.' AND fk_apprentice_formation='.$app_for_id);
+        $outputs['grades'] = $this->grade_model->order_by('semester')
+            ->get_many_by('fk_module_subject='.$mod_id.' AND fk_apprentice_formation='.$app_for_id);
         if(sizeof($outputs['grades']) == 0) {
             redirect('grade/list/'.$app_for_id);
         }
@@ -169,8 +174,8 @@ class Grade extends MY_Controller {
      * @param integer $command
      *      Whether a confirmation prompt should be displayed or the grade should be deleted
      */
-    public function delete_grade($id, $command = 0) {
-        $grade = $this->grade_model->get($id);
+    public function delete_grade($grade_id, $command = 0) {
+        $grade = $this->grade_model->get($grade_id);
         if(is_null($grade)) {
             redirect('apprentice');
         }
@@ -189,9 +194,9 @@ class Grade extends MY_Controller {
                 $this->display_view('grade/delete', $outputs);
                 break;
             case 1:
-                $this->grade_model->delete($id);
-                //$this->display_view('grade/success', $outputs);
-                //break;
+                $this->grade_model->delete($grade_id);
+                /*$this->display_view('grade/success', $outputs);
+                break;*/
             default:
                 redirect('grade/remove_from_module/'.$app_for->id.'/'.$module->id);
         }
@@ -252,53 +257,6 @@ class Grade extends MY_Controller {
     }
 
     /**
-     * Checks if the date entered is in the past.
-     *
-     * Used as a callback in form_validation()
-     * because adding 4 lines is not really pretty.
-     *
-     * @param string $date_in
-     *      The date to check
-     * @return boolean
-     *      TRUE if the date is in the past
-     */
-    public function cb_check_if_past($date_in) {
-        return (strtotime(date("d-m-Y")) >= strtotime($date_in));
-    }
-
-    /**
-     * Checks if the first date is before the 2nd one.
-     *
-     * @param string $date_last
-     *      The 2nd date
-     * @param string $date_first
-     *      The first date
-     * @return boolean
-     *      Whether $date_first is before $date_last
-     */
-    public function cb_comp_dates($date_last, $date_first) {
-        return (strtotime($date_first) <= strtotime($date_last));
-    }
-
-    /**
-     * Checks that the semester for the grade is during the formation
-     *
-     * @param integer $grade_semester
-     *      The semester the grade was made during
-     * @param integer $app_for_id
-     *      The apprentice formation id
-     * @return boolean
-     *      Whether the grade happened during the formation
-     */
-    public function cb_semester_before_end($grade_semester, $app_for_id) {
-        $this->load->model('formation_model');
-        $app_for = $this->apprentice_formation_model->get($app_for_id);
-        $formation = $this->formation_model->get($app_for->fk_formation);
-        $max_semester = $formation->duration;
-        return $grade_semester <= $max_semester;
-    }
-
-    /**
      * Obtains all the data you may need.
      *
      * @param integer $app_for_id
@@ -336,7 +294,7 @@ class Grade extends MY_Controller {
                 // Put it in the 'modules' result and sort by group
                 $results['modules'][$module_group->fk_formation_modules_group][$module->id] = $module;
 
-                $grades = $this->grade_model->get_many_by('fk_module_subject='.$module->id);
+                $grades = $this->grade_model->order_by('semester')->get_many_by('fk_module_subject='.$module->id);
                 // Put it in the 'grades' result and sort by module
                 // It's easier for displaying, as a module can be twice in the same formation
                 // It shouldn't be, but it can still be
@@ -403,5 +361,51 @@ class Grade extends MY_Controller {
         $results['apprentice_formation'] = $app_for;
 
         return $results;
+    }
+
+    /**
+     * Checks if the date entered is in the past.
+     *
+     * Used as a callback in form_validation()
+     * because adding 4 lines is not really pretty.
+     *
+     * @param string $date_in
+     *      The date to check
+     * @return boolean
+     *      TRUE if the date is in the past
+     */
+    public function cb_check_if_past($date_in) {
+        return (strtotime(date("d-m-Y")) >= strtotime($date_in));
+    }
+
+    /**
+     * Checks if the first date is before the 2nd one.
+     *
+     * @param string $date_last
+     *      The 2nd date
+     * @param string $date_first
+     *      The first date
+     * @return boolean
+     *      Whether $date_first is before $date_last
+     */
+    public function cb_comp_dates($date_last, $date_first) {
+        return (strtotime($date_first) <= strtotime($date_last));
+    }
+
+    /**
+     * Checks that the semester for the grade is during the formation
+     *
+     * @param integer $grade_semester
+     *      The semester the grade was made during
+     * @param integer $app_for_id
+     *      The apprentice formation id
+     * @return boolean
+     *      Whether the grade happened during the formation
+     */
+    public function cb_semester_before_end($grade_semester, $app_for_id) {
+        $this->load->model('formation_model');
+        $app_for = $this->apprentice_formation_model->get($app_for_id);
+        $max_semester = ($this->formation_model->get($app_for->fk_formation))->duration * 2;
+        return $grade_semester <= $max_semester;
     }
 }
