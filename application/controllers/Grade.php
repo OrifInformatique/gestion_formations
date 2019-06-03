@@ -113,7 +113,7 @@ class Grade extends MY_Controller {
             'callback_cb_comp_dates['.$this->input->post('grade_date_test').']'
         ));
         $this->form_validation->set_rules('grade_weight', $this->lang->line('grade_weight'), 'required|greater_than[0]|integer');
-        $this->form_validation->set_rules('grade_semester', $this->lang->line('grade_semester'), 'required|greater_than[0]|integer');
+        $this->form_validation->set_rules('grade_semester', $this->lang->line('grade_semester'), 'required|greater_than[0]|integer|callback_cb_semester_before_end['.$app_for_id.']');
 
         $req = array(
             "grade" => $this->input->post('grade_grade'),
@@ -278,6 +278,24 @@ class Grade extends MY_Controller {
      */
     public function cb_comp_dates($date_last, $date_first) {
         return (strtotime($date_first) <= strtotime($date_last));
+    }
+
+    /**
+     * Checks that the semester for the grade is during the formation
+     *
+     * @param integer $grade_semester
+     *      The semester the grade was made during
+     * @param integer $app_for_id
+     *      The apprentice formation id
+     * @return boolean
+     *      Whether the grade happened during the formation
+     */
+    public function cb_semester_before_end($grade_semester, $app_for_id) {
+        $this->load->model('formation_model');
+        $app_for = $this->apprentice_formation_model->get($app_for_id);
+        $formation = $this->formation_model->get($app_for->fk_formation);
+        $max_semester = $formation->duration;
+        return $grade_semester <= $max_semester;
     }
 
     /**

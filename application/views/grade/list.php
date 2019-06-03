@@ -3,9 +3,9 @@
     <a class="btn btn-primary" href="<?=base_url('apprentice/apprentice_formations/'.$apprentice_formation->fk_apprentice)?>"><?=$this->lang->line('return')?></a>
     <?php
     foreach ($groups as $group) { ?>
-        <a class="btn btn-secondary" href="#" onclick="toggleDiv('group_<?php echo $group->id; ?>_div')"
+        <a class="btn btn-secondary" href="#" onclick="toggleTbody('group_<?php echo $group->id; ?>_div')"
             id="group_<?php echo $group->id; ?>_btn">
-            <?php echo $this->lang->line('grade_group_show').' '.$group->name_group; ?>
+            <?php echo $this->lang->line('grade_group_hide').' '.$group->name_group; ?>
         </a>
     <?php } ?>
 </div>
@@ -71,8 +71,8 @@
                 <tr style="border-bottom:double rgb(182, 186, 190) 1px;">
                     <td></td>
                     <th><?php echo $this->lang->line('grade_median'); ?></th>
-                    <td>
-                        <?php if(!empty($group_medians[$group->id])) { ?>
+                    <td><!--
+                        --><?php if(!empty($group_medians[$group->id])) { ?>
                         <b class="<?php
                         if($group_medians[$group->id] < 4)
                             echo 'grade_bad';
@@ -83,8 +83,8 @@
                         ?>">
                         <?php echo $group_medians[$group->id]; ?>
                         </b>
-                        <?php } ?>
-                    </td>
+                        <?php } ?><!--
+                    --></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -128,29 +128,31 @@
     }
 </style>
 <script type="text/javascript">
-    Boolean.prototype.toInt=()=>{return this.valueOf()?1:0};
 
-    let buttonDivs = [
-        <?php foreach($groups as $group) {
-            echo '"group_'.$group->id.'_div",';
-        } ?>],
-        buttonTexts = [
-        <?php foreach($groups as $group) {
-            $text = '["'.$this->lang->line('grade_group_show').' '.$group->name_group.'",';
-            $text .= '"'.$this->lang->line('grade_group_hide').' '.$group->name_group.'"],';
-            echo $text;
-        }; ?>],
-        buttons = [
-        <?php foreach($groups as $group) {
-            echo '"group_'.$group->id.'_btn",';
-        } ?>];
-    function toggleDiv(divId) {
-        let index = buttonDivs.indexOf(divId);
+    // Contains the divs' ids
+    let buttonTbodies = [<?php
+        foreach($groups as $group) {
+            echo "`group_".$group->id."_div`,";} ?>];
+        // Contains the buttons' texts
+    let buttonTexts = [<?php
+        foreach($groups as $group) {
+            $text = "[`".$this->lang->line('grade_group_show')." ".$group->name_group."`,";
+            $text .= "`".$this->lang->line('grade_group_hide')." ".$group->name_group."`],";
+            echo $text;}; ?>];
+        // Contains the buttons' ids
+    let buttons = [<?php
+        foreach($groups as $group) {
+            echo "`group_".$group->id."_btn`,";} ?>];
+
+    // Toggles a tbody
+    function toggleTbody(divId) {
+        let index = buttonTbodies.indexOf(divId);
         if(index == -1) console.log(false);
-        let docPart = document.getElementById(buttonDivs[index]),
+        let docPart = document.getElementById(buttonTbodies[index]),
             button = document.getElementById(buttons[index]),
             hidden = !docPart.hidden,
-            newText = buttonTexts[index][(hidden).toInt()];
+            newText = buttonTexts[index][hidden?0:1];
+        button.innerHTML = newText;
         docPart.hidden = hidden;
     }
 </script>
