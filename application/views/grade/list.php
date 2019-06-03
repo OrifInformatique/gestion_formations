@@ -10,9 +10,9 @@
     <?php } ?>
 </div>
 <br>
-<div class="container" style="max-width: 90%; margin-bottom: 2%;">
+<div class="container" style="max-width: 90%;">
     <!-- Header -->
-    <div class="row">
+    <div class="row row_plus">
         <div class="col-md-1"><b><?php echo $this->lang->line('module_group'); ?></b></div>
         <div class="col-md-5"><b><?php echo $this->lang->line('grade_module'); ?></b></div>
         <div class="col-md-1"><b><?php echo $this->lang->line('grade_median'); ?></b></div>
@@ -21,15 +21,15 @@
     </div>
 
     <!-- Each group gets its own togglable div -->
-    <?php foreach($groups as $group) {
-        $first = TRUE; ?>
-        <div id="group_<?php echo $group->id; ?>_div" <?php if($first) echo 'style="border-top:double rgb(182, 186, 190) 1px;"'; ?>>
+    <?php foreach($groups as $group) { ?>
+        <div id="group_<?php echo $group->id; ?>_div" <?php echo 'style="border-top:double rgb(182, 186, 190) 1px;"'; ?>>
             <!-- Each module gets its own line -->
+            <div class="row row_plus">
+                <div class="col-md-12"><b><?php echo $group->name_group; ?></b></div>
+            </div>
             <?php foreach($modules[$group->id] as $module) { ?>
                 <div class="row row_plus row_hover">
-                    <div class="col-md-1">
-                        <b><?php if ($first) echo $group->name_group; ?></b>
-                    </div>
+                    <div class="col-md-1"></div>
                     <div class="col-md-5"><i><?php echo $module->title; ?></i></div>
                     <div class="col-md-1">
                         <b><a href="<?php echo base_url('grade/get_median/'.$apprentice_formation->id.'/'.$module->id); ?>"
@@ -72,7 +72,7 @@
                         <?php } ?>
                     </div>
                 </div>
-            <?php $first = FALSE; }
+            <?php }
 
             // Median of the group
             if(!empty($group_medians[$group->id])) { ?>
@@ -122,6 +122,7 @@
         <?php } ?>
     </div>
 </div>
+<br>
 <style type="text/css">
     .grade_bad, .grade_bad:hover {
         background-color: #ffc2c2;
@@ -139,6 +140,7 @@
         min-height: 40px;
         border-bottom: solid #EAEAEA 1px;
         padding: 2px 0;
+        margin: 0;
     }
     .row_hover:hover {
         background-color: #F0F0F0;
