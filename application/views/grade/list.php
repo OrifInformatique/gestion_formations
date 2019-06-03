@@ -11,6 +11,7 @@
 </div>
 <br>
 <div class="container" style="max-width: 90%; margin-bottom: 2%;">
+    <!-- Header -->
     <div class="row">
         <div class="col-md-1"><b><?php echo $this->lang->line('module_group'); ?></b></div>
         <div class="col-md-5"><b><?php echo $this->lang->line('grade_module'); ?></b></div>
@@ -18,9 +19,12 @@
         <div class="col-md-4"><b><?php echo $this->lang->line('grade_grades'); ?></b></div>
         <div class="col-md-1"></div>
     </div>
+
+    <!-- Each group gets its own togglable div -->
     <?php foreach($groups as $group) {
         $first = TRUE; ?>
         <div id="group_<?php echo $group->id; ?>_div" <?php if($first) echo 'style="border-top:double rgb(182, 186, 190) 1px;"'; ?>>
+            <!-- Each module gets its own line -->
             <?php foreach($modules[$group->id] as $module) { ?>
                 <div class="row row_plus row_hover">
                     <div class="col-md-1">
@@ -42,6 +46,7 @@
                         </a></b>
                     </div>
                     <div class="col-md-4">
+                        <!-- Each grade is added -->
                         <?php foreach($grades[$module->id] as $grade) { ?>
                             <a href="<?php echo base_url('grade/edit_grade/'.$grade->id); ?>"
                             class="<?php
@@ -56,6 +61,7 @@
                             --></a>;
                         <?php } ?>
                     </div>
+                    <!-- Add and remove buttons -->
                     <div class="col-md-1">
                         <a href="<?php echo base_url('grade/add_to_module/'.$apprentice_formation->id.'/'.$module->id); ?>"
                             class="btn btn-success">+</a>
@@ -67,6 +73,8 @@
                     </div>
                 </div>
             <?php $first = FALSE; }
+
+            // Median of the group
             if(!empty($group_medians[$group->id])) { ?>
             <div class="row row_plus">
                 <div class="col-md-1"></div>
@@ -88,14 +96,16 @@
             </div>
             <?php } ?>
         </div>
-    <?php } ?>
-    <div class="row row_plus">
+    <?php }
+
+    // The medians' median
+    if(!empty($final_median)) { ?>
+    <div class="row row_plus" style="border-top:double gray">
         <div class="col-md-1"></div>
         <div class="col-md-5">
             <b><?php echo $this->lang->line('grade_median_end'); ?></b>
         </div>
         <div class="col-md-1">
-            <?php if(!empty($final_median)) { ?>
                 <b class="<?php
                 if($final_median < 4)
                     echo 'grade_bad';
@@ -106,10 +116,10 @@
                 ?>">
                     <?php echo $final_median; ?>
                 </b>
-            <?php } ?>
         </div>
         <div class="col-md-4"></div>
         <div class="col-md-1"></div>
+        <?php } ?>
     </div>
 </div>
 <style type="text/css">
@@ -127,11 +137,11 @@
 
     .row_plus {
         min-height: 40px;
-        border-bottom: solid rgba(234,234,234,1) 1px;
+        border-bottom: solid #EAEAEA 1px;
         padding: 2px 0;
     }
     .row_hover:hover {
-        background-color: rgba(240,240,240,1);
+        background-color: #F0F0F0;
     }
 </style>
 <script type="text/javascript">
