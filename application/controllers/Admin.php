@@ -111,7 +111,7 @@ class Admin extends MY_Controller {
     public function user_change_password($id) {
         $outputs['selected'] = 1;
         $outputs['user'] = $this->user_model->get($id);
-        
+
         $this->display_view(['admin/common/nav','admin/users/cp'], $outputs);
     }
 
@@ -150,6 +150,38 @@ class Admin extends MY_Controller {
     }
 
     /**
+     * Deletes a user.
+     * @param integer $id
+     *      ID of the user to delete
+     * @param integer $confirm
+     *      0 leads to the confirmation prompt, 1 deletes the user.
+     */
+    public function user_delete($id, $confirm = 0) {
+        $outputs['selected'] = 1;
+        $this->load->model(['apprentice_model']);
+
+        $outputs['user'] = $this->user_model->get($id);
+
+        $teachers = $this->teacher_model->count_by('fk_user='.$id);
+        $apprentices = $this->apprentice_model->count_by('fk_user='.$id);
+        $outputs['deletion_allowed'] = ($teachers + $apprentices <= 0);
+        echo $teachers + $apprentices;
+
+        switch($confirm) {
+            case 0:
+                $this->display_view(['admin/common/nav','admin/users/delete'], $outputs);
+                break;
+            case 1:
+                $this->user_model->delete($id);
+                $this->display_view(['admin/common/nav','admin/users/success'], $outputs);
+                break;
+            default:
+                redirect(['admin/common/nav','admin/user_index']);
+                break;
+        }
+    }
+
+    /**
      * Checks if the password corresponds to a username.
      *
      * Used as a callback in user_change_password_validation()
@@ -181,36 +213,6 @@ class Admin extends MY_Controller {
      */
     public function cb_check_new_password($new_password, $new_password_conf) {
         return !(strcmp($new_password, $new_password_conf) != 0);
-    }
-
-    /**
-     * Deletes a user.
-     * @param integer $id
-     *      ID of the user to delete
-     * @param integer $confirm
-     *      0 leads to the confirmation prompt, 1 deletes the user.
-     */
-    public function user_delete($id, $confirm = 0) {
-        $outputs['selected'] = 1;
-        $this->load->model(['apprentice_model']);
-
-        $outputs['user'] = $this->user_model->get($id);
-
-        $teachers = $this->teacher_model->count_by('fk_user='.$id);
-        $apprentices = $this->apprentice_model->count_by('fk_user='.$id);
-        $outputs['deletion_allowed'] = ($teachers + $apprentices <= 0);
-        echo $teachers + $apprentices;
-        /*if(sizeof($apprentices) > 0)
-            $outputs['deletion_allowed'] = FALSE;*/
-
-        if($confirm == 1) {
-            $this->user_model->delete($id);
-            $this->display_view(['admin/common/nav','admin/users/success'], $outputs);
-        } elseif ($confirm == 0) {
-            $this->display_view(['admin/common/nav','admin/users/delete'], $outputs);
-        } else {
-            redirect(['admin/common/nav','admin/user_index']);
-        }
     }
 
     /*****************************
@@ -281,13 +283,17 @@ class Admin extends MY_Controller {
         if(sizeof($users) > 0)
             $outputs['deletion_allowed'] = FALSE;
 
-        if($confirm == 1) {
-            $this->user_type_model->delete($id);
-            $this->display_view(['admin/common/nav','admin/user_types/success']);
-        } elseif ($confirm == 0) {
-            $this->display_view(['admin/common/nav','admin/user_types/delete'], $outputs);
-        } else {
-            redirect('admin/user_type_index');
+        switch($confirm) {
+            case 0:
+                $this->display_view(['admin/common/nav','admin/user_types/delete'], $outputs);
+                break;
+            case 1:
+                $this->user_type_model->delete($id);
+                $this->display_view(['admin/common/nav','admin/user_types/success']);
+                break;
+            default:
+                redirect('admin/user_type_index');
+                break;
         }
     }
 
@@ -373,13 +379,17 @@ class Admin extends MY_Controller {
         if(sizeof($apprentices) > 0)
             $outputs['deletion_allowed'] = FALSE;
 
-        if($confirm == 1) {
-            $this->teacher_model->delete($id);
-            $this->display_view(['admin/common/nav','admin/teachers/success']);
-        } elseif($confirm == 0) {
-            $this->display_view(['admin/common/nav','admin/teachers/delete'], $outputs);
-        } else {
-            redirect('admin/teacher_index');
+        switch($confirm) {
+            case 0:
+                $this->display_view(['admin/common/nav','admin/teachers/delete'], $outputs);
+                break;
+            case 1:
+                $this->teacher_model->delete($id);
+                $this->display_view(['admin/common/nav','admin/teachers/success']);
+                break;
+            default:
+                redirect('admin/teacher_index');
+                break;
         }
     }
 }

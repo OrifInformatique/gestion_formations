@@ -121,14 +121,17 @@ class Apprentice extends MY_Controller {
 
         $outputs['apprentice'] = $this->apprentice_model->get($id);
         $outputs['deletion_allowed'] = ($this->apprentice_formation_model->count_by('fk_apprentice='.$id) <= 0);
-        
-        if($confirm == 1) {
-            $this->apprentice_model->delete($id);
-            $this->display_view('apprentice/success');
-        } elseif ($confirm == 0) {
-            $this->display_view('apprentice/delete', $outputs);
-        } else {
-            redirect('group');
+
+        switch($confirm) {
+            case 0:
+                $this->display_view('apprentice/delete', $outputs);
+                break;
+            case 1:
+                $this->apprentice_model->delete($id);
+                $this->display_view('apprentice/success');
+                break;
+            default:
+                redirect('apprentice');
         }
     }
 

@@ -173,21 +173,21 @@ class Group extends MY_Controller {
         $this->load->model('module_subject_model');
 
         //Verifies that the group does not have any child upon deletion
-        $outputs['deletion_allowed'] = TRUE;
-        //Checks all groups for their parents
-        $groups = $this->formation_module_group_model->get_many_by('fk_parent_group='.$id);
-        if(sizeof($groups) > 0) {
-            $outputs['deletion_allowed'] = FALSE;
-        }
+        $groups = $this->formation_module_group_model->count_by('fk_parent_group='.$id);
+        $outputs['deletion_allowed'] = ($groups <= 0);
         $outputs['group'] = $this->formation_module_group_model->get($id);
 
-        if($confirm == 1) {
-            $this->formation_module_group_model->delete($id);
-            $this->display_view('group/success');
-        } elseif ($confirm == 0) {
-            $this->display_view('group/delete', $outputs);
-        } else {
-            redirect('group');
+        switch($confirm) {
+            case 0:
+                $this->display_view('group/delete', $outputs);
+                break;
+            case 1:
+                $this->formation_module_group_model->delete($id);
+                $this->display_view('group/success');
+                break;
+            default:
+                redirect('group');
+                break;
         }
     }
 

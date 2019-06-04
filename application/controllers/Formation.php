@@ -83,22 +83,21 @@ class Formation extends MY_Controller {
     public function delete($id, $confirm = 0) {
         $this->load->model('apprentice_formation_model');
         $outputs['formation'] = $this->formation_model->get($id);
-        $outputs['deletion_allowed'] = TRUE;
-        $modules = $this->formation_module_group_model->get_many_by('fk_formation='.$id);
-        if(sizeof($modules) > 0) {
-            $outputs['deletion_allowed'] = FALSE;
+
+        $modules = $this->formation_module_group_model->count_by('fk_formation='.$id);
+        $apprentices = $this->apprentice_formation_model->count_by('fk_formation='.$id);
+        $outputs['deletion_allowed'] = ($apprentices + $modules <= 0);
+
+        switch($confirm) {
+            case 0:
+                $this->display_view('formation/delete', $outputs);
+                break;
+            case 1:
+                $this->formation_model->delete($id);
+                $this->display_view('formation/success');
+                break;
+            default:
+                redirect('formation');
         }
-        $modules = $this->apprentice_formation_model->get_many_by('fk_formation='.$id);
-        if(sizeof($modules) > 0) {
-            $outputs['deletion_allowed'] = FALSE;
-        }
-        if($confirm == 1) {
-            $this->formation_model->delete($id);
-            $this->display_view('formation/success');
-        } elseif ($confirm == 0) {
-            $this->display_view('formation/delete', $outputs);
-        }
-        else
-            redirect('formation');
     }
 }

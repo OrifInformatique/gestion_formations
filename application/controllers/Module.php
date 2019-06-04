@@ -73,7 +73,6 @@ class Module extends MY_Controller {
             // Sends the user back to the index
             redirect('module');
         } else {
-            //$outputs["groups"] = $this->formation_module_group_model->dropdown('name_group');
             $this->form($this->input->post('id'));
         }
     }
@@ -90,24 +89,24 @@ class Module extends MY_Controller {
         $outputs['module'] = $this->module_subject_model->get($id);
         $outputs['deletion_allowed'] = TRUE;
         // Check that there is no module group linked to the module
-        $modules = $this->module_group_model->get_many_by('fk_module='.$id);
-        if(sizeof($modules) > 0) {
-            $outputs['deletion_allowed'] = FALSE;
-        }
-        $modules = $this->grade_model->get_many_by('fk_module_subject='.$id);
-        if(sizeof($modules) > 0) {
-            $outputs['deletion_allowed'] = FALSE;
-        }
-        if($confirm == 1) {
-            // Deletes the module and sends the user to a success view
-            $this->module_subject_model->delete($id);
-            $this->display_view('module/success');
-        } elseif ($confirm == 0) {
-            // Default view, displays the delete view
-            $this->display_view('module/delete', $outputs);
-        } else {
-            // Any other value sends back to the list of modules
-            redirect('module');
+        $modules = $this->module_group_model->count_by('fk_module='.$id);
+        $grades = $this->grade_model->count_by('fk_module_subject='.$id);
+        $outputs['deletion_allowed'] = ($modules + $grades <= 0);
+
+        switch($confirm) {
+            case 0:
+                // Default view, displays the delete view
+                $this->display_view('module/delete', $outputs);
+                break;
+            case 1:
+                // Deletes the module and sends the user to a success view
+                $this->module_subject_model->delete($id);
+                $this->display_view('module/success');
+                break;
+            default:
+                // Any other value sends back to the list of modules
+                redirect('module');
+                break;
         }
     }
 }
