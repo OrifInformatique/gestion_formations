@@ -14,14 +14,7 @@
                 <tr>
                     <td>
                         <a href="<?php echo base_url('grade/edit_grade/'.$grade->id); ?>"
-                        class="<?php
-                        if($grade->grade < 4)
-                            echo 'grade_bad';
-                        elseif ($grade->grade >= 5)
-                            echo 'grade_good';
-                        else
-                            echo 'grade_neutral';
-                        ?>">
+                        class="<?php echo get_grade_class($grade->grade); ?>">
                             <?php echo $grade->grade; ?>
                         </a>
                     </td>
@@ -46,3 +39,24 @@
         color: #007bff;
     }
 </style>
+<?php
+/**
+ * Returns the correct class depending on the grade.
+ *
+ * @param integer $grade
+ *      The grade
+ * @return string
+ *      The class with the correct colors
+ */
+function get_grade_class($grade) {
+    if (empty($grade)) {
+        return '';
+    } else if ($grade < 4) {
+        return 'grade_bad';
+    } elseif ($grade >= 5) {
+        return 'grade_good';
+    } else {
+        return 'grade_neutral';
+    }
+}
+?>

@@ -34,15 +34,7 @@
                     <div class="col-md-6"><i><?php echo $module->title; ?></i></div>
                     <div class="col-md-1">
                         <b><a href="<?php echo base_url('grade/get_median/'.$apprentice_formation->id.'/'.$module->id); ?>"
-                        class="<?php
-                        if(!empty($medians[$module->id])) {
-                            if($medians[$module->id] < 4)
-                                echo 'grade_bad';
-                            elseif($medians[$module->id] >= 5)
-                                echo 'grade_good';
-                            else
-                                echo 'grade_neutral';}
-                        ?>">
+                        class="<?php echo get_grade_class($medians[$module->id]); ?>">
                             <?php echo $medians[$module->id]; ?>
                         </a></b>
                     </div>
@@ -50,14 +42,7 @@
                         <!-- Each grade is added -->
                         <?php foreach($grades[$module->id] as $grade) { ?>
                             <a href="<?php echo base_url('grade/edit_grade/'.$grade->id); ?>"
-                            class="<?php
-                            if($grade->grade < 4)
-                                echo 'grade_bad';
-                            elseif($grade->grade >= 5)
-                                echo 'grade_good';
-                            else
-                                echo 'grade_neutral';
-                            ?>">
+                            class="<?php echo get_grade_class($grade->grade); ?>">
                                 <?php echo $grade->grade; ?><!--
                             --></a>;
                         <?php } ?>
@@ -81,14 +66,7 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-6"><b><?php echo $this->lang->line('grade_median'); ?></b></div>
                 <div class="col-md-1">
-                    <b class="<?php
-                    if($group_medians[$group->id] < 4)
-                        echo 'grade_bad';
-                    elseif($group_medians[$group->id] >= 5)
-                        echo 'grade_good';
-                    else
-                        echo 'grade_neutral';
-                    ?>">
+                    <b class="<?php echo get_grade_class($group_medians[$group->id]); ?>">
                         <?php echo $group_medians[$group->id]; ?>
                     </b>
                 </div>
@@ -107,14 +85,7 @@
             <b><?php echo $this->lang->line('grade_median_end'); ?></b>
         </div>
         <div class="col-md-1">
-                <b class="<?php
-                if($final_median < 4)
-                    echo 'grade_bad';
-                elseif($final_median >= 5)
-                    echo 'grade_good';
-                else
-                    echo 'grade_neutral';
-                ?>">
+                <b class="<?php echo get_grade_class($final_median); ?>">
                     <?php echo $final_median; ?>
                 </b>
         </div>
@@ -170,7 +141,11 @@
         foreach($groups as $group) {
             echo "`group_".$group->id."_btn`,";} ?>];
 
-    // Toggles a tbody
+    /**
+     * Displays or hides the selected div
+     *
+     * @param {String} divId - the div to toggle
+     */
     function toggleDiv(divId) {
         let index = buttonDivs.indexOf(divId);
         if(index == -1) {
@@ -185,3 +160,24 @@
         docPart.hidden = hidden;
     }
 </script>
+<?php
+/**
+ * Returns the correct class depending on the grade.
+ *
+ * @param integer $grade
+ *      The grade
+ * @return string
+ *      The class with the correct colors
+ */
+function get_grade_class($grade) {
+    if (empty($grade)) {
+        return '';
+    } else if ($grade < 4) {
+        return 'grade_bad';
+    } elseif ($grade >= 5) {
+        return 'grade_good';
+    } else {
+        return 'grade_neutral';
+    }
+}
+?>

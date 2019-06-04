@@ -36,9 +36,11 @@ class Admin extends MY_Controller {
      * Shows the list of users.
      */
     public function user_index() {
-        $outputs['selected'] = 1;
-        $outputs['users'] = $this->user_model->get_all();
-        $outputs['user_types'] = $this->user_type_model->get_all();
+        $outputs = array(
+            'selected' => 1,
+            'users' => $this->user_model->get_all(),
+            'user_types' => $this->user_type_model->get_all()
+        );
         $this->display_view(['admin/common/nav','admin/users/list'], $outputs);
     }
 
@@ -48,17 +50,12 @@ class Admin extends MY_Controller {
      *      ID of the user to modify. Leave at 0 to create a new user
      */
     public function user_form($id = 0) {
+        $outputs = array(
+            'selected' => 1,
+            'user_types' => $this->user_type_model->dropdown('type'),
+        );
         if($id > 0) {
             $outputs['user'] = $this->user_model->get($id);
-        }
-
-        $outputs['selected'] = 1;
-        $user_types = $this->user_type_model->get_all();
-        $outputs['user_types'] = array();
-        if(is_array($user_types)) {
-            foreach($user_types as $user_type) {
-                $outputs['user_types'][$user_type->id] = $user_type->type;
-            }
         }
         $outputs['user_types'][0] = $this->lang->line('none');
 
@@ -109,8 +106,10 @@ class Admin extends MY_Controller {
      *      ID of the user's password to change
      */
     public function user_change_password($id) {
-        $outputs['selected'] = 1;
-        $outputs['user'] = $this->user_model->get($id);
+        $outputs = array(
+            'selected' => 1,
+            'user' => $this->user_model->get($id)
+        );
 
         $this->display_view(['admin/common/nav','admin/users/cp'], $outputs);
     }
@@ -157,10 +156,11 @@ class Admin extends MY_Controller {
      *      0 leads to the confirmation prompt, 1 deletes the user.
      */
     public function user_delete($id, $confirm = 0) {
-        $outputs['selected'] = 1;
         $this->load->model(['apprentice_model']);
-
-        $outputs['user'] = $this->user_model->get($id);
+        $outputs = array(
+            'selected' => 1,
+            'user' => $this->user_model->get($id)
+        );
 
         $teachers = $this->teacher_model->count_by('fk_user='.$id);
         $apprentices = $this->apprentice_model->count_by('fk_user='.$id);
@@ -212,7 +212,7 @@ class Admin extends MY_Controller {
      *      TRUE if the passwords are the same
      */
     public function cb_check_new_password($new_password, $new_password_conf) {
-        return !(strcmp($new_password, $new_password_conf) != 0);
+        return (strcmp($new_password, $new_password_conf) == 0);
     }
 
     /*****************************
@@ -222,9 +222,11 @@ class Admin extends MY_Controller {
      * Shows the list of user types.
      */
     public function user_type_index() {
-        $outputs['selected'] = 2;
-        $outputs['access_levels'] = array_flip(ACCESS_LVLS);
-        $outputs['user_types'] = $this->user_type_model->get_all();
+        $outputs = array(
+            'selected' => 2,
+            'access_levels' => array_flip(ACCESS_LVLS),
+            'user_types' => $this->user_type_model->get_all()
+        );
         $this->display_view(['admin/common/nav','admin/user_types/list'], $outputs);
     }
 
@@ -234,8 +236,10 @@ class Admin extends MY_Controller {
      *      ID of the user to modify. Leave at 0 to create a new user type
      */
     public function user_type_form($id = 0) {
-        $outputs['selected'] = 2;
-        $outputs['access_levels'] = array_flip(ACCESS_LVLS);
+        $outputs = array(
+            'selected' => 2,
+            'access_levels' => array_flip(ACCESS_LVLS)
+        );
 
         if($id > 0) {
             $outputs['user_type'] = $this->user_type_model->get($id);
@@ -275,13 +279,12 @@ class Admin extends MY_Controller {
      *      0 leads to the confirmation prompt, 1 deletes the user.
      */
     public function user_type_delete($id, $confirm = 0) {
-        $outputs['selected'] = 2;
-        $outputs['user_type'] = $this->user_type_model->get($id);
-
-        $outputs['deletion_allowed'] = TRUE;
-        $users = $this->user_model->get_many_by('fk_user_type='.$id);
-        if(sizeof($users) > 0)
-            $outputs['deletion_allowed'] = FALSE;
+        $users = $this->user_model->count_by('fk_user_type='.$id);
+        $outputs = array(
+            'selected' => 2,
+            'user_type' => $this->user_type_model->get($id),
+            'deletion_allowed' => ($users <= 0)
+        );
 
         switch($confirm) {
             case 0:
@@ -304,9 +307,11 @@ class Admin extends MY_Controller {
      * Shows the list of teachers
      */
     public function teacher_index() {
-        $outputs['selected'] = 3;
-        $outputs['teachers'] = $this->teacher_model->get_all();
-        $outputs['users'] = $this->user_model->get_all();
+        $outputs = array(
+            'selected' => 3,
+            'teachers' => $this->teacher_model->get_all(),
+            'users' => $this->user_model->get_all()
+        );
         $this->display_view(['admin/common/nav','admin/teachers/list'], $outputs);
     }
 
@@ -316,18 +321,11 @@ class Admin extends MY_Controller {
      *      ID of the teacher to modify
      */
     public function teacher_form($id = 0) {
-        $outputs['selected'] = 3;
-        //Puts the user names and their corresponding ids together
-        $outputs['users'] = array();
-        $users_names = $this->user_model->dropdown('User');
-        $users_names[0] = $this->lang->line('none');
-        $users_ids = $this->user_model->dropdown('id');
-        $users_ids[0] = 0;
-        for($i = 0; $i < max($users_ids)+1; $i++) {
-            if(isset($users_names[$i]) && isset($users_ids[$i])) {
-                $outputs['users'][$users_ids[$i]] = $users_names[$i];
-            }
-        }
+        $outputs = array(
+            'selected' => 3,
+            'users' => $this->user_model->dropdown('User')
+        );
+        $outputs['users'][0] = $this->lang->line('none');
 
         if($id > 0) {
             $outputs['teacher'] = $this->teacher_model->get($id);
@@ -348,7 +346,8 @@ class Admin extends MY_Controller {
         $req = array(
             'firstname' => $this->input->post('teacher_firstname'),
             'last_name' => $this->input->post('teacher_name'),
-            'fk_user' => $this->input->post('teacher_user'));
+            'fk_user' => $this->input->post('teacher_user')
+        );
 
         if($this->form_validation->run()) {
             if($teacher_id > 0) {
@@ -370,14 +369,14 @@ class Admin extends MY_Controller {
      *      0 leads to the confirmation prompt, 1 deletes the teacher
      */
     public function teacher_delete($id, $confirm = 0) {
-        $outputs['selected'] = 3;
         $this->load->model(['apprentice_model']);
-        $outputs['teacher'] = $this->teacher_model->get($id);
+        $apprentices = $this->apprentice_model->count_by('fk_teacher='.$id);
 
-        $outputs['deletion_allowed'] = TRUE;
-        $apprentices = $this->apprentice_model->get_many_by('fk_teacher='.$id);
-        if(sizeof($apprentices) > 0)
-            $outputs['deletion_allowed'] = FALSE;
+        $outputs = array(
+            'selected' => 3,
+            'teacher' => $this->teacher_model->get($id),
+            'deletion_allowed' => ($apprentices <= 0)
+        );
 
         switch($confirm) {
             case 0:

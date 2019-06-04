@@ -119,8 +119,11 @@ class Apprentice extends MY_Controller {
     public function delete($id, $confirm = 0) {
         $this->load->model('apprentice_formation_model');
 
-        $outputs['apprentice'] = $this->apprentice_model->get($id);
-        $outputs['deletion_allowed'] = ($this->apprentice_formation_model->count_by('fk_apprentice='.$id) <= 0);
+        $app_for = $this->apprentice_formation_model->count_by('fk_apprentice='.$id);
+        $outputs = array(
+            'apprentice' => $this->apprentice_model->get($id),
+            'deletion_allowed' => ($app_for <= 0)
+        );
 
         switch($confirm) {
             case 0:
@@ -144,16 +147,19 @@ class Apprentice extends MY_Controller {
     public function apprentice_formations($id) {
         $this->load->model(['apprentice_formation_model','formation_model']);
 
+        // Get other things
+        $outputs = array(
+            'linked_formations' => $this->apprentice_formation_model->get_many_by('fk_apprentice='.$id),
+            'formation_in_progress' => $this->is_formation_in_progress($id),
+            'id' => $id
+        );
+
         // Get all formations in an array
         $formations = $this->formation_model->get_all();
         $outputs['formations'] = array();
         foreach($formations as $formation) {
             $outputs['formations'][$formation->id] = $formation;
         }
-        // Get other things
-        $outputs['linked_formations'] = $this->apprentice_formation_model->get_many_by('fk_apprentice='.$id);
-        $outputs['formation_in_progress'] = $this->is_formation_in_progress($id);
-        $outputs['id'] = $id;
 
         $this->display_view('apprentice/history', $outputs);
     }
@@ -167,8 +173,10 @@ class Apprentice extends MY_Controller {
     public function link_form($id) {
         $this->load->model('formation_model');
 
-        $outputs['formations'] = $this->formation_model->dropdown('name_formation');
-        $outputs['id'] = $id;
+        $outputs = array(
+            'formations' => $this->formation_model->dropdown('name_formation'),
+            'id' => $id
+        );
 
         $this->display_view('apprentice/link', $outputs);
     }
@@ -188,9 +196,11 @@ class Apprentice extends MY_Controller {
             redirect('apprentice');
         }
 
-        $outputs['link'] = $link;
-        $outputs['formations'] = $this->formation_model->dropdown('name_formation');
-        $outputs['id'] = $link->fk_apprentice;
+        $outputs = array(
+            'link' => $link,
+            'formations' => $this->formation_model->dropdown('name_formation'),
+            'id' => $link->fk_apprentice
+        );
 
         $this->display_view('apprentice/link', $outputs);
     }
@@ -269,8 +279,11 @@ class Apprentice extends MY_Controller {
             redirect('apprentice');
         }
 
-        $outputs['deletion_allowed'] = ($this->grade_model->count_by('fk_apprentice_formation='.$id) <= 0);
-        $outputs['link'] = $link;
+        $grades = $this->grade_model->count_by('fk_apprentice_formation='.$id);
+        $outputs = array(
+            'deletion_allowed' => ($grades <= 0),
+            'link' => $link
+        );
 
         switch ($command) {
             // Display confirmation

@@ -1,14 +1,7 @@
 <div class="container">
     <h1><?php echo $this->lang->line('grade_delete'); ?></h1>
     <div class="row">
-        <?php echo $this->lang->line('grade_delete_confirm'); ?><span class="<?php
-        if ($grade->grade < 4)
-            echo 'grade_bad';
-        elseif ($grade->grade >= 5)
-            echo 'grade_good';
-        else
-            echo 'grade_neutral';
-        ?>">
+        <?php echo $this->lang->line('grade_delete_confirm'); ?><span class="<?php echo get_grade_class($grade->grade); ?>">
             <?php echo $grade->grade; ?>
         </span>?
     </div>
@@ -31,3 +24,24 @@
         margin: 0 3px;
     }
 </style>
+<?php
+/**
+ * Returns the correct class depending on the grade.
+ *
+ * @param integer $grade
+ *      The grade
+ * @return string
+ *      The class with the correct colors
+ */
+function get_grade_class($grade) {
+    if (empty($grade)) {
+        return '';
+    } else if ($grade < 4) {
+        return 'grade_bad';
+    } elseif ($grade >= 5) {
+        return 'grade_good';
+    } else {
+        return 'grade_neutral';
+    }
+}
+?>

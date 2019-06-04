@@ -50,8 +50,10 @@ class Grade extends MY_Controller {
             redirect('grade/list/'.$app_for_id);
         }
 
-        $outputs['module'] = $module;
-        $outputs['apprentice_formation'] = $app_for;
+        $outputs = array(
+            'module' => $module,
+            'apprentice_formation' => $app_for
+        );
 
         $this->display_view('grade/add', $outputs);
     }
@@ -74,9 +76,11 @@ class Grade extends MY_Controller {
             redirect('grade/list/'.$grade->fk_apprentice_formation);
         }
 
-        $outputs['grade'] = $grade;
-        $outputs['apprentice_formation'] = $app_for;
-        $outputs['module'] = $module;
+        $outputs = array(
+            'grade' => $grade,
+            'apprentice_formation' => $app_for,
+            'module' => $module
+        );
 
         $this->display_view('grade/add', $outputs);
     }
@@ -155,10 +159,12 @@ class Grade extends MY_Controller {
         if(is_null($app_for) || is_null($module)) {
             redirect('apprentice');
         }
-        $outputs['apprentice_formation'] = $app_for;
-        $outputs['module'] = $module;
-        $outputs['grades'] = $this->grade_model->order_by('semester')
-            ->get_many_by('fk_module_subject='.$mod_id.' AND fk_apprentice_formation='.$app_for_id);
+        $outputs = array(
+            'apprentice_formation' => $app_for,
+            'module' => $module,
+            'grades' => $this->grade_model->order_by('semester')
+                ->get_many_by('fk_module_subject='.$mod_id.' AND fk_apprentice_formation='.$app_for_id)
+        );
         if(sizeof($outputs['grades']) == 0) {
             redirect('grade/list/'.$app_for_id);
         }
@@ -185,18 +191,18 @@ class Grade extends MY_Controller {
             redirect('apprentice');
         }
 
-        $outputs['apprentice_formation'] = $app_for;
-        $outputs['module'] = $module;
+        $outputs = array(
+            'apprentice_formation' => $app_for,
+            'module' => $module,
+            'grade' => $grade
+        );
 
         switch ($command) {
             case 0:
-                $outputs['grade'] = $grade;
                 $this->display_view('grade/delete', $outputs);
                 break;
             case 1:
                 $this->grade_model->delete($grade_id);
-                /*$this->display_view('grade/success', $outputs);
-                break;*/
             default:
                 redirect('grade/remove_from_module/'.$app_for->id.'/'.$module->id);
         }
@@ -221,16 +227,19 @@ class Grade extends MY_Controller {
         if(is_null($app_for)) {
             redirect('grade/list/'.$app_for_id);
         }
-        $outputs['apprentice_formation'] = $app_for;
-        $outputs['module'] = $module;
 
         // Prepare the grades
         $grades = $this->grade_model->order_by('semester')->get_many_by('fk_module_subject='.$module->id);
-        $outputs['grades'] = array();
-
         // Calculate semesters based on the amount of years
         $semesters = ($this->formation_model->get($app_for->fk_formation))->duration*2;
-        $outputs['semesters'] = $semesters;
+
+        $outputs = array(
+            'apprentice_formation' => $app_for,
+            'module' => $module,
+            'grades' => array(),
+            'medians' => array(),
+            'semesters' => $semesters
+        );
         for($i = 1; $i <= $semesters; $i++) {
             $total = 0;
             $count = 0;
@@ -272,10 +281,14 @@ class Grade extends MY_Controller {
         }
 
         // Prepare the different variables that may be modified / empty at return
-        $results = array();
-        $results['group_medians'] = array();
-        $results['medians'] = array();
-        $results['groups'] = array();
+        $results = array(
+            'group_medians' => array(),
+            'medians' => array(),
+            'groups' => array(),
+            'modules' => array(),
+            'grades' => array(),
+            'apprentice_formation' => $app_for
+        );
         $modules_groups_g = array();
         $medians_g = array();
         // Get all linked groups

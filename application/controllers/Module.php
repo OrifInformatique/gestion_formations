@@ -26,11 +26,12 @@ class Module extends MY_Controller {
      * Displays the list of modules
      */
     public function index(){
-        $outputs['groups'] = $this->formation_module_group_model->get_ordered();
-        $outputs['groups_tree'] = $this->formation_module_group_model->get_tree();
-        if(is_null($outputs['groups_tree']))
-            $outputs['groups_tree'] = array();
-        $outputs['modules'] = $this->module_subject_model->get_ordered('number');
+        $groups_tree = $this->formation_module_group_model->get_tree();
+        $outputs = array(
+            'groups' => $this->formation_module_group_model->get_ordered(),
+            'groups_tree' => (is_null($groups_tree) ? $groups_tree : array()),
+            'modules' => $this->module_subject_model->get_ordered('number')
+        );
         $this->display_view('module/list', $outputs);
     }
 
@@ -86,12 +87,14 @@ class Module extends MY_Controller {
      */
     public function delete($id, $confirm = 0) {
         $this->load->model(['module_group_model','grade_model']);
-        $outputs['module'] = $this->module_subject_model->get($id);
-        $outputs['deletion_allowed'] = TRUE;
-        // Check that there is no module group linked to the module
+        // Checks that there is no module group linked to the module
         $modules = $this->module_group_model->count_by('fk_module='.$id);
         $grades = $this->grade_model->count_by('fk_module_subject='.$id);
-        $outputs['deletion_allowed'] = ($modules + $grades <= 0);
+
+        $outputs = array(
+            'module' => $this->module_subject_model->get($id),
+            'deletion_allowed' => ($modules + $grades <= 0)
+        );
 
         switch($confirm) {
             case 0:

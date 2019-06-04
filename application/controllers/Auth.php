@@ -27,8 +27,10 @@ class Auth extends MY_Controller {
      *                                      2 = field(s) empty
      */
     public function index($error = 0){
-        $outputs['error'] = $error;
-        $outputs['title'] = $this->lang->line('page_login');
+        $outputs = array(
+            'error' => $error,
+            'title' => $this->lang->line('page_login')
+        );
         $this->display_view("login/login", $outputs);
     }
 
@@ -75,18 +77,5 @@ class Auth extends MY_Controller {
     public function logout(){
         session_destroy();
         redirect('Auth');
-    }
-
-    /**
-     * Checks if the username is unique.<br>
-     * Unused because I forgot there was a is_unique filter
-     * @param string $username
-     *      Username to check
-     * @return boolean
-     *      TRUE if the username is unique
-     */
-    private function is_username_unique($username) {
-        $users = $this->user_model->where('user='.$usermame);
-        return (sizeof($users) == 0);
     }
 }

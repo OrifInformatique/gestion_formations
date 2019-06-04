@@ -196,3 +196,4 @@ $lang['redirect_warn_start']            = 'Vous allez être redirigé dans';
 $lang['redirect_warn_end']              = 'secondes';
 $lang['years']                          = 'ans';
 $lang['out_of']                         = 'sur';
+$lang['page_login']                     = 'Connexion';

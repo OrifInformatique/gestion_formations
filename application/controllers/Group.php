@@ -27,8 +27,10 @@ class Group extends MY_Controller {
      */
     public function index(){
         $this->load->model('formation_model');
-        $outputs['groups'] = $this->formation_module_group_model->get_ordered();
-        $outputs['formations'] = $this->formation_model->dropdown('name_formation');
+        $outputs = array(
+            'groups' => $this->formation_module_group_model->get_ordered(),
+            'formations' => $this->formation_model->dropdown('name_formation')
+        );
         $this->display_view('group/list', $outputs);
     }
 
@@ -39,13 +41,16 @@ class Group extends MY_Controller {
      */
     public function form($id = 0){
         $this->load->model(['module_group_model','module_subject_model','formation_model']);
-        $outputs = array();
+        $outputs = array(
+            'modules' => $this->module_subject_model->dropdown('title'),
+            'm' => array(),
+            'formations' => $this->formation_model->dropdown('name_formation'),
+            'groups' => array()
+        );
 
         if($id > 0){
             $outputs["group"] = $this->formation_module_group_model->get($id);
         }
-        $outputs['modules'] = $this->module_subject_model->dropdown('title');
-        $outputs['m'] = [];
         // Obtain linked modules
         $links = $this->module_group_model->get_many_by('fk_formation_modules_group='.$id);
         foreach($links as $link) {
@@ -56,12 +61,10 @@ class Group extends MY_Controller {
             $outputs['m'] = [];
         }
 
-        $outputs['formations'] = $this->formation_model->dropdown('name_formation');
-
         $groups = $this->formation_module_group_model->get_all();
         if($id != 0) {
+            // Important to prevent a group from being in itself.
             $groups = $this->recursive_remove($groups, $id);
-            /* Important to prevent a group from being in itself.*/
         }
         $group_names[0] = $this->lang->line('none');
         $group_ids[0] = 0;

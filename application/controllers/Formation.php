@@ -25,7 +25,9 @@ class Formation extends MY_Controller {
      * Shows the index with all the groups
      */
     public function index(){
-        $outputs['formations'] = $this->formation_model->get_ordered();
+        $outputs = array(
+            'formations' => $this->formation_model->get_ordered()
+        );
         $this->display_view('formation/list', $outputs);
     }
 
@@ -38,11 +40,13 @@ class Formation extends MY_Controller {
         $this->load->model(['module_subject_model','apprentice_model','apprentice_formation_model']);
         $outputs = array();
 
+        $outputs = array(
+            'all_modules' => $this->module_subject_model->dropdown('title')
+        );
         if($id > 0){
             $outputs["formation"] = $this->formation_model->get($id);
             $outputs["groups"] = $this->formation_module_group_model->get_tree($id, true);
         }
-        $outputs["all_modules"] = $this->module_subject_model->dropdown('title');
 
         $this->display_view('formation/add', $outputs);
     }
@@ -82,11 +86,13 @@ class Formation extends MY_Controller {
      */
     public function delete($id, $confirm = 0) {
         $this->load->model('apprentice_formation_model');
-        $outputs['formation'] = $this->formation_model->get($id);
-
         $modules = $this->formation_module_group_model->count_by('fk_formation='.$id);
         $apprentices = $this->apprentice_formation_model->count_by('fk_formation='.$id);
-        $outputs['deletion_allowed'] = ($apprentices + $modules <= 0);
+
+        $outputs = array(
+            'formation' => $this->formation_model->get($id),
+            'deletion_allowed' => ($apprentices + $modules <= 0)
+        );
 
         switch($confirm) {
             case 0:

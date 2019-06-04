@@ -15,29 +15,14 @@
                 <tr>
                     <td><b><?php echo $this->lang->line('grade_semester').' '.$i; ?></b></td>
                     <td>
-                        <b class="<?php
-                        if(!empty($medians[$i])) {
-                            if($medians[$i] < 4)
-                                echo 'grade_bad';
-                            elseif($medians[$i] >= 5)
-                                echo 'grade_good';
-                            else
-                                echo 'grade_neutral';
-                        } ?>">
+                        <b class="<?php echo get_grade_class($medians[$i]); ?>">
                             <?php echo $medians[$i]; ?>
                         </b>
                     </td>
                     <td>
                         <?php foreach($grades[$i] as $grade) { ?>
                             <a href="<?php echo base_url('grade/edit_grade/'.$grade->id); ?>"
-                            class="<?php
-                            if($grade->grade < 4)
-                                echo 'grade_bad';
-                            elseif($grade->grade >= 5)
-                                echo 'grade_good';
-                            else
-                                echo 'grade_neutral';
-                            ?>">
+                            class="<?php echo get_grade_class($grade->grade); ?>">
                                 <?php echo $grade->grade;
                             ?></a>;
                         <?php } ?>
@@ -47,15 +32,7 @@
             <tr>
                 <td><b><?php echo $this->lang->line('grade_median_end'); ?></b></td>
                 <td>
-                    <b class="<?php
-                        if(!empty($medians[0])) {
-                            if($medians[0] < 4)
-                                echo 'grade_bad';
-                            elseif($medians[0] >= 5)
-                                echo 'grade_good';
-                            else
-                                echo 'grade_neutral';
-                        } ?>">
+                    <b class="<?php echo get_grade_class($medians[0]); ?>">
                         <?php echo $medians[0]; ?>
                     </b>
                 </td>
@@ -77,3 +54,24 @@
         color: #007bff;
     }
 </style>
+<?php
+/**
+ * Returns the correct class depending on the grade.
+ *
+ * @param integer $grade
+ *      The grade
+ * @return string
+ *      The class with the correct colors
+ */
+function get_grade_class($grade) {
+    if (empty($grade)) {
+        return '';
+    } else if ($grade < 4) {
+        return 'grade_bad';
+    } elseif ($grade >= 5) {
+        return 'grade_good';
+    } else {
+        return 'grade_neutral';
+    }
+}
+?>
