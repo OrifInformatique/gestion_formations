@@ -34,7 +34,7 @@ $update = isset($grade);
                 <a name="cancel" class="btn btn-danger" href="<?=base_url('/grade/list/'.$apprentice_formation->id)?>"><?=$this->lang->line('cancel')?></a>
                 <?php
                     echo form_submit('save', $this->lang->line('save'), 'class="btn btn-success"');
-                    //echo form_reset('reset', $this->lang->line('btn_reset'), 'class="btn btn-warning"');
+                    echo form_reset('reset', $this->lang->line('btn_reset'), 'class="btn btn-warning"');
                 ?>
             </div>
         </div>
@@ -42,7 +42,8 @@ $update = isset($grade);
         <!-- ERROR MESSAGES -->
         <?php
         if (!empty(validation_errors())) {
-            echo '<div class="alert alert-danger">'.validation_errors().'</div>';}
+            echo '<div class="alert alert-danger">'.validation_errors().'</div>';
+        }
         ?>
 
         <div class="form-group">

@@ -41,11 +41,9 @@ class Module extends MY_Controller {
      *      The id of the module to modify (0 for a new module)
      */
     public function form($id = 0){
-        $outputs = array();
-
-        if($id > 0){
-            $outputs["module"] = $this->module_subject_model->get($id);
-        }
+        $outputs = array(
+            'module' => ($id > 0 ? $this->module_subject_model->get($id) : NULL),
+        );
 
         $this->display_view('module/add', $outputs);
     }

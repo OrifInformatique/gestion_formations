@@ -53,10 +53,8 @@ class Admin extends MY_Controller {
         $outputs = array(
             'selected' => 1,
             'user_types' => $this->user_type_model->dropdown('type'),
+            'user' => ($id > 0 ? $this->user_model->get($id) : NULL),
         );
-        if($id > 0) {
-            $outputs['user'] = $this->user_model->get($id);
-        }
         $outputs['user_types'][0] = $this->lang->line('none');
 
         $this->display_view(['admin/common/nav','admin/users/form'], $outputs);
@@ -70,7 +68,8 @@ class Admin extends MY_Controller {
         $update = (!is_null($user_id));
 
         $req = array( 'user' => $this->input->post('user_username'),
-            'fk_user_type' => $this->input->post('user_type') );
+            'fk_user_type' => $this->input->post('user_type')
+        );
 
         // Checks that the inputs don't mess the program
         $this->form_validation->set_rules('user_username', $this->lang->line('user_username'), array(
@@ -238,12 +237,9 @@ class Admin extends MY_Controller {
     public function user_type_form($id = 0) {
         $outputs = array(
             'selected' => 2,
-            'access_levels' => array_flip(ACCESS_LVLS)
+            'access_levels' => array_flip(ACCESS_LVLS),
+            'user_type' => ($id > 0 ? $this->user_type_model->get($id) : NULL),
         );
-
-        if($id > 0) {
-            $outputs['user_type'] = $this->user_type_model->get($id);
-        }
 
         $this->display_view(['admin/common/nav','admin/user_types/form'], $outputs);
     }
@@ -323,13 +319,10 @@ class Admin extends MY_Controller {
     public function teacher_form($id = 0) {
         $outputs = array(
             'selected' => 3,
-            'users' => $this->user_model->dropdown('User')
+            'users' => $this->user_model->dropdown('User'),
+            'teacher' => ($id > 0 ? $this->teacher_model->get($id) : NULL),
         );
         $outputs['users'][0] = $this->lang->line('none');
-
-        if($id > 0) {
-            $outputs['teacher'] = $this->teacher_model->get($id);
-        }
 
         $this->display_view(['admin/common/nav','admin/teachers/form'], $outputs);
     }

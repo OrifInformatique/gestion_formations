@@ -6,10 +6,11 @@
  * @link        https://github.com/OrifInformatique/gestion_questionnaires
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
  */
+$update = isset($module);
 ?>
 
 <div class="container">
-    <h1 class="title-section"><?php if(isset($module)) {echo $this->lang->line('module_modify'); $update = true;} else {echo $this->lang->line('module_new'); $update = false;} ?></h1>
+    <h1 class="title-section"><?php echo ($update ? $this->lang->line('module_modify') : $this->lang->line('module_new')); ?></h1>
     <?php
     $attributes = array("id" => "addModuleForm",
                         "name" => "addModuleForm");
@@ -21,7 +22,7 @@
                 <a name="cancel" class="btn btn-danger" href="<?=base_url('/module')?>"><?=$this->lang->line('cancel')?></a>
                 <?php
                     echo form_submit('save', $this->lang->line('save'), 'class="btn btn-success"'); 
-                    //echo form_reset('reset', $this->lang->line('btn_reset'), 'class="btn btn-danger"');
+                    echo form_reset('reset', $this->lang->line('btn_reset'), 'class="btn btn-warning"');
                 ?>
             </div>
         </div>
@@ -29,7 +30,8 @@
         <!-- ERROR MESSAGES -->
         <?php
         if (!empty(validation_errors())) {
-            echo '<div class="alert alert-danger">'.validation_errors().'</div>';}
+            echo '<div class="alert alert-danger">'.validation_errors().'</div>';
+        }
         ?>
 
         <!-- MODULE FIELDS -->

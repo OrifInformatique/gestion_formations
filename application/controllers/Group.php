@@ -45,12 +45,10 @@ class Group extends MY_Controller {
             'modules' => $this->module_subject_model->dropdown('title'),
             'm' => array(),
             'formations' => $this->formation_model->dropdown('name_formation'),
-            'groups' => array()
+            'groups' => array(),
+            'group' => ($id > 0 ? $this->formation_module_group_model->get($id) : NULL),
         );
 
-        if($id > 0){
-            $outputs["group"] = $this->formation_module_group_model->get($id);
-        }
         // Obtain linked modules
         $links = $this->module_group_model->get_many_by('fk_formation_modules_group='.$id);
         foreach($links as $link) {
@@ -121,7 +119,7 @@ class Group extends MY_Controller {
     public function add_module_duallistbox($id) {
         $this->load->model('module_group_model');
         $modules = $this->input->post('m');
-        // Make sure it's not empty
+        // Make sure it's not null
         if(is_null($modules)) {
             $modules = array();
         }
@@ -177,8 +175,10 @@ class Group extends MY_Controller {
 
         //Verifies that the group does not have any child upon deletion
         $groups = $this->formation_module_group_model->count_by('fk_parent_group='.$id);
-        $outputs['deletion_allowed'] = ($groups <= 0);
-        $outputs['group'] = $this->formation_module_group_model->get($id);
+        $outputs = array(
+            'deletion_allowed' => ($groups <= 0),
+            'group' => $this->formation_module_group_model->get($id),
+        );
 
         switch($confirm) {
             case 0:

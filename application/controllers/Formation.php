@@ -41,7 +41,7 @@ class Formation extends MY_Controller {
         $outputs = array();
 
         $outputs = array(
-            'all_modules' => $this->module_subject_model->dropdown('title')
+            'all_modules' => $this->module_subject_model->dropdown('title'),
         );
         if($id > 0){
             $outputs["formation"] = $this->formation_model->get($id);

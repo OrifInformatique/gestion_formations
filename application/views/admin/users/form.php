@@ -28,7 +28,7 @@
                 <a name="cancel" class="btn btn-danger" href="<?=base_url('/admin/user_index')?>"><?=$this->lang->line('cancel')?></a>
                 <?php
                     echo form_submit('save', $this->lang->line('save'), 'class="btn btn-success"'); 
-                    //echo form_reset('reset', $this->lang->line('btn_reset'), 'class="btn btn-danger"');
+                    echo form_reset('reset', $this->lang->line('btn_reset'), 'class="btn btn-warning"');
                 ?>
             </div>
         </div>

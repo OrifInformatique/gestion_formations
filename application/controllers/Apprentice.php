@@ -50,7 +50,7 @@ class Apprentice extends MY_Controller {
         }
         $outputs['users'] = $this->user_model->dropdown('user');
 
-        $this->display_view("apprentice/form", $outputs);
+        $this->display_view("apprentice/add", $outputs);
     }
 
     /**
@@ -90,7 +90,7 @@ class Apprentice extends MY_Controller {
                 $outputs["apprentice"] = $this->apprentice_model->get($id);
             }
             //redirect('apprentice/form/'.$this->input->post('id'));
-            $this->display_view("apprentice/form", $outputs);
+            $this->display_view("apprentice/add", $outputs);
         }
     }
 
@@ -151,12 +151,12 @@ class Apprentice extends MY_Controller {
         $outputs = array(
             'linked_formations' => $this->apprentice_formation_model->get_many_by('fk_apprentice='.$id),
             'formation_in_progress' => $this->is_formation_in_progress($id),
-            'id' => $id
+            'id' => $id,
+            'formations' => array(),
         );
 
         // Get all formations in an array
         $formations = $this->formation_model->get_all();
-        $outputs['formations'] = array();
         foreach($formations as $formation) {
             $outputs['formations'][$formation->id] = $formation;
         }
@@ -301,12 +301,12 @@ class Apprentice extends MY_Controller {
     }
 
     /**
-     * Returns all formations, teachers and users
+     * Returns all teachers, in an array by id
      * @return array
-     *      All formations, teachers and users in an array
+     *      All teachers in an array
      */
     private function get_parents() {
-        $this->load->model(['teacher_model','user_model']);
+        $this->load->model('teacher_model');
 
         //Puts the teacher first names, last names and their corresponding ids together
         $teachers_names = $this->teacher_model->dropdown('firstname');
