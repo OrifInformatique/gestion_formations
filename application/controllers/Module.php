@@ -63,16 +63,18 @@ class Module extends MY_Controller {
             'description' => $this->input->post('description_module')
         );
 
+        $module_id = $this->input->post('id');
+
         if($this->form_validation->run()){
-            if($this->input->post('id') > 0){
-                $this->module_subject_model->update($this->input->post('id'), $req);
+            if($module_id > 0){
+                $this->module_subject_model->update($module_id, $req);
             } else {
                 $this->module_subject_model->insert($req);
             }
             // Sends the user back to the index
             redirect('module');
         } else {
-            $this->form($this->input->post('id'));
+            $this->form($module_id);
         }
     }
 

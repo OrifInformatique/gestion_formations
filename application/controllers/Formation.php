@@ -40,9 +40,7 @@ class Formation extends MY_Controller {
         $this->load->model(['module_subject_model','apprentice_model','apprentice_formation_model']);
         $outputs = array();
 
-        $outputs = array(
-            'all_modules' => $this->module_subject_model->dropdown('title'),
-        );
+        $outputs['all_modules'] = $this->module_subject_model->dropdown('title');
         if($id > 0){
             $outputs["formation"] = $this->formation_model->get($id);
             $outputs["groups"] = $this->formation_module_group_model->get_tree($id, true);

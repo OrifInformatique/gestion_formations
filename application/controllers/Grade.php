@@ -89,41 +89,40 @@ class Grade extends MY_Controller {
      * Validates the inputs and updates/adds the entry to the database
      */
     public function grade_validation() {
+        $this->load->model('formation_model');
         $grade_id = $this->input->post('grade_id');
         $app_for_id = $this->input->post('app_for_id');
         $mod_id = $this->input->post('mod_id');
-        $update = FALSE;
-        $redirect = 'apprentice';
 
-        if(is_null($app_for_id) && is_null($mod_id)) {
+        if(is_null($app_for_id) || is_null($mod_id)) {
             redirect('apprentice');
+        }
+
+        if(!is_null($grade_id)) {
+            $update = TRUE;
+            $redirect = 'grade/edit_grade/'.$grade_id;
         } else {
+            $update = FALSE;
             $redirect = 'grade/add_to_module/'.$app_for_id.'/'.$mod_id;
         }
-        if(!is_null($grade_id)) {
-            if(is_null($this->grade_model->get($grade_id))) {
-                redirect('apprentice');
-            }
+        $app_for = $this->apprentice_formation_model->get($app_for_id);
+        $max_semester = $this->formation_model->get($app_for->fk_formation)->duration * 2 || 1;
+        $grade_date_test = $this->input->post('grade_date_test');
 
-            $redirect = 'grade/edit_grade/'.$grade_id;
-            $update = TRUE;
-        }
-
-        $this->form_validation->set_rules('grade_grade', $this->lang->line('grade_grade'), 'required|greater_than[-0.1]|less_than[6.1]|numeric');
+        $this->form_validation->set_rules('grade_grade', $this->lang->line('grade_grade'),
+            'required|greater_than_equal_to[0]|less_than_equal_to[6]|numeric');
         $this->form_validation->set_rules('grade_date_test', $this->lang->line('grade_date_test'), 'required|callback_cb_check_if_past');
-        $this->form_validation->set_rules('grade_date_inscription', $this->lang->line('grade_date_inscription'), array(
-            'required',
-            'callback_cb_check_if_past',
-            'callback_cb_comp_dates['.$this->input->post('grade_date_test').']'
-        ));
+        $this->form_validation->set_rules('grade_date_inscription', $this->lang->line('grade_date_inscription'),
+            'required|callback_cb_check_if_past|callback_cb_comp_dates['.$grade_date_test.']');
         $this->form_validation->set_rules('grade_weight', $this->lang->line('grade_weight'), 'required|greater_than[0]|integer');
-        $this->form_validation->set_rules('grade_semester', $this->lang->line('grade_semester'), 'required|greater_than[0]|integer|callback_cb_semester_before_end['.$app_for_id.']');
+        $this->form_validation->set_rules('grade_semester', $this->lang->line('grade_semester'),
+            'required|greater_than[0]|integer|callback_cb_semester_before_end['.$app_for_id.']|less_than_equal_to['.$max_semester.']');
 
         $req = array(
             "grade" => $this->input->post('grade_grade'),
             "fk_apprentice_formation" => $app_for_id,
             "fk_module_subject" => $mod_id,
-            "date_test" => $this->input->post('grade_date_test'),
+            "date_test" => $grade_date_test,
             "date_inscription" => $this->input->post('grade_date_inscription'),
             "weight" => $this->input->post('grade_weight'),
             "semester" => $this->input->post('grade_semester')
@@ -241,8 +240,7 @@ class Grade extends MY_Controller {
             'semesters' => $semesters
         );
         for($i = 1; $i <= $semesters; $i++) {
-            $total = 0;
-            $count = 0;
+            $total = $count = 0;
             $grades = $this->grade_model->get_many_by('fk_module_subject='.$module->id.' AND semester='.$i);
             foreach($grades as $grade) {
                 $total += $grade->grade * $grade->weight;
@@ -252,8 +250,7 @@ class Grade extends MY_Controller {
             $outputs['medians'][$i] = ($total == 0 ? '' : round($total/$count,1));
         }
         // Calculate median of medians
-        $total = 0;
-        $count = 0;
+        $total = $count = 0;
         foreach($outputs['medians'] as $median) {
             if(!empty($median)) {
                 $total += $median;
@@ -310,25 +307,23 @@ class Grade extends MY_Controller {
                 $grades = $this->grade_model->order_by('semester')->get_many_by('fk_module_subject='.$module->id);
                 // Put it in the 'grades' result and sort by module
                 // It's easier for displaying, as a module can be twice in the same formation
-                // It shouldn't be, but it can still be
+                // It shouldn't, but it can
                 $results['grades'][$module->id] = $grades;
 
                 // Calculate medians and save them with the module
                 $medians = array();
-                $semesters = ($this->formation_model->get($app_for->fk_formation))->duration*2;
+                $semesters = ($this->formation_model->get($app_for->fk_formation))->duration * 2;
                 for($i = 1; $i <= $semesters; $i++) {
-                    $total = 0;
-                    $count = 0;
+                    $total = $count = 0;
                     $grades = $this->grade_model->get_many_by('fk_module_subject='.$module->id.' AND semester='.$i);
                     foreach($grades as $grade) {
                         $total += $grade->grade * $grade->weight;
                         $count += $grade->weight;
                     }
-                    $medians[$i] = ($count > 0 ? $total/$count : 0);
+                    $medians[$i] = ($count > 0 ? $total / $count : 0);
                 }
                 // Calculate final module median
-                $total = 0;
-                $count = 0;
+                $total = $count = 0;
                 foreach($medians as $median) {
                     if($median == 0) continue;
                     $total += $median;
@@ -350,8 +345,7 @@ class Grade extends MY_Controller {
         // Calculate group medians
         foreach($medians_g as $medians) {
             $index = array_search($medians, $medians_g);
-            $total = 0;
-            $count = 0;
+            $total = $count = 0;
             foreach($medians as $median) {
                 if(empty($median)) continue;
                 $total += $median;
@@ -360,8 +354,7 @@ class Grade extends MY_Controller {
             $results['group_medians'][$index] = ($count > 0 ? round($total / $count, 1) : '');
         }
         // Calculate final median
-        $total = 0;
-        $count = 0;
+        $total = $count = 0;
         foreach($results['group_medians'] as $median) {
             if(empty($median)) continue;
             $group_id = array_search($median, $results['group_medians']);

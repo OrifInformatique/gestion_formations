@@ -25,15 +25,17 @@ class Apprentice extends MY_Controller {
      * Shows the list of apprentices
      */
     public function index() {
-        $this->load->model('formation_model');
-        $outputs = $this->get_parents();
-        $outputs["apprentices"] = $this->apprentice_model->with("C_App_Form")->get_ordered();
+        $this->load->model(['formation_model','user_model']);
+        $outputs = array(
+            "teachers" => $this->get_teachers(),
+            "apprentices" => $this->apprentice_model->with("C_App_Form")->get_ordered(),
+            "formations" => array(),
+            "users" => $this->user_model->dropdown('user')
+        );
         $formations = $this->formation_model->get_all();
-        $outputs['formations'] = array();
         foreach($formations as $formation) {
             $outputs['formations'][$formation->id] = $formation;
         }
-        $outputs['users'] = $this->user_model->dropdown('user');
         $this->display_view("apprentice/list", $outputs);
     }
 
@@ -43,14 +45,14 @@ class Apprentice extends MY_Controller {
      *      The apprentice to modify (0 for new)
      */
     public function form($id = 0) {
-        $outputs = $this->get_parents();
+        $this->load->model('user_model');
+        $outputs = array(
+            "teachers" => $this->get_teachers(),
+            "apprentice" => ($id > 0 ? $this->apprentice_model->get($id) : NULL),
+            "users" => $this->user_model->dropdown('user')
+        );
 
-        if($id > 0) {
-            $outputs["apprentice"] = $this->apprentice_model->get($id);
-        }
-        $outputs['users'] = $this->user_model->dropdown('user');
-
-        $this->display_view("apprentice/add", $outputs);
+        $this->display_view("apprentice/form", $outputs);
     }
 
     /**
@@ -64,11 +66,6 @@ class Apprentice extends MY_Controller {
             'fk_teacher' => $this->input->post('teacher'),
             'fk_user' => $this->input->post('user')
         );
-
-        //Verification that the date is not in the future
-        $current_date = strtotime(date("d-m-Y"));
-        $input_date = strtotime($req["date_birth"]);
-        $problem = ($current_date >= $input_date);
 
         $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
         $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
@@ -84,13 +81,12 @@ class Apprentice extends MY_Controller {
             }
             redirect('apprentice');
         } else {
-            $outputs = $this->get_parents();
-
-            if($this->input->post('id') > 0) {
-                $outputs["apprentice"] = $this->apprentice_model->get($id);
-            }
+            $outputs = array(
+                "teachers" => $this->get_teachers(),
+                "apprentice" => ($this->input->post('id') > 0 ? $this->apprentice_model->get($id) : NULL)
+            );
             //redirect('apprentice/form/'.$this->input->post('id'));
-            $this->display_view("apprentice/add", $outputs);
+            $this->display_view("apprentice/form", $outputs);
         }
     }
 
@@ -307,7 +303,7 @@ class Apprentice extends MY_Controller {
      * @return array
      *      All teachers in an array
      */
-    private function get_parents() {
+    private function get_teachers() {
         $this->load->model('teacher_model');
 
         //Puts the teacher first names, last names and their corresponding ids together
@@ -322,9 +318,9 @@ class Apprentice extends MY_Controller {
         $teachers_names[0] = $this->lang->line('none');
         $msps_ids = $this->teacher_model->dropdown('id');
         $msps_ids[0] = 0;
-        $results["teachers"] = array();
+        $results = array();
         foreach($msps_ids as $msp_id) {
-            $results['teachers'][$msp_id] = $teachers_names[$msp_id];
+            $results[$msp_id] = $teachers_names[$msp_id];
         }
 
         return $results;

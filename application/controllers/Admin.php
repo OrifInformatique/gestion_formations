@@ -29,6 +29,21 @@ class Admin extends MY_Controller {
         $this->display_view(['admin/common/nav','admin/list'], $outputs);
     }
 
+    /**
+     * Modified version of display view
+     * Mainly for not having to add 'admin/common/nav' to every call
+     */
+    public function display_view($view_parts, $data = NULL) {
+        $forward = ['admin/common/nav'];
+        if(!is_array($view_parts)) {
+            $forward[] = $view_parts;
+        } else {
+            $forward += $view_parts;
+        }
+
+        parent::display_view($forward, $data);
+    }
+
     /************************
      * User-related functions
      ************************/
@@ -41,7 +56,7 @@ class Admin extends MY_Controller {
             'users' => $this->user_model->get_all(),
             'user_types' => $this->user_type_model->get_all()
         );
-        $this->display_view(['admin/common/nav','admin/users/list'], $outputs);
+        $this->display_view('admin/users/list', $outputs);
     }
 
     /**
@@ -58,7 +73,7 @@ class Admin extends MY_Controller {
             'user' => ($id > 0 ? $this->user_model->get($id) : NULL),
         );
 
-        $this->display_view(['admin/common/nav','admin/users/form'], $outputs);
+        $this->display_view('admin/users/form', $outputs);
     }
 
     /**
@@ -112,7 +127,7 @@ class Admin extends MY_Controller {
             'user' => $this->user_model->get($id)
         );
 
-        $this->display_view(['admin/common/nav','admin/users/cp'], $outputs);
+        $this->display_view('admin/users/cp', $outputs);
     }
 
     /**
@@ -168,12 +183,12 @@ class Admin extends MY_Controller {
 
         switch($confirm) {
             case 0:
-                $this->display_view(['admin/common/nav','admin/users/delete'], $outputs);
+                $this->display_view('admin/users/delete', $outputs);
                 break;
             case 1:
             if(!$deletion_allowed) redirect('admin/user_index');
                 $this->user_model->delete($id);
-                $this->display_view(['admin/common/nav','admin/users/success'], ['selected' => 1]);
+                $this->display_view('admin/users/success', ['selected' => 1]);
                 break;
             default:
                 redirect('admin/user_index');
@@ -227,7 +242,7 @@ class Admin extends MY_Controller {
             'access_levels' => array_flip(ACCESS_LVLS),
             'user_types' => $this->user_type_model->get_all()
         );
-        $this->display_view(['admin/common/nav','admin/user_types/list'], $outputs);
+        $this->display_view('admin/user_types/list', $outputs);
     }
 
     /**
@@ -242,7 +257,7 @@ class Admin extends MY_Controller {
             'user_type' => ($id > 0 ? $this->user_type_model->get($id) : NULL),
         );
 
-        $this->display_view(['admin/common/nav','admin/user_types/form'], $outputs);
+        $this->display_view('admin/user_types/form', $outputs);
     }
 
     /**
@@ -287,12 +302,12 @@ class Admin extends MY_Controller {
 
         switch($confirm) {
             case 0:
-                $this->display_view(['admin/common/nav','admin/user_types/delete'], $outputs);
+                $this->display_view('admin/user_types/delete', $outputs);
                 break;
             case 1:
                 if(!$deletion_allowed) redirect('admin/user_type_index');
                 $this->user_type_model->delete($id);
-                $this->display_view(['admin/common/nav','admin/user_types/success'], ['selected' => 2]);
+                $this->display_view('admin/user_types/success', ['selected' => 2]);
                 break;
             default:
                 redirect('admin/user_type_index');
@@ -312,7 +327,7 @@ class Admin extends MY_Controller {
             'teachers' => $this->teacher_model->get_all(),
             'users' => $this->user_model->get_all()
         );
-        $this->display_view(['admin/common/nav','admin/teachers/list'], $outputs);
+        $this->display_view('admin/teachers/list', $outputs);
     }
 
     /**
@@ -329,7 +344,7 @@ class Admin extends MY_Controller {
             'teacher' => ($id > 0 ? $this->teacher_model->get($id) : NULL),
         );
 
-        $this->display_view(['admin/common/nav','admin/teachers/form'], $outputs);
+        $this->display_view('admin/teachers/form', $outputs);
     }
 
     /**
@@ -379,12 +394,12 @@ class Admin extends MY_Controller {
 
         switch($confirm) {
             case 0:
-                $this->display_view(['admin/common/nav','admin/teachers/delete'], $outputs);
+                $this->display_view('admin/teachers/delete', $outputs);
                 break;
             case 1:
                 if(!$deletion_allowed) redirect('admin/teacher_index');
                 $this->teacher_model->delete($id);
-                $this->display_view(['admin/common/nav','admin/teachers/success'], ['selected' => 3]);
+                $this->display_view('admin/teachers/success', ['selected' => 3]);
                 break;
             default:
                 redirect('admin/teacher_index');

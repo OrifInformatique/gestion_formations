@@ -64,13 +64,12 @@ class Group extends MY_Controller {
             // Important to prevent a group from being in itself.
             $groups = $this->recursive_remove($groups, $id);
         }
-        $group_names[0] = $this->lang->line('none');
-        $group_ids[0] = 0;
         foreach($groups as $group) {
             array_push($group_names, $group->name_group);
             array_push($group_ids, $group->id);
         }
         $outputs['groups'] = array_combine($group_ids, $group_names);
+        $outputs['groups'][0] = $this->lang->line('none');
 
         $this->display_view('group/add', $outputs);
     }
@@ -104,8 +103,8 @@ class Group extends MY_Controller {
             $this->add_module_duallistbox($id);
             redirect('group');
         } else {
+            $outputs["groups"] = $this->formation_module_group_model->dropdown('name_group');
             $outputs["groups"][0] = $this->lang->line('none');
-            $outputs["groups"] = array_merge($outputs["groups"], $this->formation_module_group_model->dropdown('name_group'));
             $this->form($this->input->post('id'));
         }
     }
