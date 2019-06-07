@@ -88,10 +88,11 @@ class Module extends MY_Controller {
         // Checks that there is no module group linked to the module
         $modules = $this->module_group_model->count_by('fk_module='.$id);
         $grades = $this->grade_model->count_by('fk_module_subject='.$id);
+        $deletion_allowed = ($modules + $grades <= 0);
 
         $outputs = array(
             'module' => $this->module_subject_model->get($id),
-            'deletion_allowed' => ($modules + $grades <= 0)
+            'deletion_allowed' => $deletion_allowed
         );
 
         switch($confirm) {
@@ -101,6 +102,7 @@ class Module extends MY_Controller {
                 break;
             case 1:
                 // Deletes the module and sends the user to a success view
+                if(!$deletion_allowed) redirect('module');
                 $this->module_subject_model->delete($id);
                 $this->display_view('module/success');
                 break;

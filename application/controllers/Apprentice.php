@@ -118,11 +118,12 @@ class Apprentice extends MY_Controller {
      */
     public function delete($id, $confirm = 0) {
         $this->load->model('apprentice_formation_model');
+        $deletion_allowed = ($app_for <= 0);
 
         $app_for = $this->apprentice_formation_model->count_by('fk_apprentice='.$id);
         $outputs = array(
             'apprentice' => $this->apprentice_model->get($id),
-            'deletion_allowed' => ($app_for <= 0)
+            'deletion_allowed' => $deletion_allowed
         );
 
         switch($confirm) {
@@ -130,6 +131,7 @@ class Apprentice extends MY_Controller {
                 $this->display_view('apprentice/delete', $outputs);
                 break;
             case 1:
+                if(!$deletion_allowed) redirect('apprentice');
                 $this->apprentice_model->delete($id);
                 $this->display_view('apprentice/success');
                 break;

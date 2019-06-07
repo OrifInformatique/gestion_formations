@@ -88,10 +88,11 @@ class Formation extends MY_Controller {
         $this->load->model('apprentice_formation_model');
         $modules = $this->formation_module_group_model->count_by('fk_formation='.$id);
         $apprentices = $this->apprentice_formation_model->count_by('fk_formation='.$id);
+        $deletion_allowed = ($apprentices + $modules <= 0);
 
         $outputs = array(
             'formation' => $this->formation_model->get($id),
-            'deletion_allowed' => ($apprentices + $modules <= 0)
+            'deletion_allowed' => $deletion_allowed
         );
 
         switch($confirm) {
@@ -99,6 +100,7 @@ class Formation extends MY_Controller {
                 $this->display_view('formation/delete', $outputs);
                 break;
             case 1:
+                if(!$deletion_allowed) redirect('formation');
                 $this->formation_model->delete($id);
                 $this->display_view('formation/success');
                 break;

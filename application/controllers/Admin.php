@@ -50,12 +50,13 @@ class Admin extends MY_Controller {
      *      ID of the user to modify. Leave at 0 to create a new user
      */
     public function user_form($id = 0) {
+        $user_types = $this->user_type_model->dropdown('type');
+        $user_types[0] = $this->lang->line('none');
         $outputs = array(
             'selected' => 1,
-            'user_types' => $this->user_type_model->dropdown('type'),
+            'user_types' => $user_types,
             'user' => ($id > 0 ? $this->user_model->get($id) : NULL),
         );
-        $outputs['user_types'][0] = $this->lang->line('none');
 
         $this->display_view(['admin/common/nav','admin/users/form'], $outputs);
     }
@@ -67,7 +68,8 @@ class Admin extends MY_Controller {
         $user_id = $this->input->post('id');
         $update = (!is_null($user_id));
 
-        $req = array( 'user' => $this->input->post('user_username'),
+        $req = array(
+            'user' => $this->input->post('user_username'),
             'fk_user_type' => $this->input->post('user_type')
         );
 
@@ -116,8 +118,6 @@ class Admin extends MY_Controller {
     /**
      * Verifies that the old password corresponds to the user's password
      * and that the new password is repeated twice.
-     *
-     * Function is not pretty.
      */
     public function user_change_password_validation() {
         $user_id = $this->input->post('id');
@@ -127,15 +127,15 @@ class Admin extends MY_Controller {
             'password' => password_hash($this->input->post('user_password_new'), PASSWORD_DEFAULT)
         );
 
-        //Check user password
+        $new_password = $this->input->post('user_password_new');
         $username = $this->user_model->get($user_id)->user;
+        //Check user password
         $this->form_validation->set_rules('user_password_old', $this->lang->line('user_password_old'),
             $base_rules.'|callback_cb_check_old_password['.$username.']');
         //Check that the new password did get in
         $this->form_validation->set_rules('user_password_new', $this->lang->line('user_password_new'),
             $base_rules);
         //Check that the new password was repeated twice
-        $new_password = $this->input->post('user_password_new');
         $this->form_validation->set_rules('user_password_again', $this->lang->line('user_password_again'),
             $base_rules.'|callback_cb_check_new_password['.$new_password.']');
 
@@ -156,26 +156,27 @@ class Admin extends MY_Controller {
      */
     public function user_delete($id, $confirm = 0) {
         $this->load->model(['apprentice_model']);
-        $outputs = array(
-            'selected' => 1,
-            'user' => $this->user_model->get($id)
-        );
-
         $teachers = $this->teacher_model->count_by('fk_user='.$id);
         $apprentices = $this->apprentice_model->count_by('fk_user='.$id);
-        $outputs['deletion_allowed'] = ($teachers + $apprentices <= 0);
-        echo $teachers + $apprentices;
+        $deletion_allowed = ($teachers + $apprentices <= 0);
+
+        $outputs = array(
+            'selected' => 1,
+            'user' => $this->user_model->get($id),
+            'deletion_allowed' => $deletion_allowed
+        );
 
         switch($confirm) {
             case 0:
                 $this->display_view(['admin/common/nav','admin/users/delete'], $outputs);
                 break;
             case 1:
+            if(!$deletion_allowed) redirect('admin/user_index');
                 $this->user_model->delete($id);
-                $this->display_view(['admin/common/nav','admin/users/success'], $outputs);
+                $this->display_view(['admin/common/nav','admin/users/success'], ['selected' => 1]);
                 break;
             default:
-                redirect(['admin/common/nav','admin/user_index']);
+                redirect('admin/user_index');
                 break;
         }
     }
@@ -253,7 +254,8 @@ class Admin extends MY_Controller {
 
         $req = array(
             'type' => $this->input->post('user_type_type'),
-            'access_level' => $this->input->post('user_type_access_level'));
+            'access_level' => $this->input->post('user_type_access_level')
+        );
 
         if($this->form_validation->run()) {
             if($this->input->post('id') > 0) {
@@ -276,10 +278,11 @@ class Admin extends MY_Controller {
      */
     public function user_type_delete($id, $confirm = 0) {
         $users = $this->user_model->count_by('fk_user_type='.$id);
+        $deletion_allowed = ($users <= 0);
         $outputs = array(
             'selected' => 2,
             'user_type' => $this->user_type_model->get($id),
-            'deletion_allowed' => ($users <= 0)
+            'deletion_allowed' => $deletion_allowed
         );
 
         switch($confirm) {
@@ -287,8 +290,9 @@ class Admin extends MY_Controller {
                 $this->display_view(['admin/common/nav','admin/user_types/delete'], $outputs);
                 break;
             case 1:
+                if(!$deletion_allowed) redirect('admin/user_type_index');
                 $this->user_type_model->delete($id);
-                $this->display_view(['admin/common/nav','admin/user_types/success']);
+                $this->display_view(['admin/common/nav','admin/user_types/success'], ['selected' => 2]);
                 break;
             default:
                 redirect('admin/user_type_index');
@@ -317,12 +321,13 @@ class Admin extends MY_Controller {
      *      ID of the teacher to modify
      */
     public function teacher_form($id = 0) {
+        $users = $this->user_model->dropdown('User');
+        $users[0] = $this->lang->line('none');
         $outputs = array(
             'selected' => 3,
-            'users' => $this->user_model->dropdown('User'),
+            'users' => $users,
             'teacher' => ($id > 0 ? $this->teacher_model->get($id) : NULL),
         );
-        $outputs['users'][0] = $this->lang->line('none');
 
         $this->display_view(['admin/common/nav','admin/teachers/form'], $outputs);
     }
@@ -362,13 +367,14 @@ class Admin extends MY_Controller {
      *      0 leads to the confirmation prompt, 1 deletes the teacher
      */
     public function teacher_delete($id, $confirm = 0) {
-        $this->load->model(['apprentice_model']);
+        $this->load->model('apprentice_model');
         $apprentices = $this->apprentice_model->count_by('fk_teacher='.$id);
+        $deletion_allowed = ($apprentices <= 0);
 
         $outputs = array(
             'selected' => 3,
             'teacher' => $this->teacher_model->get($id),
-            'deletion_allowed' => ($apprentices <= 0)
+            'deletion_allowed' => $deletion_allowed
         );
 
         switch($confirm) {
@@ -376,8 +382,9 @@ class Admin extends MY_Controller {
                 $this->display_view(['admin/common/nav','admin/teachers/delete'], $outputs);
                 break;
             case 1:
+                if(!$deletion_allowed) redirect('admin/teacher_index');
                 $this->teacher_model->delete($id);
-                $this->display_view(['admin/common/nav','admin/teachers/success']);
+                $this->display_view(['admin/common/nav','admin/teachers/success'], ['selected' => 3]);
                 break;
             default:
                 redirect('admin/teacher_index');

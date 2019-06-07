@@ -175,8 +175,9 @@ class Group extends MY_Controller {
 
         //Verifies that the group does not have any child upon deletion
         $groups = $this->formation_module_group_model->count_by('fk_parent_group='.$id);
+        $deletion_allowed = ($groups <= 0);
         $outputs = array(
-            'deletion_allowed' => ($groups <= 0),
+            'deletion_allowed' => $deletion_allowed,
             'group' => $this->formation_module_group_model->get($id),
         );
 
@@ -185,6 +186,7 @@ class Group extends MY_Controller {
                 $this->display_view('group/delete', $outputs);
                 break;
             case 1:
+                if(!$deletion_allowed) redirect('group');
                 $this->formation_module_group_model->delete($id);
                 $this->display_view('group/success');
                 break;

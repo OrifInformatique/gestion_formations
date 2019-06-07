@@ -1,3 +1,6 @@
+<?php
+$selected = isset($selected) ? $selected : 0;
+?>
 <div class="container">
     <div class="row">
         <a class="btn <?php echo $selected == 1 ? 'btn-primary' : 'btn-secondary';?>"
