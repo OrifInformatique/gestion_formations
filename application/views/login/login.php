@@ -37,20 +37,32 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="username"><?php echo $this->lang->line('field_username'); ?></label>
+            <?php
+            echo form_label($this->lang->line('field_username'), 'username')
+            ?>
             <div class="row">
-                <div class="col-lg-4"><input type="text" name="username" class="form-control" id="username"
-                                             aria-describedby="Entrez votre nom d'utilisateur"></div>
+                <div class="col-lg-4">
+                    <?php
+                    echo form_input('username', '',
+                        'class="form-control" id="username" aria-describedby="'.$this->lang->line('login_enter_username').'"')
+                    ?>
+                </div>
             </div>
         </div>
         <div class="form-group">
-            <label for="password"><?php echo $this->lang->line('field_password'); ?></label>
+            <?php
+            echo form_label($this->lang->line('field_password'), 'password')
+            ?>
             <div class="row">
-                <div class="col-lg-4"><input type="password" class="form-control" name="password" id="password"></div>
+                <div class="col-lg-4">
+                    <?php
+                    echo form_password('password', '', 'class="form-control" id="password"')
+                    ?>
+                </div>
             </div>
         </div>
 
-        <input type="submit" class="btn btn-primary" />
+        <?php echo form_submit('submit', $this->lang->line('btn_login'), 'class="btn btn-primary"') ?>
         
         <?php echo form_close(); ?>
     </div>

@@ -20,6 +20,6 @@ class Welcome extends MY_Controller {
 	 */
 	public function index()
 	{
-		$this->display_view('welcome_message');
+		self::display_view('welcome_message');
 	}
 }

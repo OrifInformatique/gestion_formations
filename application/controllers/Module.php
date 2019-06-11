@@ -29,7 +29,7 @@ class Module extends MY_Controller {
         $groups_tree = $this->formation_module_group_model->get_tree();
         $outputs = array(
             'groups' => $this->formation_module_group_model->get_ordered(),
-            'groups_tree' => (is_null($groups_tree) ? $groups_tree : array()),
+            'groups_tree' => ($groups_tree ?? array()),
             'modules' => $this->module_subject_model->get_ordered('number')
         );
         $this->display_view('module/list', $outputs);
@@ -53,9 +53,12 @@ class Module extends MY_Controller {
      */
     public function form_validation(){
         // Checks that the inputs don't mess the program
-        $this->form_validation->set_rules('title_module', $this->lang->line('module_title'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-,\.\'\/]+$/]');
-        $this->form_validation->set_rules('number_module', $this->lang->line('module_number'), 'required');
-        $this->form_validation->set_rules('description_module', $this->lang->line('module_description'), 'trim|regex_match[/^[A-Za-zÀ-ÿ0-9 \-\.,\?\!:;]+$/]');
+        $this->form_validation->set_rules('title_module', $this->lang->line('module_title'),
+            ['required', 'trim','regex_match[/^[A-Za-zÀ-ÿ0-9 \-,\.\'\/]+$/]']);
+        $this->form_validation->set_rules('number_module', $this->lang->line('module_number'),
+            ['required']);
+        $this->form_validation->set_rules('description_module', $this->lang->line('module_description'),
+            ['trim','regex_match[/^[A-Za-zÀ-ÿ0-9 \-\.,\?\!:;]+$/]']);
 
         $req = array(
             'number' => $this->input->post('number_module'),
@@ -83,7 +86,7 @@ class Module extends MY_Controller {
      * @param integer $id
      *      The id of the module to delete
      * @param integer $confirm
-     *      0 to display confirmation, 1 to confirm, 0 to go back to the index
+     *      0 to display confirmation, 1 to confirm, anything else to go back to the index
      */
     public function delete($id, $confirm = 0) {
         $this->load->model(['module_group_model','grade_model']);
@@ -103,8 +106,9 @@ class Module extends MY_Controller {
                 $this->display_view('module/delete', $outputs);
                 break;
             case 1:
-                // Deletes the module and sends the user to a success view
+                // In case the user attempts to force the deletion
                 if(!$deletion_allowed) redirect('module');
+                // Deletes the module and sends the user to a success view
                 $this->module_subject_model->delete($id);
                 $this->display_view('module/success');
                 break;

@@ -6,17 +6,14 @@
  * @link        https://github.com/OrifInformatique/gestion_questionnaires
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
  */
+$update = isset($user);
 ?>
 
 <div class="container">
     <h1 class="title-section">
-        <?php if(isset($user)) {
-            echo $this->lang->line('user_modify');
-            $update = TRUE;
-        } else {
-            echo $this->lang->line('user_new');
-            $update = FALSE;
-        } ?>
+        <?php
+        echo $this->lang->line($update ? 'user_modify' : 'user_new');
+        ?>
     </h1>
     <?php
     $attributes = array("name" => "addFormUser",
@@ -56,10 +53,14 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_input('user_username', set_value('user_username', $user->user), 'maxlength="65535" class="form-control" id="user_username"');
-                        else
-                            echo form_input('user_username', set_value('user_username'), 'maxlength="65535" class="form-control" id="user_username"');
+                        echo form_input('user_username',
+                            set_value('user_username', ($update ? $user->user : '')),
+                            array(
+                                'maxlength' => '65535', 'class' => 'form-control',
+                                'id' => 'user_username', 'autofocus' => 'autofocus',
+                                'required' => 'required', 'pattern' => '^[A-Za-z0-9 \-]{'.USERNAME_MIN_LENGTH.',}$',
+                                'placeholder' => $this->lang->line('placeholder_user_username')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -76,7 +77,14 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        echo form_password('user_password', set_value('user_password'), 'maxlength="65535" class="form-control" id="user_password"');
+                        echo form_password('user_password',
+                            set_value('user_password'),
+                            array(
+                                'maxlength' => '65535', 'class' => 'form-control',
+                                'id' => 'user_password', 'required' => 'required',
+                                'pattern' => '.{'.PASSWORD_MIN_LENGTH.',}',
+                                'placeholder' => $this->lang->line('placeholder_user_password')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -91,7 +99,14 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        echo form_password('user_password_again', set_value('user_password_again'), 'maxlength="65535" class="form-control" id="user_password_again"');
+                        echo form_password('user_password_again',
+                            set_value('user_password_again'),
+                            array(
+                                'maxlength' => '65535', 'class' => 'form-control',
+                                'id' => 'user_password_again', 'required' => 'required',
+                                'pattern' => '.{'.PASSWORD_MIN_LENGTH.',}',
+                                'placeholder' => $this->lang->line('placeholder_user_password')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -107,10 +122,9 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_dropdown('user_type', $user_types, set_value('user_type', $user->fk_user_type), 'class="form-control" id="user_type"');
-                        else
-                            echo form_dropdown('user_type', $user_types, set_value('user_type'), 'class="form-control" id="user_type"');
+                        echo form_dropdown('user_type', $user_types,
+                            set_value('user_type', ($update ? $user->fk_user_type : '')),
+                            'class="form-control" id="user_type" required="required"');
                         ?>
                     </div>
                 </div>
@@ -118,8 +132,3 @@
         </div>
     <?php echo form_close(); ?>
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#user_username')[0].focus();
-    });
-</script>

@@ -10,7 +10,7 @@ $update = isset($module);
 ?>
 
 <div class="container">
-    <h1 class="title-section"><?php echo ($update ? $this->lang->line('module_modify') : $this->lang->line('module_new')); ?></h1>
+    <h1 class="title-section"><?php echo $this->lang->line($update ? 'module_modify' : 'module_new'); ?></h1>
     <?php
     $attributes = array("id" => "addModuleForm",
                         "name" => "addModuleForm");
@@ -51,10 +51,14 @@ $update = isset($module);
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_input('title_module', set_value('title_module', $module->title, FALSE), 'maxlength="65535" class="form-control" id="title_module"');
-                        else
-                            echo form_input('title_module', set_value('title_module', '', FALSE), 'maxlength="65535" class="form-control" id="title_module"');
+                        echo form_input('title_module',
+                            set_value('title_module', ($update ? $module->title : ''), FALSE),
+                            array(
+                                'maxlength' => '65535', 'class' => 'form-control',
+                                'id' => 'title_module', 'autofocus' => 'autofocus',
+                                'required' => 'required', 'pattern' => '^[A-Za-zÀ-ÿ0-9 \-,\.\'\/]+$',
+                                'placeholder' => $this->lang->line('placeholder_module_title')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -69,10 +73,13 @@ $update = isset($module);
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_input('description_module', set_value('description_module', $module->description), 'maxlength="65535" class="form-control" id="description_module"');
-                        else
-                            echo form_input('description_module', set_value('description_module'), 'maxlength="65535" class="form-control" id="description_module"');
+                        echo form_input('description_module',
+                            set_value('description_module', ($update ? $module->description : '')),
+                            array(
+                                'maxlength' => '65535', 'class' => 'form-control',
+                                'id' => 'description_module', 'pattern' => '^[A-Za-zÀ-ÿ0-9 \-\.,\?\!:;]+$',
+                                'placeholder' => $this->lang->line('placeholder_module_description')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -87,10 +94,12 @@ $update = isset($module);
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_checkbox('is_subject', 'is_subject', $module->number == 0, 'class="form-control" id="is_subject" onclick="setDisplay()"');
-                        else
-                            echo form_checkbox('is_subject', 'is_subject', set_value('is_subject'), 'class="form-control" id="is_subject" onclick="setDisplay()"');
+                        echo form_checkbox('is_subject', 'is_subject',
+                            ($update ? $module->number == 0 : set_value('is_subject')),
+                            array(
+                                'class' => 'form-control', 'id' => 'is_subject',
+                                'onchange' => 'setDisplay()'
+                            ));
                         ?>
                     </div>
 
@@ -106,10 +115,13 @@ $update = isset($module);
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_input('number_module', set_value('number_module', $module->number), 'maxlength="65535" class="form-control" id="number_module"');
-                        else
-                            echo form_input('number_module', set_value('number_module'), 'maxlength="65535" class="form-control" id="number_module"');
+                        echo form_input(array('type' => 'number', 'name' => 'number_module'),
+                            set_value('number_module', ($update ? $module->number : '')),
+                            array(
+                                'maxlength' => '65535', 'class' => 'form-control',
+                                'id' => 'number_module', 'min' => 0,
+                                'required' => 'required', 'placeholder' => $this->lang->line('placeholder_module_number')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -119,7 +131,21 @@ $update = isset($module);
     <?php echo form_close(); ?>
 </div>
 <script type="text/javascript">
-    $(document).ready(function(){
-        $('#title_module')[0].focus();
-    });
+    let moduleNumberValue = 0;
+    /**
+     * Changes required values for toggling between module / subject
+     */
+    function setDisplay() {
+        let checkbox = $('#is_subject')[0],
+        moduleNumber = $('#div_module_number')[0],
+        number = $('#number_module')[0],
+        checked = checkbox.checked;
+        moduleNumber.hidden = checked;
+        if(checked) {
+            moduleNumberValue = number.value;
+            number.value = 0;
+        } else {
+            number.value = moduleNumberValue;
+        }
+    }
 </script>

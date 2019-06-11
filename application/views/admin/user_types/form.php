@@ -6,17 +6,14 @@
  * @link        https://github.com/OrifInformatique/gestion_questionnaires
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
  */
+$update = isset($user_type);
 ?>
 
 <div class="container">
     <h1 class="title-section">
-        <?php if(isset($user_type)) {
-            echo $this->lang->line('user_type_modify');
-            $update = TRUE;
-        } else {
-            echo $this->lang->line('user_type_new');
-            $update = FALSE;
-        } ?>
+        <?php
+        echo ($update ? $this->lang->line('user_type_modify') : $this->lang->line('user_type_new'));
+        ?>
     </h1>
     <?php
     $attributes = array('name' => 'addFormUserType',
@@ -57,10 +54,14 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_input('user_type_type', set_value('user_type_type', $user_type->type), 'maxlength="65535" class="form-control" id="user_type_type"');
-                        else
-                            echo form_input('user_type_type', set_value('user_type_type'), 'maxlength="65535" class="form-control" id="user_type_type"');
+                        echo form_input('user_type_type',
+                            set_value('user_type_type', ($update ? $user_type->type : '')),
+                            array(
+                                'maxlength' => 65535, 'class' => 'form-control',
+                                'id' => 'user_type_type', 'autofocus' => 'autofocus',
+                                'required' => 'required', 'pattern' => '^[A-Za-zÀ-ÿ ]+$',
+                                'placeholder' => $this->lang->line('placeholder_user_type_type')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -75,10 +76,9 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_dropdown('user_type_access_level', $access_levels, set_value('user_type_access_level', $user_type->access_level), 'class="form-control" id="user_type_access_level"');
-                        else
-                            echo form_dropdown('user_type_access_level', $access_levels, set_value('user_type_access_level'), 'class="form-control" id="user_type_access_level"');
+                        echo form_dropdown('user_type_access_level', $access_levels,
+                            set_value('user_type_access_level', ($update ? $user_type->access_level : '')),
+                            'class="form-control" id="user_type_access_level" required="required"');
                         ?>
                     </div>
                 </div>
@@ -87,8 +87,3 @@
 
     <?php echo form_close(); ?>
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#user_type_type')[0].focus();
-    });
-</script>

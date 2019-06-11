@@ -6,10 +6,13 @@
  * @link        https://github.com/OrifInformatique/gestion_questionnaires
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
  */
+$update = isset($formation);
 ?>
 
 <div class="container">
-    <h1 class="title-section"><?php if(isset($formation)) {echo $this->lang->line('formation_modify'); $update = true;} else {echo $this->lang->line('formation_new'); $update = false;} ?></h1>
+    <h1 class="title-section"><?php
+    echo $this->lang->line($update ? 'formation_modify' : 'formation_new');
+    ?></h1>
     <?php
     $attributes = array("id" => "addFormationForm",
                         "name" => "addFormationForm");
@@ -49,10 +52,14 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_input('name_formation', set_value('name_formation', $formation->name_formation, FALSE), 'maxlength="65535" class="form-control" id="name_formation"');
-                        else
-                            echo form_input('name_formation', set_value('name_formation'), 'maxlength="65535" class="form-control" id="name_formation"');
+                        echo form_input('name_formation',
+                            set_value('name_formation', ($update ? $formation->name_formation : ''), FALSE),
+                            array(
+                                'maxlength' => 65535, "class" => 'form-control',
+                                'id' => 'name_formation', 'autofocus' => 'autofocus',
+                                'required' => 'required', 'pattern' => '^[A-Za-zÀ-ÿ0-9 \-\']+$',
+                                'placeholder' => $this->lang->line('placeholder_formation_name')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -67,10 +74,12 @@
                     </div>
                     <div class="col-md-7">
                         <?php
-                        if($update)
-                            echo form_input('duration_formation', set_value('duration_formation', $formation->duration), 'class="form-control" id="duration_formation"');
-                        else
-                            echo form_input('duration_formation', set_value('duration_formation'), 'class="form-control" id="duration_formation"');
+                        echo form_input(array('type' => 'number', 'name' => 'duration_formation'),
+                            set_value('duration_formation', ($update ? $formation->duration : 0)),
+                            array(
+                                'class' => 'form-control', 'id' => 'duration_formation',
+                                'required' => 'required', 'min' => 0
+                            ));
                         ?>
                     </div>
                     <div class="col-md-1">
@@ -82,8 +91,3 @@
 
     <?php echo form_close(); ?>
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#name_formation')[0].focus();
-    });
-</script>

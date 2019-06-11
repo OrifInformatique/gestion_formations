@@ -54,8 +54,10 @@ class Formation extends MY_Controller {
      */
     public function form_validation(){
         // Checks that the inputs don't mess the program
-        $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-\']+$/]');
-        $this->form_validation->set_rules('duration_formation', $this->lang->line('formation_duration'), 'required|integer');
+        $this->form_validation->set_rules('name_formation', $this->lang->line('formation_name'),
+            ['trim','required','regex_match[/^[A-Za-zÀ-ÿ0-9 \-\']+$/]']);
+        $this->form_validation->set_rules('duration_formation', $this->lang->line('formation_duration'),
+            'required','integer');
 
         $req = array(
             'name_formation' => $this->input->post('name_formation'),
@@ -98,6 +100,7 @@ class Formation extends MY_Controller {
                 $this->display_view('formation/delete', $outputs);
                 break;
             case 1:
+                // In case the user attempts to force the deletion_allowed
                 if(!$deletion_allowed) redirect('formation');
                 $this->formation_model->delete($id);
                 $this->display_view('formation/success');

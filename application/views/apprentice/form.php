@@ -6,22 +6,14 @@
  * @link        https://github.com/OrifInformatique/gestion_questionnaires
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
  */
-if(isset($apprentice))
-    $update = TRUE;
-else
-    $update = FALSE;
+$update = isset($apprentice);
 $attributes = array("id" => "apprenticeForm",
                     "name" => "apprenticeForm");
 ?>
 
 <div class="container">
     <h1 class="title-section">
-        <?php
-        if($update)
-            echo $this->lang->line("modify");
-        else
-            echo $this->lang->line("new");
-        ?>
+        <?php echo $this->lang->line($update ? "apprentice_modify" : "apprentice_new"); ?>
     </h1>
     <?php echo form_open('Apprentice/form_validation', $attributes); ?>
 
@@ -51,10 +43,14 @@ $attributes = array("id" => "apprenticeForm",
                 </div>
                 <div class="col-md-8">
                     <?php
-                    if($update)
-                        echo form_input('firstname', set_value('firstname', $apprentice->firstname), 'maxlength="65535" class="form-control" id="firstname"');
-                    else
-                        echo form_input('firstname', set_value('firstname'), 'maxlength="65535" class="form-control" id="firstname"');
+                    echo form_input('firstname',
+                        set_value('firstname', ($update ? $apprentice->firstname : '')),
+                        array(
+                            'maxlength' => 65535, 'class' => 'form-control',
+                            'id' => 'firstname', 'autofocus' => 'autofocus',
+                            'required' => 'required', 'pattern' => '^[A-Za-zÀ-ÿ0-9 \-]+$',
+                            'placeholder' => $this->lang->line('placeholder_apprentice_firstname')
+                        ));
                     ?>
                 </div>
             </div>
@@ -69,10 +65,14 @@ $attributes = array("id" => "apprenticeForm",
                 </div>
                 <div class="col-md-8">
                     <?php
-                    if($update)
-                        echo form_input('lastname', set_value('lastname', $apprentice->last_name), 'maxlength="65535" class="form-control" id="lastname"');
-                    else
-                        echo form_input('lastname', set_value('lastname'), 'maxlength="65535" class="form-control" id="lastname"');
+                    echo form_input('lastname',
+                        set_value('lastname', ($update ? $apprentice->last_name : '')),
+                        array(
+                            'maxlength' => 65535, 'class' => 'form-control',
+                            'id' => 'lastname', 'autofocus' => 'autofocus',
+                            'required' => 'required', 'pattern' => '^[A-Za-zÀ-ÿ0-9 \-]+$',
+                            'placeholder' => $this->lang->line('placeholder_apprentice_lastname')
+                        ));
                     ?>
                 </div>
             </div>
@@ -87,10 +87,12 @@ $attributes = array("id" => "apprenticeForm",
                 </div>
                 <div class="col-md-8">
                     <?php
-                    if($update)
-                        echo form_input(array('type' => 'date', 'name' => 'datebirth'), set_value('datebirth', $apprentice->date_birth), 'maxlength="65535" class="form-control" id="datebirth"');
-                    else
-                        echo form_input(array('type' => 'date', 'name' => 'datebirth'), set_value('datebirth'), 'maxlength="65535" class="form-control" id="datebirth"');
+                    echo form_input(array('type' => 'date', 'name' => 'datebirth'),
+                        set_value('datebirth', ($update ? $apprentice->date_birth : '')),
+                        array(
+                            'class' => 'form-control', 'id' => 'datebirth',
+                            'required' => 'required', 'max' => $max_date
+                        ));
                     ?>
                 </div>
             </div>
@@ -105,10 +107,9 @@ $attributes = array("id" => "apprenticeForm",
                 </div>
                 <div class="col-md-8">
                     <?php
-                    if($update)
-                        echo form_dropdown('teacher', $teachers, set_value('teacher', $apprentice->fk_teacher), 'class="form-control" id="teacher"');
-                    else
-                        echo form_dropdown('teacher', $teachers, set_value('teacher'), 'class="form-control" id="teacher"');
+                    echo form_dropdown('teacher', $teachers,
+                        set_value('teacher', ($update ? $apprentice->fk_teacher : '')),
+                        'class="form-control" id="teacher" required="required"');
                     ?>
                 </div>
             </div>
@@ -123,11 +124,9 @@ $attributes = array("id" => "apprenticeForm",
                 </div>
                 <div class="col-md-8">
                     <?php
-                    //Find a way to load the users
-                    if($update)
-                        echo form_dropdown('user', $users, set_value('user', $apprentice->fk_user), 'class="form-control" id="user"');
-                    else
-                        echo form_dropdown('user', $users, set_value('user'), 'class="form-control" id="user"');
+                    echo form_dropdown('user', $users,
+                        set_value('user', ($update ? $apprentice->fk_user : '')),
+                        'class="form-control" id="user" required="required"');
                     ?>
                 </div>
             </div>
@@ -136,8 +135,3 @@ $attributes = array("id" => "apprenticeForm",
 
     <?php echo form_close(); ?>
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#firstname')[0].focus();
-    });
-</script>

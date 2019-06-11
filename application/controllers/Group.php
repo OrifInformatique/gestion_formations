@@ -52,11 +52,7 @@ class Group extends MY_Controller {
         // Obtain linked modules
         $links = $this->module_group_model->get_many_by('fk_formation_modules_group='.$id);
         foreach($links as $link) {
-            array_push($outputs['m'], $link->fk_module);
-        }
-
-        if(empty($outputs['m'])) {
-            $outputs['m'] = [];
+            $outputs['m'][] = $link->fk_module;
         }
 
         $groups = $this->formation_module_group_model->get_all();
@@ -65,8 +61,8 @@ class Group extends MY_Controller {
             $groups = $this->recursive_remove($groups, $id);
         }
         foreach($groups as $group) {
-            array_push($group_names, $group->name_group);
-            array_push($group_ids, $group->id);
+            $group_names[] = $group->name_group;
+            $group_ids[] = $group->id;
         }
         $outputs['groups'] = array_combine($group_ids, $group_names);
         $outputs['groups'][0] = $this->lang->line('none');
@@ -78,11 +74,16 @@ class Group extends MY_Controller {
      * Opens the form and deals with updating or creating the group
      */
     public function form_validation(){
-        $this->form_validation->set_rules('name_group', $this->lang->line('group_name'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-\(\)]+$/]');
-        $this->form_validation->set_rules('weight', $this->lang->line('group_weight'), 'required');
-        $this->form_validation->set_rules('position', $this->lang->line('group_position'), 'required');
-        $this->form_validation->set_rules('parent_group', $this->lang->line('group_parent_group'), 'required');
-        $this->form_validation->set_rules('group_formation', $this->lang->line('group_formation'),'required');
+        $this->form_validation->set_rules('name_group', $this->lang->line('group_name'),
+            ['trim','required','regex_match[/^[A-Za-zÀ-ÿ0-9 \-\(\)]+$/]']);
+        $this->form_validation->set_rules('weight', $this->lang->line('group_weight'),
+            ['required']);
+        $this->form_validation->set_rules('position', $this->lang->line('group_position'),
+            ['required']);
+        $this->form_validation->set_rules('parent_group', $this->lang->line('group_parent_group'),
+            ['required']);
+        $this->form_validation->set_rules('group_formation', $this->lang->line('group_formation'),
+            ['required']);
 
         $req = array(
             'name_group' => $this->input->post('name_group'),
@@ -103,8 +104,6 @@ class Group extends MY_Controller {
             $this->add_module_duallistbox($id);
             redirect('group');
         } else {
-            $outputs["groups"] = $this->formation_module_group_model->dropdown('name_group');
-            $outputs["groups"][0] = $this->lang->line('none');
             $this->form($this->input->post('id'));
         }
     }
@@ -139,14 +138,14 @@ class Group extends MY_Controller {
         foreach($modules as $module) {
             $i = array_search($module, $linked_modules);
             if($i === FALSE) {
-                array_push($to_add, $module);
+                $to_add[] = $module;
             }
         }
         foreach($linked_modules as $linked_module) {
             $i = array_search($linked_module, $modules);
             if($i === FALSE) {
                 $j = array_search($linked_module, $linked_modules);
-                array_push($to_remove, $j);
+                $to_remove[] = $j;
             }
         }
         // Add or remove links
@@ -185,6 +184,7 @@ class Group extends MY_Controller {
                 $this->display_view('group/delete', $outputs);
                 break;
             case 1:
+                // In case the user attempts to force the deletion
                 if(!$deletion_allowed) redirect('group');
                 $this->formation_module_group_model->delete($id);
                 $this->display_view('group/success');

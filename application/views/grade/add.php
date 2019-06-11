@@ -11,10 +11,8 @@ $update = isset($grade);
 
 <div class="container">
     <h1>
-        <?php if($update)
-            echo $this->lang->line('grade_edit');
-        else
-            echo $this->lang->line('grade_new');
+        <?php
+        echo $this->lang->line($update ? 'grade_edit' : 'grade_new');
         ?>
     </h1>
     <?php
@@ -53,10 +51,14 @@ $update = isset($grade);
                 </div>
                 <div class="col-md-1">
                     <?php
-                    if($update)
-                        echo form_input('grade_grade', set_value('grade_grade', $grade->grade), 'id="grade_grade" class="form-control"');
-                    else
-                        echo form_input('grade_grade', set_value('grade_grade'), 'id="grade_grade" class="form-control" maxlength="4"');
+                    echo form_input(array('type' => 'number', 'name' => 'grade_grade'),
+                        set_value('grade_grade', ($update ? $grade->grade : '')),
+                        array(
+                            'id' => 'grade_grade', 'class' => 'form-control',
+                            'maxlength' => 4, 'autofocus' => 'autofocus',
+                            'min' => 0, 'max' => 6, 'step' => .5,
+                            'required' => 'required'
+                        ));
                     ?>
                 </div>
                 <div class="col-md-2"></div>
@@ -64,19 +66,27 @@ $update = isset($grade);
                     <?php echo form_label($this->lang->line('grade_date_test'), 'grade_date_test'); ?>
                 </div>
                 <div class="col-md-2">
-                    <input type="date" name="grade_date_test" id="grade_date_test" value="<?php
-                    if($update)
-                        echo $grade->date_test;
-                    ?>" class="form-control">
+                    <?php
+                    echo form_input(array('type' => 'date', 'name' => 'grade_date_test'),
+                        set_value('grade_date_test', ($update ? $grade->date_test : '')),
+                        array(
+                            'id' => 'grade_date_test', 'class' => 'form-control',
+                            'max' => $date_max, 'required' => 'required'
+                        ));
+                    ?>
                 </div>
                 <div class="col-md-2">
                     <?php echo form_label($this->lang->line('grade_date_inscription'), 'grade_date_inscription'); ?>
                 </div>
                 <div class="col-md-2">
-                    <input type="date" name="grade_date_inscription" id="grade_date_inscription" value="<?php
-                    if($update)
-                        echo $grade->date_inscription;
-                    ?>" class="form-control">
+                    <?php
+                    echo form_input(array('type' => 'date', 'name' => 'grade_date_inscription'),
+                        set_value('grade_date_inscription', ($update ? $grade->date_inscription : '')),
+                        array(
+                            'id' => 'grade_date_inscription', 'class' => 'form-control',
+                            'max' => $date_max, 'required' => 'required'
+                        ));
+                    ?>
                 </div>
             </div>
 
@@ -86,10 +96,12 @@ $update = isset($grade);
                 </div>
                 <div class="col-md-3">
                     <?php
-                    if($update)
-                        echo form_input('grade_weight', set_value('grade_weight', $grade->weight), 'id="grade_weight" class="form-control"');
-                    else
-                        echo form_input('grade_weight', set_value('grade_weight'), 'id="grade_weight" class="form-control"');
+                    echo form_input(array('type' => 'number', 'name' => 'grade_weight'),
+                        set_value('grade_weight', ($update ? $grade->weight : '')),
+                        array(
+                            'id' => 'grade_weight', 'class' => 'form-control',
+                            'min' => 1, 'required' => 'required'
+                        ));
                     ?>
                 </div>
                 <div class="col-md-2"></div>
@@ -98,10 +110,13 @@ $update = isset($grade);
                 </div>
                 <div class="col-md-3">
                     <?php
-                    if($update)
-                        echo form_input('grade_semester', set_value('grade_semester', $grade->semester), 'id="grade_semester" class="form-control"');
-                    else
-                        echo form_input('grade_semester', set_value('grade_semester'), 'id="grade_semester" class="form-control"');
+                    echo form_input(array('type' => 'number', 'name' => 'grade_semester'),
+                        set_value('grade_semester', ($update ? $grade->semester : '')),
+                        array(
+                            'id' => 'grade_semester', 'class' => 'form-control',
+                            'min' => 1, 'max' => $semester_max,
+                            'required' => 'required'
+                        ));
                     ?>
                 </div>
             </div>
@@ -109,8 +124,3 @@ $update = isset($grade);
 
     <?php echo form_close(); ?>
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#grade_grade')[0].focus();
-    });
-</script>

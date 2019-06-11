@@ -49,7 +49,8 @@ class Apprentice extends MY_Controller {
         $outputs = array(
             "teachers" => $this->get_teachers(),
             "apprentice" => ($id > 0 ? $this->apprentice_model->get($id) : NULL),
-            "users" => $this->user_model->dropdown('user')
+            "users" => $this->user_model->dropdown('user'),
+            'max_date' => date('Y-m-d')
         );
 
         $this->display_view("apprentice/form", $outputs);
@@ -67,11 +68,16 @@ class Apprentice extends MY_Controller {
             'fk_user' => $this->input->post('user')
         );
 
-        $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
-        $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
-        $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'), array('required', 'callback_cb_check_if_past'));
-        $this->form_validation->set_rules('teacher', $this->lang->line('apprentice_MSP'), 'required');
-        $this->form_validation->set_rules('user', $this->lang->line('apprentice_user'), 'required');
+        $this->form_validation->set_rules('firstname', $this->lang->line('apprentice_firstname'),
+            ['trim','required','regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]']);
+        $this->form_validation->set_rules('lastname', $this->lang->line('apprentice_lastname'),
+            'trim','required','regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
+        $this->form_validation->set_rules('datebirth', $this->lang->line('apprentice_datebirth'),
+            ['required','callback_cb_check_if_past']);
+        $this->form_validation->set_rules('teacher', $this->lang->line('apprentice_MSP'),
+            ['required']);
+        $this->form_validation->set_rules('user', $this->lang->line('apprentice_user'),
+            ['required']);
 
         if($this->form_validation->run()){
             if($this->input->post('id') > 0) {
@@ -85,7 +91,6 @@ class Apprentice extends MY_Controller {
                 "teachers" => $this->get_teachers(),
                 "apprentice" => ($this->input->post('id') > 0 ? $this->apprentice_model->get($id) : NULL)
             );
-            //redirect('apprentice/form/'.$this->input->post('id'));
             $this->display_view("apprentice/form", $outputs);
         }
     }
@@ -127,6 +132,7 @@ class Apprentice extends MY_Controller {
                 $this->display_view('apprentice/delete', $outputs);
                 break;
             case 1:
+                // In case the user attempts to force the deletion
                 if(!$deletion_allowed) redirect('apprentice');
                 $this->apprentice_model->delete($id);
                 $this->display_view('apprentice/success');
@@ -209,11 +215,11 @@ class Apprentice extends MY_Controller {
     public function link_form_validation() {
         $this->load->model('apprentice_formation_model');
 
-        $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), 'required|numeric');
-        $this->form_validation->set_rules('date', $this->lang->line('apprentice_formation'), 'numeric');
+        $this->form_validation->set_rules('formation', $this->lang->line('apprentice_formation'), ['required','numeric']);
+        $this->form_validation->set_rules('date', $this->lang->line('apprentice_formation'), ['numeric']);
 
         // Check whether we are changing a link or making a new one
-        if($this->input->post('link_id') !== null) {
+        if(!is_null($this->input->post('link_id'))) {
             $link_id = $this->input->post('link_id');
             $link = $this->apprentice_formation_model->get($link_id);
             $apprentice_id = $link->fk_apprentice;
@@ -284,15 +290,15 @@ class Apprentice extends MY_Controller {
         );
 
         switch ($command) {
-            // Display confirmation
             case 0:
+                // Display confirmation
                 $this->display_view('apprentice/unlink', $outputs);
                 break;
-            // Confirmed, delete item
             case 1:
+                // Confirmed, delete item
                 $this->apprentice_formation_model->delete($id);
-            // Back to the menu
             default:
+                // Back to the menu
                 $apprentice_id = $link->fk_apprentice;
                 redirect('apprentice/apprentice_formations/'.$apprentice_id);
         }
@@ -343,8 +349,8 @@ class Apprentice extends MY_Controller {
         }
 
         foreach($apprentice->C_App_Form as $app_form) {
-            $f = $formations[$app_form->fk_formation];
-            if ($app_form->year + $f->duration >= date('Y') && $app_form->year <= date('Y'))
+            $form = $formations[$app_form->fk_formation];
+            if ($app_form->year + $form->duration >= date('Y') && $app_form->year <= date('Y'))
                 return TRUE;
         }
         return FALSE;

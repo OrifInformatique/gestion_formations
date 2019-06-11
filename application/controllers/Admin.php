@@ -26,12 +26,17 @@ class Admin extends MY_Controller {
      */
     public function index() {
         $outputs['selected'] = 0;
-        $this->display_view(['admin/common/nav','admin/list'], $outputs);
+        $this->display_view('admin/list', $outputs);
     }
 
     /**
      * Modified version of display view
      * Mainly for not having to add 'admin/common/nav' to every call
+     *
+     * @param string|string[] $view_parts
+     *      Single view or array of view parts to display
+     * @param array $data
+     *      Data array to send to the view
      */
     public function display_view($view_parts, $data = NULL) {
         $forward = ['admin/common/nav'];
@@ -89,12 +94,12 @@ class Admin extends MY_Controller {
         );
 
         // Checks that the inputs don't mess the program
-        $this->form_validation->set_rules('user_username', $this->lang->line('user_username'), array(
-            'trim', 'required','
-            min_length['.USERNAME_MIN_LENGTH.']',
+        $this->form_validation->set_rules('user_username', $this->lang->line('user_username'), [
+            'trim', 'required',
+            'min_length['.USERNAME_MIN_LENGTH.']',
             'is_unique[users.user]',
             'regex_match[/^[A-Za-z0-9 \-]+$/]'
-        ));
+        ]);
         $this->form_validation->set_rules('user_type', $this->lang->line('user_type'), 'required');
         // If it's a new user, create a password with it
         if(!$update) {
@@ -186,7 +191,8 @@ class Admin extends MY_Controller {
                 $this->display_view('admin/users/delete', $outputs);
                 break;
             case 1:
-            if(!$deletion_allowed) redirect('admin/user_index');
+                // In case the user attempts to force the deletion
+                if(!$deletion_allowed) redirect('admin/user_index');
                 $this->user_model->delete($id);
                 $this->display_view('admin/users/success', ['selected' => 1]);
                 break;
@@ -264,8 +270,10 @@ class Admin extends MY_Controller {
      * Makes sure that the form was filled correctly.
      */
     public function user_type_form_validation() {
-        $this->form_validation->set_rules('user_type_type', $this->lang->line('user_type_type'), 'required|regex_match[/^[A-Za-zÀ-ÿ ]+$/]');
-        $this->form_validation->set_rules('user_type_access_level', $this->lang->line('user_type_access_level'), 'required');
+        $this->form_validation->set_rules('user_type_type', $this->lang->line('user_type_type'),
+            ['required','regex_match[/^[A-Za-zÀ-ÿ ]+$/]']);
+        $this->form_validation->set_rules('user_type_access_level', $this->lang->line('user_type_access_level'),
+            ['required']);
 
         $req = array(
             'type' => $this->input->post('user_type_type'),
@@ -305,6 +313,7 @@ class Admin extends MY_Controller {
                 $this->display_view('admin/user_types/delete', $outputs);
                 break;
             case 1:
+                // In case the user attempts to force the deletion
                 if(!$deletion_allowed) redirect('admin/user_type_index');
                 $this->user_type_model->delete($id);
                 $this->display_view('admin/user_types/success', ['selected' => 2]);
@@ -352,9 +361,12 @@ class Admin extends MY_Controller {
      */
     public function teacher_form_validation() {
         $teacher_id = $this->input->post('id');
-        $this->form_validation->set_rules('teacher_firstname', $this->lang->line('teacher_firstname'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
-        $this->form_validation->set_rules('teacher_name', $this->lang->line('teacher_name'), 'trim|required|regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]');
-        $this->form_validation->set_rules('teacher_user', $this->lang->line('teacher_username'), 'required');
+        $this->form_validation->set_rules('teacher_firstname', $this->lang->line('teacher_firstname'),
+            ['trim','required','regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]']);
+        $this->form_validation->set_rules('teacher_name', $this->lang->line('teacher_name'),
+            ['trim','required','regex_match[/^[A-Za-zÀ-ÿ0-9 \-]+$/]']);
+        $this->form_validation->set_rules('teacher_user', $this->lang->line('teacher_username'),
+            ['required']);
 
         $req = array(
             'firstname' => $this->input->post('teacher_firstname'),
@@ -397,6 +409,7 @@ class Admin extends MY_Controller {
                 $this->display_view('admin/teachers/delete', $outputs);
                 break;
             case 1:
+                // In case the user attempts to force the deletion
                 if(!$deletion_allowed) redirect('admin/teacher_index');
                 $this->teacher_model->delete($id);
                 $this->display_view('admin/teachers/success', ['selected' => 3]);

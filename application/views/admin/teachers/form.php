@@ -6,18 +6,13 @@
  * @link        https://github.com/OrifInformatique/gestion_questionnaires
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
  */
+$update = isset($teacher);
 ?>
 
 <div class="container">
     <h1 class="title-section">
         <?php
-        if(isset($teacher)) {
-            echo $this->lang->line('teacher_modify');
-            $update = TRUE;
-        } else {
-            echo $this->lang->line('teacher_new');
-            $update = FALSE;
-        }
+        echo ($update ? $this->lang->line('teacher_modify') : $this->lang->line('teacher_new'));
         ?>
     </h1>
     <?php
@@ -58,10 +53,14 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_input('teacher_firstname', set_value('teacher_firstname', $teacher->firstname), 'maxlength="65535" class="form-control" id="teacher_firstname"');
-                        else
-                            echo form_input('teacher_firstname', set_value('teacher_firstname'), 'maxlength="65535" class="form-control" id="teacher_firstname"');
+                        echo form_input('teacher_firstname',
+                            set_value('teacher_firstname', ($update ? $teacher->firstname : '')),
+                            array(
+                                'maxlength' => 65535, 'class' => 'form-control',
+                                'id' => 'teacher_firstname', 'autofocus' => 'autofocus',
+                                'required' => 'required', 'pattern' => '^[A-Za-zÀ-ÿ0-9 \-]+$',
+                                'placeholder' => $this->lang->line('placeholder_teacher_name')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -76,10 +75,14 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_input('teacher_name', set_value('teacher_name', $teacher->last_name), 'maxlength="65535" class="form-control" id="teacher_name"');
-                        else
-                            echo form_input('teacher_name', set_value('teacher_name'), 'maxlength="65535" class="form-control" id="teacher_name"');
+                        echo form_input('teacher_name',
+                            set_value('teacher_name', ($update ? $teacher->last_name : '')),
+                            array(
+                                'maxlength' => 65535, 'class' => 'form-control',
+                                'id' => 'teacher_name', 'required' => 'required',
+                                'pattern' => '^[A-Za-zÀ-ÿ0-9 \-]+$',
+                                'placeholder' => $this->lang->line('placeholder_teacher_firstname')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -94,10 +97,9 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_dropdown('teacher_user', $users, set_value('teacher_user', $teacher->fk_user), 'class="form-control" id="teacher_user"');
-                        else
-                            echo form_dropdown('teacher_user', $users, set_value('teacher_user'), 'class="form-control" id="teacher_user"');
+                        echo form_dropdown('teacher_user', $users,
+                            set_value('teacher_user', ($update ? $teacher->fk_user : '')),
+                            'class="form-control" id="teacher_user" required="required"');
                         ?>
                     </div>
                 </div>
@@ -107,8 +109,3 @@
     echo form_close();
     ?>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#teacher_firstname')[0].focus();
-    });
-</script>

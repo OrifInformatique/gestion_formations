@@ -31,6 +31,7 @@ $lang['datetime_format_short']          = 'd.m.Y H:i';
 // Fields labels
 $lang['field_username']                 = 'Nom d\'utilisateur:';
 $lang['field_password']                 = 'Mot de passe:';
+$lang['login_enter_username']           = 'Entrez votre nom d\'utilisateur';
 $lang['group_name']                     = 'Nom';
 $lang['group_weight']                   = 'Poids';
 $lang['group_eliminatory']              = 'Eliminatoire';
@@ -73,6 +74,20 @@ $lang['grade_semester']                 = 'Semestre';
 $lang['grade_median_end']               = 'Moyenne finale';
 $lang['grade_group_show']               = 'Montrer le groupe';
 $lang['grade_group_hide']               = 'Cacher le groupe';
+
+// Field placeholders
+$lang['placeholder_group_name']         = 'Nom du groupe';
+$lang['placeholder_module_title']       = 'Titre du module / matière';
+$lang['placeholder_module_description'] = 'Decription du module / matière';
+$lang['placeholder_module_number']      = 'Numéro du module';
+$lang['placeholder_apprentice_firstname']   = 'Prénom de l\'apprenti';
+$lang['placeholder_apprentice_lastname']    = 'Nom de l\'apprenti';
+$lang['placeholder_formation_name']     = 'Nom de la formation';
+$lang['placeholder_user_username']      = 'Nom d\'utilisateur';
+$lang['placeholder_user_password']      = 'Mot de passe';
+$lang['placeholder_user_type_type']     = 'Type d\'utilisateur';
+$lang['placeholder_teacher_name']       = 'Nom du MSP';
+$lang['placeholder_teacher_firstname']  = 'Prénom du MSP';
 
 // Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
@@ -181,7 +196,7 @@ $lang['subject']                        = 'Matière';
 
 // Duallistbox
 $lang['duallistbox_text_clear']         = 'Tout montrer';
-$lang['duallistbox_place_holder']       = 'Filtrer';
+$lang['duallistbox_place_holder']       = 'Filtre';
 $lang['duallistbox_info_text_filtered'] = 'Montrant {0} sur {1}';
 $lang['duallistbox_info_text']          = 'objet(s) disponible(s)';
 $lang['duallistbox_info_text_empty']    = 'Aucun objet disponible';

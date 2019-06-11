@@ -6,10 +6,11 @@
  * @link        https://github.com/OrifInformatique/gestion_questionnaires
  * @copyright   Copyright (c) Orif (http://www.orif.ch)
  */
+$update = isset($group);
 ?>
 
 <div class="container">
-    <h1 class="title-section"><?php if(isset($group)) {echo $this->lang->line('group_modify'); $update = true;} else {echo $this->lang->line('group_new'); $update = false;} ?></h1>
+    <h1 class="title-section"><?php echo $this->lang->line($update ? 'group_modify' : 'group_new'); ?></h1>
     <?php
     $attributes = array("id" => "addGroupForm",
                         "name" => "addGroupForm");
@@ -49,10 +50,14 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_input('name_group', set_value('name_group', $group->name_group), 'maxlength="65535" class="form-control" id="name_group"');
-                        else
-                            echo form_input('name_group', set_value('name_group'), 'maxlength="65535" class="form-control" id="name_group"');
+                        echo form_input('name_group',
+                            set_value('name_group', ($update ? $group->name_group : '')),
+                            array(
+                                'maxlength' => 65535, 'class' => 'form-control',
+                                'id' => 'name_group', 'autofocus' => 'autofocus',
+                                'required' => 'required', 'pattern' => '^[A-Za-zÀ-ÿ0-9 \-\(\)]+$',
+                                'placeholder' => $this->lang->line('placeholder_group_name')
+                            ));
                         ?>
                     </div>
                 </div>
@@ -67,10 +72,13 @@
                     </div>
                     <div class="col-md-7">
                         <?php
-                        if($update)
-                            echo form_input('weight', set_value('weight', $group->weight), 'class="form-control" id="weight"');
-                        else
-                            echo form_input('weight', set_value('weight'), 'class="form-control" id="weight"');
+                        echo form_input(array('type' => 'number', 'name' => 'weight'),
+                            set_value('weight', ($update ? $group->weight : 0)),
+                            array(
+                                'class' => 'form-control', 'id' => 'weight',
+                                'required' => 'required', 'min' => 0,
+                                'max' => 100
+                            ));
                         ?>
                     </div>
                     <div class="col-md-1">
@@ -88,10 +96,9 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_checkbox('eliminatory', 'eliminatory', $group->eliminatory, 'class="form-control" id="eliminatory"');
-                        else
-                            echo form_checkbox('eliminatory', 'eliminatory', set_value('eliminatory'), 'class="form-control" id="eliminatory"');
+                        echo form_checkbox('eliminatory', 'eliminatory',
+                            ($update ? $group->eliminatory : set_value('eliminatory')),
+                            'class="form-control" id="eliminatory"');
                         ?>
                     </div>
 
@@ -107,10 +114,9 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_input('position', set_value('position', $group->position), 'class="form-control" id="position"');
-                        else
-                            echo form_input('position', set_value('position'), 'class="form-control" id="position"');
+                        echo form_input(array('type' => 'number', 'name' => 'position'),
+                            set_value('position', ($update ? $group->position : 0)),
+                            'class="form-control" id="position" required="required"');
                         ?>
                     </div>
                 </div>
@@ -125,10 +131,9 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_dropdown('parent_group', $groups, set_value('parent_group', $group->fk_parent_group), 'class="form-control" id="parent_group"');
-                        else
-                            echo form_dropdown('parent_group', $groups, set_value('parent_group'), 'class="form-control" id="parent_group"');
+                        echo form_dropdown('parent_group', $groups,
+                            set_value('parent_group', ($update ? $group->fk_parent_group : '')),
+                            'class="form-control" id="parent_group" required="required"');
                         ?>
                     </div>
                 </div>
@@ -143,10 +148,9 @@
                     </div>
                     <div class="col-md-8">
                         <?php
-                        if($update)
-                            echo form_dropdown('group_formation', $formations, set_value('group_formation', $group->fk_formation), 'class="form-control" id="group_formation"');
-                        else
-                            echo form_dropdown('group_formation', $formations, set_value('group_formation'), 'class="form-control" id="group_formation"');
+                        echo form_dropdown('group_formation', $formations,
+                            set_value('group_formation', ($update ? $group->fk_formation : '')),
+                            'class="form-control" id="group_formation" required="required"');
                         ?>
                     </div>
                 </div>
@@ -161,8 +165,10 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        /* https://www.virtuosoft.eu/code/bootstrap-duallistbox/ */
-        $('#name_group')[0].focus();
+        /*
+        In case of problem, see this link
+        https://www.virtuosoft.eu/code/bootstrap-duallistbox/
+        */
         let obj = {
             filterTextClear: "<?php echo $this->lang->line('duallistbox_text_clear'); ?>",
             filterPlaceHolder: "<?php echo $this->lang->line('duallistbox_place_holder'); ?>",
