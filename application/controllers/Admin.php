@@ -25,7 +25,7 @@ class Admin extends MY_Controller {
      * It's just a list of links to the other indexes.
      */
     public function index() {
-        $outputs['selected'] = 0;
+        $outputs['admin_selected'] = 0;
         $this->display_view('admin/list', $outputs);
     }
 
@@ -57,7 +57,7 @@ class Admin extends MY_Controller {
      */
     public function user_index() {
         $outputs = array(
-            'selected' => 1,
+            'admin_selected' => 1,
             'users' => $this->user_model->get_all(),
             'user_types' => $this->user_type_model->get_all()
         );
@@ -73,7 +73,7 @@ class Admin extends MY_Controller {
         $user_types = $this->user_type_model->dropdown('type');
         $user_types[0] = $this->lang->line('none');
         $outputs = array(
-            'selected' => 1,
+            'admin_selected' => 1,
             'user_types' => $user_types,
             'user' => ($id > 0 ? $this->user_model->get($id) : NULL),
         );
@@ -128,7 +128,7 @@ class Admin extends MY_Controller {
      */
     public function user_change_password($id) {
         $outputs = array(
-            'selected' => 1,
+            'admin_selected' => 1,
             'user' => $this->user_model->get($id)
         );
 
@@ -181,7 +181,7 @@ class Admin extends MY_Controller {
         $deletion_allowed = ($teachers + $apprentices <= 0);
 
         $outputs = array(
-            'selected' => 1,
+            'admin_selected' => 1,
             'user' => $this->user_model->get($id),
             'deletion_allowed' => $deletion_allowed
         );
@@ -194,7 +194,7 @@ class Admin extends MY_Controller {
                 // In case the user attempts to force the deletion
                 if(!$deletion_allowed) redirect('admin/user_index');
                 $this->user_model->delete($id);
-                $this->display_view('admin/users/success', ['selected' => 1]);
+                $this->display_view('admin/users/success', ['admin_selected' => 1]);
                 break;
             default:
                 redirect('admin/user_index');
@@ -244,7 +244,7 @@ class Admin extends MY_Controller {
      */
     public function user_type_index() {
         $outputs = array(
-            'selected' => 2,
+            'admin_selected' => 2,
             'access_levels' => array_flip(ACCESS_LVLS),
             'user_types' => $this->user_type_model->get_all()
         );
@@ -258,7 +258,7 @@ class Admin extends MY_Controller {
      */
     public function user_type_form($id = 0) {
         $outputs = array(
-            'selected' => 2,
+            'admin_selected' => 2,
             'access_levels' => array_flip(ACCESS_LVLS),
             'user_type' => ($id > 0 ? $this->user_type_model->get($id) : NULL),
         );
@@ -303,7 +303,7 @@ class Admin extends MY_Controller {
         $users = $this->user_model->count_by('fk_user_type='.$id);
         $deletion_allowed = ($users <= 0);
         $outputs = array(
-            'selected' => 2,
+            'admin_selected' => 2,
             'user_type' => $this->user_type_model->get($id),
             'deletion_allowed' => $deletion_allowed
         );
@@ -316,7 +316,7 @@ class Admin extends MY_Controller {
                 // In case the user attempts to force the deletion
                 if(!$deletion_allowed) redirect('admin/user_type_index');
                 $this->user_type_model->delete($id);
-                $this->display_view('admin/user_types/success', ['selected' => 2]);
+                $this->display_view('admin/user_types/success', ['admin_selected' => 2]);
                 break;
             default:
                 redirect('admin/user_type_index');
@@ -332,7 +332,7 @@ class Admin extends MY_Controller {
      */
     public function teacher_index() {
         $outputs = array(
-            'selected' => 3,
+            'admin_selected' => 3,
             'teachers' => $this->teacher_model->get_all(),
             'users' => $this->user_model->get_all()
         );
@@ -348,7 +348,7 @@ class Admin extends MY_Controller {
         $users = $this->user_model->dropdown('User');
         $users[0] = $this->lang->line('none');
         $outputs = array(
-            'selected' => 3,
+            'admin_selected' => 3,
             'users' => $users,
             'teacher' => ($id > 0 ? $this->teacher_model->get($id) : NULL),
         );
@@ -399,7 +399,7 @@ class Admin extends MY_Controller {
         $deletion_allowed = ($apprentices <= 0);
 
         $outputs = array(
-            'selected' => 3,
+            'admin_selected' => 3,
             'teacher' => $this->teacher_model->get($id),
             'deletion_allowed' => $deletion_allowed
         );
@@ -412,7 +412,7 @@ class Admin extends MY_Controller {
                 // In case the user attempts to force the deletion
                 if(!$deletion_allowed) redirect('admin/teacher_index');
                 $this->teacher_model->delete($id);
-                $this->display_view('admin/teachers/success', ['selected' => 3]);
+                $this->display_view('admin/teachers/success', ['admin_selected' => 3]);
                 break;
             default:
                 redirect('admin/teacher_index');

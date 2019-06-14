@@ -22,7 +22,7 @@
                     <td><?php echo $group->position; ?></td>
                     <td><a href="<?php echo base_url().'group/form/'.$group->id; ?>"><?php echo $group->name_group; ?></a></td>
                     <td><?php echo $group->weight . ' %'; ?></td>
-                    <td><?php echo $group->eliminatory?$this->lang->line('yes'):$this->lang->line('no'); ?></td>
+                    <td><?php echo ($group->eliminatory ? $this->lang->line('yes') : $this->lang->line('no')); ?></td>
                     <td><?php echo getParentGroup($groups, $group->fk_parent_group, $no_group); ?></td>
                     <td><?php echo $formations[$group->fk_formation]; ?></td>
                     <td>
@@ -44,14 +44,11 @@
      *      The name of the parent group
      */
     function getParentGroup($groups, $id, $ifempty){
-        if($id == 0){
+        if($id == 0)
             return $ifempty;
-        } else {
-            foreach ($groups as $group) {
-                if($group->id === $id){
+        else
+            foreach ($groups as $group)
+                if($group->id === $id)
                     return $group->name_group;
-                }
-            }
-        }
     }
 ?>

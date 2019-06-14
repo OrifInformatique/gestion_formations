@@ -48,7 +48,12 @@
                 <div class="form-group row">
                     <div class="col-md-4"><?php echo $this->lang->line('user_password_old'); ?></div>
                     <div class="col-md-8">
-                        <?php echo form_password('user_password_old', set_value('user_password_old'), 'maxlength="65535" class="form-control" id="user_password_old"'); ?>
+                        <?php echo form_password('user_password_old', set_value('user_password_old'),
+                        array(
+                            'maxlength' => 65535, 'class' => 'form-control',
+                            'id' => 'user_password_old',
+                            'placeholder' => $this->lang->line('placeholder_user_password_old')
+                        )); ?>
                     </div>
                 </div>
             </div>
@@ -59,7 +64,12 @@
                 <div class="form-group row">
                     <div class="col-md-4"><?php echo $this->lang->line('user_password_new'); ?></div>
                     <div class="col-md-8">
-                        <?php echo form_password('user_password_new', set_value('user_password_new'), 'maxlength="65535" class="form-control" id="user_password_new"'); ?>
+                        <?php echo form_password('user_password_new', set_value('user_password_new'),
+                        array(
+                            'maxlength' => 65535, 'class' => 'form-control',
+                            'id' => 'user_password_new',
+                            'placeholder' => $this->lang->line('placeholder_user_password_new')
+                        )); ?>
                     </div>
                 </div>
             </div>
@@ -70,7 +80,12 @@
                 <div class="form-group row">
                     <div class="col-md-4"><?php echo $this->lang->line('user_password_again'); ?></div>
                     <div class="col-md-8">
-                        <?php echo form_password('user_password_again', set_value('user_password_again'), 'maxlength="65535" class="form-control" id="user_password_again"'); ?>
+                        <?php echo form_password('user_password_again', set_value('user_password_again'),
+                        array(
+                            'maxlength' => 65535, 'class' => 'form-control',
+                            'id' => 'user_password_again',
+                            'placeholder' => $this->lang->line('placeholder_user_password_again')
+                        )); ?>
                     </div>
                 </div>
             </div>

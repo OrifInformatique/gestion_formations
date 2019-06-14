@@ -44,7 +44,11 @@
                 <div class="col-lg-4">
                     <?php
                     echo form_input('username', '',
-                        'class="form-control" id="username" aria-describedby="'.$this->lang->line('login_enter_username').'"')
+                        array(
+                            'class' => 'form-control', 'id' => 'username',
+                            'aria-describedby' => $this->lang->line('login_enter_username'),
+                            'placeholder' => $this->lang->line('placeholder_login_username')
+                        ))
                     ?>
                 </div>
             </div>
@@ -56,7 +60,11 @@
             <div class="row">
                 <div class="col-lg-4">
                     <?php
-                    echo form_password('password', '', 'class="form-control" id="password"')
+                    echo form_password('password', '',
+                        array(
+                            'class' => 'form-control', 'id' => 'password',
+                            'placeholder' => $this->lang->line('placeholder_login_password')
+                        ));
                     ?>
                 </div>
             </div>

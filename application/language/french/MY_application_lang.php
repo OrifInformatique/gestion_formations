@@ -88,6 +88,11 @@ $lang['placeholder_user_password']      = 'Mot de passe';
 $lang['placeholder_user_type_type']     = 'Type d\'utilisateur';
 $lang['placeholder_teacher_name']       = 'Nom du MSP';
 $lang['placeholder_teacher_firstname']  = 'Prénom du MSP';
+$lang['placeholder_login_username']     = 'Votre nom d\'utilisateur';
+$lang['placeholder_login_password']     = 'Votre mot de passe';
+$lang['placeholder_user_password_old']  = 'Le mot de passe précédent';
+$lang['placeholder_user_password_new']  = 'Le nouveau mot de passe';
+$lang['placeholder_user_password_again']    = 'Répétez le nouveau mot de passe';
 
 // Log Error
 $lang['invalid_id']                     = 'Ces informations de connexion ne sont pas valides';
