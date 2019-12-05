@@ -25,9 +25,9 @@ class Apprentice extends MY_Controller {
      * Shows the list of apprentices
      */
     public function index() {
-        $this->load->model(['formation_model','user_model']);
+        $this->load->model(['formation_model','auth/user_model']);
         $outputs = array(
-            "teachers" => $this->get_teachers(),
+            "teachers" => $this->get_parents(),
             "apprentices" => $this->apprentice_model->with("C_App_Form")->get_ordered(),
             "formations" => array(),
             "users" => $this->user_model->dropdown('user')
@@ -47,7 +47,7 @@ class Apprentice extends MY_Controller {
     public function form($id = 0) {
         $this->load->model('user_model');
         $outputs = array(
-            "teachers" => $this->get_teachers(),
+            "teachers" => $this->get_parents(),
             "apprentice" => ($id > 0 ? $this->apprentice_model->get($id) : NULL),
             "users" => $this->user_model->dropdown('user'),
             'max_date' => date('Y-m-d')
@@ -88,7 +88,7 @@ class Apprentice extends MY_Controller {
             redirect('apprentice');
         } else {
             $outputs = array(
-                "teachers" => $this->get_teachers(),
+                "teachers" => $this->get_parents(),
                 "apprentice" => ($this->input->post('id') > 0 ? $this->apprentice_model->get($id) : NULL)
             );
             $this->display_view("apprentice/form", $outputs);
@@ -310,7 +310,7 @@ class Apprentice extends MY_Controller {
      *      All teachers in an array
      */
     private function get_parents() {
-        $this->load->model(['teacher_model','auth/user_model']);
+        $this->load->model(['teacher_model']);
 
         //Puts the teacher first names, last names and their corresponding ids together
         $teachers_names = $this->teacher_model->dropdown('firstname');
