@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     ?></title>
 
     <!-- Icon -->
-    <link rel="shortcut icon" href="<?php echo base_url("assets/images/favicon.ico"); ?>" type="image/x-icon" />
+    <link rel="shortcut icon" href="<?= base_url("assets/images/favicon.png"); ?>" type="image/x-icon" />
 
     <!-- Bootstrap  -->
     <link rel="stylesheet" href="<?php echo base_url("assets/css/bootstrap.min.css"); ?>" />
@@ -39,6 +39,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <![endif]-->
 
     <!-- Application styles -->
-    <link rel="stylesheet" href="<?php echo base_url("assets/css/MY_styles.css"); ?>" />
+    <link rel="stylesheet" href="<?= base_url("assets/css/MY_styles.css"); ?>" />
 </head>
 <body>

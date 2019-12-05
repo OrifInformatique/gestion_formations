@@ -309,13 +309,13 @@ class Apprentice extends MY_Controller {
      * @return array
      *      All teachers in an array
      */
-    private function get_teachers() {
-        $this->load->model('teacher_model');
+    private function get_parents() {
+        $this->load->model(['teacher_model','auth/user_model']);
 
         //Puts the teacher first names, last names and their corresponding ids together
         $teachers_names = $this->teacher_model->dropdown('firstname');
         $teachers_last_names = $this->teacher_model->dropdown('last_name');
-        for($i = 1; $i < max(array_keys($teachers_names))+1; $i ++) {
+        for($i = 1; count($teachers_names) > 0 && $i < max(array_keys($teachers_names))+1; $i ++) {
             if(!isset($teachers_names[$i]) || is_null($teachers_names[$i])) {
                 continue;
             }

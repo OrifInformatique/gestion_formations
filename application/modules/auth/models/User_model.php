@@ -1,15 +1,17 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * User is used to give access to the application.
- * User type is used to give different access rights (defining an access level).
+ * User_type is used to give different access rights (defining an access level).
  * 
- * @author      Orif, section informatique (UlSi, ViDi)
- * @link        https://github.com/OrifInformatique/gestion_formations
- * @copyright   Copyright (c) Orif (http://www.orif.ch)
+ * @author      Orif (UlSi, ViDi)
+ * @link        https://github.com/OrifInformatique
+ * @copyright   Copyright (c) Orif (https://www.orif.ch)
  */
 class user_model extends MY_Model
 {
-    /* SET MY_Model VARIABLES */
+    /* Set MY_Model variables */
+    protected $_table = 'users';
+    protected $primary_key = 'id';
     protected $protected_attributes = ['id'];
     protected $belongs_to = ['user_type'=> ['primary_key' => 'fk_user_type',
                                             'model' => 'user_type_model']];
@@ -29,7 +31,6 @@ class user_model extends MY_Model
     /**
      * Check username and password for login
      *
-     * @access public
      * @param $username
      * @param $password
      * @return bool true on success, false on failure
@@ -38,9 +39,13 @@ class user_model extends MY_Model
     {
         $user = $this->get_by('user', $username);
 
-        if (!is_null($user) && password_verify($password, $user->password)) {
-            return true;
-        }else{
+        if (!is_null($user)) {
+            // A corresponding active user has been found
+            // Check password
+            return password_verify($password, $user->password);
+        }
+        else {
+            // No corresponding active user
             return false;
         }
     }

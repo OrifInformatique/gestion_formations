@@ -16,7 +16,7 @@ class Admin extends MY_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('form_validation');
-        $this->load->model(['user_model','user_type_model','teacher_model']);
+        $this->load->model(['auth/user_model','auth/user_type_model','teacher_model']);
         $this->load->helper('form');
     }
 
